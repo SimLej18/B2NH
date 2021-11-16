@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+}
+
+.container {
+    width: 100vh;
+    height: 100vh;
+}
+
+.map {
+    background-color: blue;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.panelsContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.leftPanelsContainer {
+    width: 60%;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.rightPanelsContainer {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.timeline {
+    background-color: red;
+}
+
+.infopanel {
+    background-color: green;
+}
+
+.routepanel {
+    background-color: cyan;
+}
