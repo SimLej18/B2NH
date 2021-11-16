@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.html",
   "repository": "https://github.com/SimLej18/B2NH.git",
-  "author": "Student of UNamur",
+  "author": "Students of UNamur",
   "license": "MIT",
   "scripts": {
     "serve": "python3 -m http.server 8080"
