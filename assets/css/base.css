@@ -40,6 +40,7 @@ body {
 }
 
 .infopanelAnchor {
+    background-color: green;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,14 +51,19 @@ body {
 }
 
 .infopanel {
-    background-color: green;
     min-height: 40vh;
     display: flex;
     flex-direction: row;
     justify-content: end;
 }
 
+.infopanelBody {
+    background-color: green;
+    min-width: 25vh;
+}
+
 .routepanelAnchor {
+    background-color: cyan;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -68,9 +74,13 @@ body {
 }
 
 .routepanel {
-    background-color: cyan;
     min-height: 40vh;
     display: flex;
     flex-direction: row;
     justify-content: end;
+}
+
+.routepanelBody {
+    background-color: cyan;
+    min-width: 25vh;
 }
