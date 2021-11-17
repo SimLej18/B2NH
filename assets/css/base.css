@@ -39,10 +39,38 @@ body {
     background-color: red;
 }
 
+.infopanelAnchor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.infopanelTitle {
+    transform: rotate(-90deg);
+}
+
 .infopanel {
     background-color: green;
+    min-height: 40vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.routepanelAnchor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.routepanelTitle {
+    transform: rotate(-90deg);
 }
 
 .routepanel {
     background-color: cyan;
+    min-height: 40vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
 }
