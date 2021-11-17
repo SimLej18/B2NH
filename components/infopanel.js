@@ -1,0 +1,3 @@
+function infopanelAnchorClick() {
+    $('.infopanelBody').toggle();
+}

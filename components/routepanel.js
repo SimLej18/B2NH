@@ -1,0 +1,3 @@
+function routepanelAnchorClick() {
+    $('.routepanelBody').toggle();
+}

@@ -1,0 +1,3 @@
+function timelineAnchorClick() {
+    $('.timelineBody').toggle();
+}
