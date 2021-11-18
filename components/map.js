@@ -15,6 +15,15 @@ getData().then(data => {
     createMap(data);
 });
 
+// Method that will be used when we update the data
+updateMap = () => {
+    // get data from url
+    getData().then(data => {
+        // update map
+        updateMap(data);
+    });
+}
+
 // function to create map with d3.js
 const createMap = (data) => {
     console.log(data);
