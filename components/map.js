@@ -1,9 +1,11 @@
 // define empty data object to store data
 let data = {};
+let volcanoes_map_url = "https://b2nh-api.tintamarre.be/api/v1/volcanoes_map";
+let world_map_url = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
 
-// function to get data from server for d3 map
+// function to get data from url for d3 map
 const getData = () => {
-    return fetch('https://b2nh-api.tintamarre.be/api/v1/volcanoes_map')
+    return fetch(world_map_url)
         .then(res => res.json())
         .then(data => data)
     }
@@ -52,9 +54,9 @@ const createMap = (data) => {
         .append('path')
         .attr('d', path)
         .attr('class', 'map-path')
-        .attr('fill', 'red')
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 0.5)
+        .attr('fill', 'white')
+        .attr('stroke', '#ccc')
+        .attr('stroke-width', 1)
         .on('mouseover', function(d) {
             console.log(d);
             tooltip.transition()
