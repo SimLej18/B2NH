@@ -14,7 +14,6 @@ data = [    {
     "value": "4"
 }];
 
-
 d3.select("#timeline").selectAll("div")
     .data(data)
     .enter()
