@@ -19,8 +19,8 @@ getData().then(data => {
 updateMap = () => {
     // get data from url
     getData().then(data => {
-        // update map
-        updateMap(data);
+        // update map data
+        updateMapData(data);
     });
 }
 

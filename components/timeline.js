@@ -2,6 +2,8 @@ function timelineAnchorClick() {
     $('.timelineBody').toggle();
 }
 
+// Idea for a range slider https://rasmusfonseca.github.io/d3RangeSlider/
+
 // Dummy example with d3.js
 data = [    {
     "type": "Irruption",
