@@ -7,6 +7,8 @@ body {
     height: 100vh;
 }
 
+
+
 .map {
     background-color: blue;
     position: absolute;
@@ -84,3 +86,10 @@ body {
     background-color: cyan;
     min-width: 25vh;
 }
+
+
+#info-item-tooltip {
+    fill: #707070;
+    fill-opacity: 0.2;
+    pointer-events: none;
+ }

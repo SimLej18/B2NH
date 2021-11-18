@@ -39,10 +39,11 @@ const createMap = (data) => {
         .projection(projection);
         
     // create tooltip
-    const tooltip = d3.select('body')
+    const tooltip = d3.select('#info-item-tooltip')
         .append('div')
         .attr('class', 'tooltip')
-        .style('opacity', 0);
+        .style('size', '10px')
+        .style('background-color', '#fff');
 
     // insert map data from geojson data
     map.selectAll('path')
@@ -51,10 +52,11 @@ const createMap = (data) => {
         .append('path')
         .attr('d', path)
         .attr('class', 'map-path')
-        .attr('fill', '#ccc')
-        .attr('stroke', '#000')
+        .attr('fill', 'red')
+        .attr('stroke', '#fff')
         .attr('stroke-width', 0.5)
         .on('mouseover', function(d) {
+            console.log(d);
             tooltip.transition()
                 .duration(200)
                 .style('opacity', .9);
@@ -69,9 +71,6 @@ const createMap = (data) => {
                 .style('opacity', 0);
         }
         );
-
-
-
 
 } 
 
