@@ -1,5 +1,18 @@
+@font-face {
+    font-family: 'Voltec';
+    src: url("../fonts/Voltec.ttf");
+}
+
+@font-face {
+    font-family: 'Aero';
+    src: url("../fonts/Aero.ttf");
+}
+
 body {
     margin: 0;
+    background-image: url("../images/sci-fi-bg.png");
+    font-family: 'Aero';
+    color: rgb(196, 252, 251);
 }
 
 .container {
@@ -7,14 +20,14 @@ body {
     height: 100vh;
 }
 
-
-
 .map {
-    background-color: blue;
     position: absolute;
     width: 100%;
     height: 100%;
 }
+
+
+/* --- Panel CSS --- */
 
 .panelsContainer {
     position: absolute;
@@ -37,26 +50,35 @@ body {
     justify-content: space-between;
 }
 
+.panel > div {
+    padding: 10px;
+    background-color: rgb(17 17 84 / 75%);
+}
+
+.panelAnchor {
+}
+
+.panelBody {
+
+}
+
+
+/* --- Timeline CSS --- */
+
+.timeline > div {
+    border-top: 3px solid rgb(196, 252, 251);
+    border-right: 3px solid rgb(196, 252, 251);
+
+}
+
 .timelineAnchor {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.timeline {
-    background-color: red;
-}
 
-.infopanelAnchor {
-    background-color: green;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.infopanelTitle {
-    transform: rotate(-90deg);
-}
+/* --- Infopanel CSS --- */
 
 .infopanel {
     min-height: 40vh;
@@ -65,21 +87,29 @@ body {
     justify-content: end;
 }
 
+.infopanel > div {
+    border-left: 3px solid rgb(196, 252, 251);
+    border-bottom: 3px solid rgb(196, 252, 251);
+}
+
+.infopanelAnchor {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 10%;
+}
+
+.infopanelTitle {
+    transform: rotate(-90deg);
+    margin-top: 60px;
+}
+
 .infopanelBody {
-    background-color: green;
     min-width: 25vh;
 }
 
-.routepanelAnchor {
-    background-color: cyan;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
 
-.routepanelTitle {
-    transform: rotate(-90deg);
-}
+/* --- Routepanel CSS --- */
 
 .routepanel {
     min-height: 40vh;
@@ -88,11 +118,29 @@ body {
     justify-content: end;
 }
 
+.routepanel > div {
+    border-top: 3px solid rgb(196, 252, 251);
+    border-left: 3px solid rgb(196, 252, 251);
+}
+
+.routepanelAnchor {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 10%
+}
+
+.routepanelTitle {
+    transform: rotate(-90deg);
+    margin-bottom: 30px;
+}
+
 .routepanelBody {
-    background-color: cyan;
     min-width: 25vh;
 }
 
+
+/* --- Tooltip CSS --- */
 
 #info-item-tooltip {
     fill: #707070;

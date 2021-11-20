@@ -31,8 +31,8 @@
 
         <div class="panelsContainer">
             <div class="leftPanelsContainer">
-                <div class="timeline">
-                    <div class="timelineAnchor" onclick="timelineAnchorClick()">
+                <div class="panel timeline">
+                    <div class="panelAnchor timelineAnchor" onclick="timelineAnchorClick()">
                         timeline
                         <div class="eventTypeSelector" onclick="cancelAnchorClick()">
                             <input type="checkbox" Checked onclick="volcanoToggle()">
@@ -43,33 +43,34 @@
                             <label>E</label>
                         </div>
                     </div>
-                    <div class="timelineBody" id="timeline">
+                    <div class="panelBody timelineBody" id="timeline">
                         / here is the timeline \
                     </div>
                 </div>
             </div>
 
             <div class="rightPanelsContainer">
-                <div class="infopanel">
-                    <div class="infopanelAnchor" onclick="infopanelAnchorClick()">
+                <div class="panel infopanel">
+                    <div class="panelAnchor infopanelAnchor" onclick="infopanelAnchorClick()">
                         <div class="infopanelTitle">
                             infopanel
-                            <div id="info-item-tooltip">tootltip</div>
                         </div>
                     </div>
-                    <div class="infopanelBody">
+                    <div class="panelBody infopanelBody">
                         <h1 id="montitre"></h1>
                         / here is the infopanel \
+
+                        <div id="info-item-tooltip">tootltip</div>
                     </div>
                 </div>
 
-                <div class="routepanel">
-                    <div class="routepanelAnchor" onclick="routepanelAnchorClick()">
+                <div class="panel routepanel">
+                    <div class="panelAnchor routepanelAnchor" onclick="routepanelAnchorClick()">
                         <div class="routepanelTitle">
                             routepanel
                         </div>
                     </div>
-                    <div class="routepanelBody">
+                    <div class="panelBody routepanelBody">
                         / here is the routepanel \
                     </div>
                 </div>
