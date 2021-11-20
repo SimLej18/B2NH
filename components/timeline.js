@@ -1,6 +1,32 @@
+checkboxes = [1, 1, 1];  // Checkboxes are checked by default
+
 function timelineAnchorClick() {
     $('.timelineBody').toggle();
 }
+
+function cancelAnchorClick(e) {
+    // Makes sure the anchor does not toggle when clicking the tick-boxes
+    if (!e) var e = window.event;
+    e.cancelBubble = true;
+    if (e.stopPropagation) e.stopPropagation();
+}
+
+function volcanoToggle() {
+    checkboxes[0] = (checkboxes[0] + 1) % 2; // Invert checkbox state
+}
+
+function tsunamiToggle() {
+    checkboxes[1] = (checkboxes[1] + 1) % 2; // Invert checkbox state
+}
+
+function earthquakeToggle() {
+    checkboxes[2] = (checkboxes[2] + 1) % 2; // Invert checkbox state
+}
+
+
+
+
+/* LEGACY CODE
 
 // Idea for a range slider https://rasmusfonseca.github.io/d3RangeSlider/
 
@@ -41,3 +67,4 @@ d3.select("#timeline").selectAll("div")
         return d.type;
     }
     );
+*/

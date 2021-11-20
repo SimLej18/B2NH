@@ -37,6 +37,12 @@ body {
     justify-content: space-between;
 }
 
+.timelineAnchor {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .timeline {
     background-color: red;
 }
