@@ -1,149 +1,157 @@
-@font-face {
-    font-family: 'Voltec';
-    src: url("../fonts/Voltec.ttf");
-}
+    @font-face {
+        font-family: 'Voltec';
+        src: url("../fonts/Voltec.ttf");
+    }
 
-@font-face {
-    font-family: 'Aero';
-    src: url("../fonts/Aero.ttf");
-}
+    @font-face {
+        font-family: 'Aero';
+        src: url("../fonts/Aero.ttf");
+    }
 
-body {
-    margin: 0;
-    background-image: url("../images/sci-fi-bg.png");
-    font-family: 'Aero';
-    color: rgb(196, 252, 251);
-}
+    body {
+        margin: 0;
+        background-image: url("../images/sci-fi-bg.png");
+        font-family: 'Aero';
+        color: rgb(196, 252, 251);
+    }
 
-.container {
-    width: 100vh;
-    height: 100vh;
-}
+        /* remove bullet */
+    li {
+        list-style-type: none;
+        padding: 10px;
+    }
 
-.map {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
+    .container {
+        width: 100vh;
+        height: 100vh;
+    }
 
-
-/* --- Panel CSS --- */
-
-.panelsContainer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-}
-
-.leftPanelsContainer {
-    width: 60%;
-    display: flex;
-    flex-direction: column-reverse;
-}
-
-.rightPanelsContainer {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.panel > div {
-    padding: 10px;
-    background-color: rgb(17 17 84 / 75%);
-}
-
-.panelAnchor {
-}
-
-.panelBody {
-
-}
+    .map {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
 
 
-/* --- Timeline CSS --- */
+    /* --- Panel CSS --- */
 
-.timeline > div {
-    border-top: 3px solid rgb(196, 252, 251);
-    border-right: 3px solid rgb(196, 252, 251);
+    .panelsContainer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+    }
 
-}
+    .leftPanelsContainer {
+        width: 60%;
+        display: flex;
+        flex-direction: column-reverse;
+    }
 
-.timelineAnchor {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
+    .rightPanelsContainer {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
+    .panel > div {
+        padding: 10px;
+        background-color: rgb(17 17 84 / 75%);
+    }
 
-/* --- Infopanel CSS --- */
+    .panelAnchor {
+    }
 
-.infopanel {
-    min-height: 40vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-}
+    .panelBody {
 
-.infopanel > div {
-    border-left: 3px solid rgb(196, 252, 251);
-    border-bottom: 3px solid rgb(196, 252, 251);
-}
-
-.infopanelAnchor {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    width: 10%;
-}
-
-.infopanelTitle {
-    transform: rotate(-90deg);
-    margin-top: 60px;
-}
-
-.infopanelBody {
-    min-width: 25vh;
-}
+    }
 
 
-/* --- Routepanel CSS --- */
+    /* --- Timeline CSS --- */
 
-.routepanel {
-    min-height: 40vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-}
+    .timeline > div {
+        border-top: 3px solid rgb(196, 252, 251);
+        border-right: 3px solid rgb(196, 252, 251);
 
-.routepanel > div {
-    border-top: 3px solid rgb(196, 252, 251);
-    border-left: 3px solid rgb(196, 252, 251);
-}
+    }
 
-.routepanelAnchor {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    width: 10%
-}
-
-.routepanelTitle {
-    transform: rotate(-90deg);
-    margin-bottom: 30px;
-}
-
-.routepanelBody {
-    min-width: 25vh;
-}
+    .timelineAnchor {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 
 
-/* --- Tooltip CSS --- */
+    /* --- Infopanel CSS --- */
 
-#info-item-tooltip {
-    fill: #707070;
-    fill-opacity: 0.2;
-    pointer-events: none;
- }
+    .infopanel {
+        min-height: 40vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+    }
+
+    .infopanel > div {
+        border-left: 3px solid rgb(196, 252, 251);
+        border-bottom: 3px solid rgb(196, 252, 251);
+    }
+
+    .infopanelAnchor {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        width: 10%;
+    }
+
+    .infopanelTitle {
+        transform: rotate(-90deg);
+        margin-top: 60px;
+    }
+
+    .infopanelBody {
+        min-width: 25vh;
+    }
+
+
+    /* --- Routepanel CSS --- */
+
+    .routepanel {
+        min-height: 40vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+    }
+
+    .routepanel > div {
+        border-top: 3px solid rgb(196, 252, 251);
+        border-left: 3px solid rgb(196, 252, 251);
+    }
+
+    .routepanelAnchor {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        width: 10%
+    }
+
+    .routepanelTitle {
+        transform: rotate(-90deg);
+        margin-bottom: 30px;
+    }
+
+    .routepanelBody {
+        min-width: 25vh;
+    }
+
+
+    /* --- Tooltip CSS --- */
+
+    #info-item-tooltip {
+        fill: #707070;
+        fill-opacity: 0.2;
+        pointer-events: none;
+    }
+
+
