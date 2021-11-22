@@ -1,9 +1,10 @@
 //définition de variables, par la suite récupérées de map.js j'imagine
-id=1;
+id=11;
 type="volcano";
 //récupération des données
 let index=["Effusive","Gentle","Explosive","Catastrophic","Cataclysmic","Paroxysmic","Colossal","Super-colossal","Mega-colossal"]
 let month=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"]
+
 function infopanelAnchorClick() {
     $('.infopanelBody').toggle();
 }
@@ -25,17 +26,42 @@ function displayTsunami(info) {
 }
 
 function displayVolcano(info,index,month) {
-    document.getElementById("element1").innerHTML=`VOLCANO 🌋 : ${info.data.geoJson.properties.title}`;
-    document.getElementById("element2").innerHTML=`Explosivity index : ${index[info.data.volcano_explosivity_index]}`;
+    i=1
+    if(info.data.geoJson.properties.title!=(null||"unknown")){
+    document.getElementById(`element${i}`).innerHTML=`Volcano : &nbsp🌋 ${info.data.geoJson.properties.title}🌋 `;
+    i++
+    }
+
+    if(info.data.volcano_explosivity_index!=(null||"unknown")) {
+    document.getElementById(`element${i}`).innerHTML=`Explosivity index : &nbsp ${index[info.data.volcano_explosivity_index]}`;
+    i++
+    }
+
+    if(info.data.dateTime!=(null||"unknown")){
     const datestart = /\d{2}-\w+-\d+/g.exec(`${info.data.dateTime}`);
     //let dateend = new Date(`${info.data.endDate}`)
-    document.getElementById('element5').innerHTML=`⚐ : ${info.data.volcano.country}`;
     //document.getElementById("element3").innerHTML=`🕐 : ${datestart} → ${dateend.getDate()}-${month[dateend.getMonth()]}-${dateend.getYear()}`;
-    document.getElementById("element3").innerHTML=`🕐 : ${datestart}`;
-    document.getElementById("element4").innerHTML=`lasted ${info.data.duration}`;
-    document.getElementById('element6').innerHTML=`Damage : ${info.data.damageAmountOrder}`;
-    if (info.data.deathAmountOrder!=null) {
-    document.getElementById('element7').innerHTML=`Deaths : ${info.data.deathAmountOrder}`; 
+    document.getElementById(`element${i}`).innerHTML=`🕐 : &nbsp${datestart}`;
+    i++
+    }
+
+    if (info.data.volcano.country!=(null||"unknown")){
+    document.getElementById(`element${i}`).innerHTML=`⚐ : &nbsp${info.data.volcano.country}`;
+    i++
+    }
+
+    if (info.data.duration!=(null||"unknown")){
+    document.getElementById(`element${i}`).innerHTML=`lasted ${info.data.duration}`;  
+    i++
+    }
+
+    if(info.data.damageAmountOrder!=(null||"unknown")){
+    document.getElementById(`element${i}`).innerHTML=`Damage : &nbsp${info.data.damageAmountOrder}`;
+    }
+
+    if (info.data.deathsAmountOrder!=(null||"unknown")) {
+    document.getElementById(`element${i}`).innerHTML=`Deaths amount: &nbsp${info.data.deathsAmountOrder}`; 
+    i++
     }
 }
 
