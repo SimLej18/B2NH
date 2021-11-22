@@ -1,3 +1,6 @@
+// need to be fetched
+let world_data_url = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
+
 var volcanoes = [];
 var allEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents": []}
 var allEventsList = [];
@@ -6,6 +9,7 @@ var currentTimeFilter = [-5000, 2021];  // All events shown by default
 var filtredEvents = [];
 var selectedVolcano = null;
 var selectedEvent = null;
+var world_data = null;
 
 
 function resetVars() {
