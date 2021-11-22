@@ -1,5 +1,5 @@
 var volcanoes = [];
-var allEventsDict = {"volcano_events": [], "tsunami_events": [], "earthquake_events": []}
+var allEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents": []}
 var allEventsList = [];
 var currentTypeFilter = [1, 1, 1];  // All events shown by default
 var currentTimeFilter = [-5000, 2021];  // All events shown by default
@@ -7,22 +7,23 @@ var filtredEvents = [];
 var selectedVolcano = null;
 var selectedEvent = null;
 
-fetchAllData()
 
 function resetVars() {
     volcanoes = [];
-    allEventsDict = {"volcano_events": [], "tsunami_events": [], "earthquake_events": []}
+    allEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents": []}
     allEventsList = [];
+    currentTypeFilter = [1, 1, 1];
+    currentTimeFilter = [-5000, 2021];
     filtredEvents = [];
     selectedVolcano = null;
     selectedEvent = null;
 }
 
-function fetchAllData() {
+async function fetchAllData() {
     resetVars();
 
     // Fetch volcanoes
-    fetch("https://b2nh-api.tintamarre.be/api/v1/volcanoes/")  // Path needs to be changed
+    await fetch("https://b2nh-api.tintamarre.be/api/v1/volcanoes/")
         .then((response) => {
             if (response.ok) {
                 return response.json();
@@ -34,8 +35,8 @@ function fetchAllData() {
             volcanoes = info.data;
         }).catch((error) => console.error("erreur du fetch:", error));
 
-    // Fetch volcano events
-    fetch("https://b2nh-api.tintamarre.be/api/v1/volcano_events/")  // Path needs to be changed
+    // Fetch all events
+    await fetch("https://b2nh-api.tintamarre.be/api/v1/filter_map_array/start/-5000/end/2021")
         .then((response) => {
             if (response.ok) {
                 return response.json();
@@ -44,39 +45,12 @@ function fetchAllData() {
                 throw new Error("Pas de réponse de l'API");
             }
         }).then(info => {
-            allEventsDict["volcano_events"] = info.data;
-            allEventsList.concat(info.data);
-            filtredEvents.concat(info.data);
-        }).catch((error) => console.error("erreur du fetch:", error));
+            allEventsList = info.data;
 
-    // Fetch tsunami events
-    fetch("https://b2nh-api.tintamarre.be/api/v1/tsunami_events/")  // Path needs to be changed
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
+            for (var i = 0 ; i < info.data.length ; i++) {
+                allEventsDict[info.data[i].type+"s"].push(info.data[i]);
             }
-            else {
-                throw new Error("Pas de réponse de l'API");
-            }
-        }).then(info => {
-            allEventsDict["tsunami_events"] = info.data;
-            allEventsList.concat(info.data);
-            filtredEvents.concat(info.data);
-        }).catch((error) => console.error("erreur du fetch:", error));
 
-    // Fetch earthquake events
-    fetch("https://b2nh-api.tintamarre.be/api/v1/earthquake_events/")  // Path needs to be changed
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-            else {
-                throw new Error("Pas de réponse de l'API");
-            }
-        }).then(info => {
-            allEventsDict["earthquake_events"] = info.data;
-            allEventsList.concat(info.data);
-            filtredEvents.concat(info.data);
         }).catch((error) => console.error("erreur du fetch:", error));
 }
 
@@ -86,7 +60,7 @@ function filterEvents(typeFilter = currentTypeFilter, timeFilter = currentTimeFi
     // Filter from type
 
     // Filter from time
-    
+
 }
 
 function selectVolcano(id) {

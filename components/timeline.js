@@ -1,5 +1,7 @@
 checkboxes = [1, 1, 1];  // Checkboxes are checked by default
 
+createTimeline();
+
 function timelineAnchorClick() {
     $('.timelineBody').toggle();
 }
@@ -24,7 +26,10 @@ function earthquakeToggle() {
 }
 
 
-
+async function createTimeline() {
+    // Data variables are available in main.js
+    await fetchAllData();
+}
 
 /* LEGACY CODE
 
