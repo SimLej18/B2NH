@@ -11,10 +11,10 @@ function infopanelAnchorClick() {
 
 function displayEarthquake(info) {
     document.getElementById("element1").innerHTML="EARTHQUAKE";
-    document.getElementById("element2").innerHTML=`magnitude : ${info.data.eqMagnitude}`;
+    document.getElementById("element2").innerHTML=`Magnitude : ${info.data.eqMagnitude}`;
     document.getElementById("element3").innerHTML=`🕐 : ${info.data.dateTime}`;
     document.getElementById('element4').innerHTML=`⚐ : ${info.data.locationName}`;
-    document.getElementById('element5').innerHTML=`damage : ${info.data.damageAmountOrder}`;
+    document.getElementById('element5').innerHTML=`Damage : ${info.data.damageAmountOrder}`;
 
 }
 
@@ -27,10 +27,10 @@ function displayTsunami(info) {
 
 function displayVolcano(info,index) {
     document.getElementById("element1").innerHTML=`VOLCANO : ${info.data.geoJson.properties.title}`;
-    document.getElementById("element2").innerHTML=`volcano explosivity index : ${index[info.data.volcano_explosivity_index]}`;
+    document.getElementById("element2").innerHTML=`Explosivity index : ${index[info.data.volcano_explosivity_index]}`;
     document.getElementById("element3").innerHTML=`🕐 : ${info.data.dateTime}`;
     document.getElementById('element4').innerHTML=`⚐ : ${info.data.volcano.country}`;
-    document.getElementById('element5').innerHTML=`damage : ${info.data.damageAmountOrder}`;
+    document.getElementById('element5').innerHTML=`Damage : ${info.data.damageAmountOrder}`;
 }
 
 fetch("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
