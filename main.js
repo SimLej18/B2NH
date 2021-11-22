@@ -1,7 +1,8 @@
 var volcanoes = [];
 var allEventsDict = {"volcano_events": [], "tsunami_events": [], "earthquake_events": []}
 var allEventsList = [];
-var currentFilter = [1, 1, 1];  // All events shown by default
+var currentTypeFilter = [1, 1, 1];  // All events shown by default
+var currentTimeFilter = [-5000, 2021];  // All events shown by default
 var filtredEvents = [];
 var selectedVolcano = null;
 var selectedEvent = null;
@@ -79,8 +80,13 @@ function fetchAllData() {
         }).catch((error) => console.error("erreur du fetch:", error));
 }
 
-function filterEvents(filter) {
+function filterEvents(typeFilter = currentTypeFilter, timeFilter = currentTimeFilter) {
+    filtredEvents = [];
 
+    // Filter from type
+
+    // Filter from time
+    
 }
 
 function selectVolcano(id) {
