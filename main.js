@@ -1,27 +1,33 @@
+// need to be fetched
+let world_data_url = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
+
 var volcanoes = [];
-var allEventsDict = {"volcano_events": [], "tsunami_events": [], "earthquake_events": []}
+var allEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents": []}
 var allEventsList = [];
-var currentFilter = [1, 1, 1];  // All events shown by default
-var filtredEvents = [];
+var currentTypeFilter = [1, 1, 1];  // All events shown by default
+var currentTimeFilter = [-5000, 2021];  // All events shown by default
+var filteredEvents = [];
 var selectedVolcano = null;
 var selectedEvent = null;
+var world_data = null;
 
-fetchAllData()
 
 function resetVars() {
     volcanoes = [];
-    allEventsDict = {"volcano_events": [], "tsunami_events": [], "earthquake_events": []}
+    allEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents": []}
     allEventsList = [];
+    currentTypeFilter = [1, 1, 1];
+    currentTimeFilter = [-5000, 2021];
     filtredEvents = [];
     selectedVolcano = null;
     selectedEvent = null;
 }
 
-function fetchAllData() {
+async function fetchAllData() {
     resetVars();
 
     // Fetch volcanoes
-    fetch("https://b2nh-api.tintamarre.be/api/v1/volcanoes/")  // Path needs to be changed
+    await fetch("https://b2nh-api.tintamarre.be/api/v1/volcanoes/")
         .then((response) => {
             if (response.ok) {
                 return response.json();
@@ -33,8 +39,8 @@ function fetchAllData() {
             volcanoes = info.data;
         }).catch((error) => console.error("erreur du fetch:", error));
 
-    // Fetch volcano events
-    fetch("https://b2nh-api.tintamarre.be/api/v1/volcano_events/")  // Path needs to be changed
+    // Fetch all events
+    await fetch("https://b2nh-api.tintamarre.be/api/v1/filter_map_array/start/-5000/end/2021")
         .then((response) => {
             if (response.ok) {
                 return response.json();
@@ -43,44 +49,39 @@ function fetchAllData() {
                 throw new Error("Pas de réponse de l'API");
             }
         }).then(info => {
-            allEventsDict["volcano_events"] = info.data;
-            allEventsList.concat(info.data);
-            filtredEvents.concat(info.data);
-        }).catch((error) => console.error("erreur du fetch:", error));
+            allEventsList = info.data;
 
-    // Fetch tsunami events
-    fetch("https://b2nh-api.tintamarre.be/api/v1/tsunami_events/")  // Path needs to be changed
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
+            for (var i = 0 ; i < info.data.length ; i++) {
+                allEventsDict[info.data[i].type+"s"].push(info.data[i]);
             }
-            else {
-                throw new Error("Pas de réponse de l'API");
-            }
-        }).then(info => {
-            allEventsDict["tsunami_events"] = info.data;
-            allEventsList.concat(info.data);
-            filtredEvents.concat(info.data);
-        }).catch((error) => console.error("erreur du fetch:", error));
 
-    // Fetch earthquake events
-    fetch("https://b2nh-api.tintamarre.be/api/v1/earthquake_events/")  // Path needs to be changed
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-            else {
-                throw new Error("Pas de réponse de l'API");
-            }
-        }).then(info => {
-            allEventsDict["earthquake_events"] = info.data;
-            allEventsList.concat(info.data);
-            filtredEvents.concat(info.data);
         }).catch((error) => console.error("erreur du fetch:", error));
 }
 
-function filterEvents(filter) {
+function filterEvents(typeFilter = currentTypeFilter, timeFilter = currentTimeFilter) {
+    console.assert(typeFilter.length == 3 && typeFilter.every((value) => (value == 0 || value == 1)), "Invalid type filter");
+    console.assert(currentTimeFilter.length == 2 && currentTimeFilter[0] < currentTimeFilter[1] && currentTimeFilter[0] >= -5000 && currentTimeFilter[1] <= 2021, "Invalid time filter");
+    filteredEvents = [];
 
+    // Filter from type
+    var filteredTypeEvents = []
+    if (typeFilter[0] == 1) {  // Add volcanoes
+        filteredTypeEvents = filteredTypeEvents.concat(allEventsDict["VolcanoEvents"]);
+    }
+    if (typeFilter[1] == 1) {  // Add tsunamis
+        filteredTypeEvents = filteredTypeEvents.concat(allEventsDict["TsunamiEvents"]);
+    }
+    if (typeFilter[2] == 1) {  // Add earthquakes
+        filteredTypeEvents = filteredTypeEvents.concat(allEventsDict["EarthquakeEvents"]);
+    }
+
+    // Filter from time
+    for (var i = 0 ; i < filteredTypeEvents.length ; i++) {
+        var year = parseInt(filteredTypeEvents[i].dateTime.split('-')[0]);
+        if (year >= timeFilter[0] && year <= timeFilter[1]) {
+            filteredEvents.push(filteredTypeEvents[i])
+        }
+    }
 }
 
 function selectVolcano(id) {

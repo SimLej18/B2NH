@@ -1,4 +1,7 @@
 checkboxes = [1, 1, 1];  // Checkboxes are checked by default
+timeRange = [-5000, 2021];
+
+createTimeline();
 
 function timelineAnchorClick() {
     $('.timelineBody').toggle();
@@ -13,18 +16,28 @@ function cancelAnchorClick(e) {
 
 function volcanoToggle() {
     checkboxes[0] = (checkboxes[0] + 1) % 2; // Invert checkbox state
+    filterEvents(checkboxes, timeRange);
+    updateMap();
 }
 
 function tsunamiToggle() {
     checkboxes[1] = (checkboxes[1] + 1) % 2; // Invert checkbox state
+    filterEvents(checkboxes, timeRange);
+    updateMap();
 }
 
 function earthquakeToggle() {
     checkboxes[2] = (checkboxes[2] + 1) % 2; // Invert checkbox state
+    filterEvents(checkboxes, timeRange);
+    updateMap();
 }
 
 
-
+async function createTimeline() {
+    await fetchAllData();
+    // Data variables are available in main.js
+    console.log("Timeline ready!");
+}
 
 /* LEGACY CODE
 
