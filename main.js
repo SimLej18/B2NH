@@ -1,18 +1,20 @@
 var volcanoes = [];
-var all_events_dict = {"volcano_events": [], "tsunami_events": [], "earthquake_events": []}
-var all_events_list = [];
-var filtred_events = [];
-var selected_volcano = null;
-var selected_event = null;
+var allEventsDict = {"volcano_events": [], "tsunami_events": [], "earthquake_events": []}
+var allEventsList = [];
+var currentFilter = [1, 1, 1];  // All events shown by default
+var filtredEvents = [];
+var selectedVolcano = null;
+var selectedEvent = null;
 
+fetchAllData()
 
 function resetVars() {
     volcanoes = [];
-    all_events_dict = {"volcano_events": [], "tsunami_events": [], "earthquake_events": []}
-    all_events_list = [];
-    filtred_events = [];
-    selected_volcano = null;
-    selected_event = null;
+    allEventsDict = {"volcano_events": [], "tsunami_events": [], "earthquake_events": []}
+    allEventsList = [];
+    filtredEvents = [];
+    selectedVolcano = null;
+    selectedEvent = null;
 }
 
 function fetchAllData() {
@@ -41,8 +43,9 @@ function fetchAllData() {
                 throw new Error("Pas de réponse de l'API");
             }
         }).then(info => {
-            all_events_dict["volcano_events"] = info.data;
-            all_events_list.concat(info.data);
+            allEventsDict["volcano_events"] = info.data;
+            allEventsList.concat(info.data);
+            filtredEvents.concat(info.data);
         }).catch((error) => console.error("erreur du fetch:", error));
 
     // Fetch tsunami events
@@ -55,8 +58,9 @@ function fetchAllData() {
                 throw new Error("Pas de réponse de l'API");
             }
         }).then(info => {
-            all_events_dict["tsunami_events"] = info.data;
-            all_events_list.concat(info.data);
+            allEventsDict["tsunami_events"] = info.data;
+            allEventsList.concat(info.data);
+            filtredEvents.concat(info.data);
         }).catch((error) => console.error("erreur du fetch:", error));
 
     // Fetch earthquake events
@@ -69,8 +73,9 @@ function fetchAllData() {
                 throw new Error("Pas de réponse de l'API");
             }
         }).then(info => {
-            all_events_dict["earthquake_events"] = info.data;
-            all_events_list.concat(info.data);
+            allEventsDict["earthquake_events"] = info.data;
+            allEventsList.concat(info.data);
+            filtredEvents.concat(info.data);
         }).catch((error) => console.error("erreur du fetch:", error));
 }
 
