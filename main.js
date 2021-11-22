@@ -6,7 +6,7 @@ var allEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents
 var allEventsList = [];
 var currentTypeFilter = [1, 1, 1];  // All events shown by default
 var currentTimeFilter = [-5000, 2021];  // All events shown by default
-var filtredEvents = [];
+var filteredEvents = [];
 var selectedVolcano = null;
 var selectedEvent = null;
 var world_data = null;
@@ -59,12 +59,29 @@ async function fetchAllData() {
 }
 
 function filterEvents(typeFilter = currentTypeFilter, timeFilter = currentTimeFilter) {
-    filtredEvents = [];
+    console.assert(typeFilter.length == 3 && typeFilter.every((value) => (value == 0 || value == 1)), "Invalid type filter");
+    console.assert(currentTimeFilter.length == 2 && currentTimeFilter[0] < currentTimeFilter[1] && currentTimeFilter[0] >= -5000 && currentTimeFilter[1] <= 2021, "Invalid time filter");
+    filteredEvents = [];
 
     // Filter from type
+    var filteredTypeEvents = []
+    if (typeFilter[0] == 1) {  // Add volcanoes
+        filteredTypeEvents = filteredTypeEvents.concat(allEventsDict["VolcanoEvents"]);
+    }
+    if (typeFilter[1] == 1) {  // Add tsunamis
+        filteredTypeEvents = filteredTypeEvents.concat(allEventsDict["TsunamiEvents"]);
+    }
+    if (typeFilter[2] == 1) {  // Add earthquakes
+        filteredTypeEvents = filteredTypeEvents.concat(allEventsDict["EarthquakeEvents"]);
+    }
 
     // Filter from time
-
+    for (var i = 0 ; i < filteredTypeEvents.length ; i++) {
+        var year = parseInt(filteredTypeEvents[i].dateTime.split('-')[0]);
+        if (year >= timeFilter[0] && year <= timeFilter[1]) {
+            filteredEvents.push(filteredTypeEvents[i])
+        }
+    }
 }
 
 function selectVolcano(id) {
