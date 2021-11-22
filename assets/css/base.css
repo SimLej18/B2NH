@@ -59,6 +59,10 @@ li {
     justify-content: space-between;
 }
 
+.panel {
+    pointer-events: auto;
+}
+
 .panel > div {
     padding: 10px;
     background-color: rgb(17 17 84 / 75%);
