@@ -35,8 +35,8 @@ function createMap() {
 
     // Add a scale for bubble size
     const size = d3.scaleLinear()
-    .domain([0,10])  // What's in the data
-    .range([ 2, 10]);  // Size in pixel
+    .domain([0,550])  // What's in the data
+    .range([2, 10]);  // Size in pixel
 
 
        // Create a color scale
@@ -58,6 +58,7 @@ function createMap() {
         .style('border', 'solid')
         .style('border-width', '1px')
         .style('border-radius', '5px')
+        .style('background-color', 'rgb(17 17 84)')
         .style('padding', '10px')
         .style('position', 'absolute')
         .style('z-index', '10');
@@ -86,7 +87,7 @@ function createMap() {
           d.latitude
         ]) + ")";
       })
-    .attr("r", "3px")
+    .attr("r", function(d){ return size(d.measure_value)} )
     .attr("fill", function(d){ return color(d.type) })
     .attr('stroke', '#ccc')
     .attr('stroke-width', 1)
@@ -94,12 +95,15 @@ function createMap() {
       tooltip.transition()
           .duration(200)
           .style('opacity', .9);
-      tooltip.html(d.title + '<br/>' + d.type + '<br/>' + d.measure_type + ':' + d.measure_value + '<br/>' + d.dateTimeForHumans);
+      tooltip.html(d.type + '<br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans);
   })
   .on('mouseout', function(d) {
       tooltip.transition()
           .duration(500)
           .style('opacity', 0);
+  })
+  .on('click', function(e, d) {
+      console.log(d.self_url);
   });
 
 
