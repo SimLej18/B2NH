@@ -12,6 +12,14 @@ var selectedEvent = null;
 var world_data = null;
 
 
+initApp();
+
+async function initApp() {
+    await fetchAllData();
+    createTimeline();
+    createMap();
+}
+
 function resetVars() {
     volcanoes = [];
     allEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents": []}

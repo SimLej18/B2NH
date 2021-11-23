@@ -1,8 +1,6 @@
 checkboxes = [1, 1, 1];  // Checkboxes are checked by default
 timeRange = [-5000, 2021];
 
-createTimeline();
-
 function timelineAnchorClick() {
     $('.timelineBody').toggle();
 }

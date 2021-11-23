@@ -4,8 +4,8 @@
 //         data => data.json()
 //     )
 //   );
-  
-  const wrapperFunc = async () => {  
+
+  const wrapperFunc = async () => {
     let volcanoes_map_url = "https://b2nh-api.tintamarre.be/api/v1/volcanoes_map";
     let world_map_url = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
     let world_data = await getData(world_map_url);
@@ -20,8 +20,6 @@
     };
   }
 
-  createMap();
-
   async function createMap() {
     await fetchAllData();
     // Data variables are available in main.js
@@ -29,7 +27,7 @@
 
     console.log("Map ready!");
 }
-  
+
 
 // function to get data from url for d3 map
 // const getData = (url) => {
@@ -76,7 +74,7 @@ const buildMap = (data) => {
     // create path
     const path = d3.geoPath()
         .projection(projection);
-   
+
     // Add a scale for bubble size
     const size = d3.scaleLinear()
     .domain([0,10])  // What's in the data
@@ -100,7 +98,7 @@ const buildMap = (data) => {
         .style('border-radius', '5px')
         .style('padding', '10px')
         .style('position', 'absolute')
-        .style('z-index', '10');        
+        .style('z-index', '10');
 
     // insert map data from geojson data
     map.selectAll('path')
@@ -132,9 +130,4 @@ const buildMap = (data) => {
         }
         );
 
-} 
-
-
-        
-
-
+}
