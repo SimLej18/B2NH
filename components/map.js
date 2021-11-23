@@ -21,7 +21,6 @@
   }
 
   async function createMap() {
-    await fetchAllData();
     // Data variables are available in main.js
     console.log(allEventsList);
 

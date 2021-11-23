@@ -32,9 +32,9 @@ function earthquakeToggle() {
 
 
 async function createTimeline() {
-    await fetchAllData();
     // Data variables are available in main.js
     console.log("Timeline ready!");
+    console.log(allEventsList);
 }
 
 /* LEGACY CODE
