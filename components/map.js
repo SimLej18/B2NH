@@ -40,8 +40,13 @@ function createMap() {
        // Create a color scale
        var color = d3.scaleOrdinal()
        .domain(["irruption", "earthquake", "tsunami" ])
-       .range([ "red", "green", "blue"])
+       .range([ "red", "green", "blue"]);
 
+             // Create a type scale
+      var type = d3.scaleOrdinal()
+      .domain(["irruption", "earthquake", "tsunami" ])
+      .range([ "triangle", "circle", "circle"]);
+      
 
     // create tooltip
     const tooltip = d3.select('#info-item-tooltip')
@@ -56,31 +61,45 @@ function createMap() {
         .style('position', 'absolute')
         .style('z-index', '10');
 
-    // insert map data
+         // insert map data
     map.selectAll('path')
-                .data(world_data.features)
-                .enter()
-                .append('path')
-                .attr('d', path)
-                .attr('class', 'country')
-                .attr('fill', '#cfcfcf')
-                .attr('stroke', '#fff')
-                .attr('stroke-width', '1px');
-    
-
+    .data(world_data.features)
+    .enter()
+    .append('path')
+    .attr('d', path)
+    .attr('class', 'country')
+    .attr('fill', '#fff')
+    .attr('stroke', '#ccc')
+    .attr('stroke-width', '1px');
+   
     // insert map data from geojson data
-    // map.selectAll('path')
-    //     .data(allEventsList)
-    //     .enter()
+    map.selectAll('path')
+    .data(allEventsList)
+    .enter()
+    .append("circle")
+    .attr("transform", function(d) {
+        return "translate(" + projection([
+          d.longitude,
+          d.latitude
+        ]) + ")";
+      })
+    .attr("r", "3px")
+    .attr("fill", function(d){ return color(d.type) })
+    .attr('stroke', '#ccc')
+    .attr('stroke-width', 1);
+
+
+   
+
     //     .append('path')
-    //     // .attr('d', path)
+    //     .attr('d', path)
     //     .attr('class', 'map-path')
-    //     // .attr("r", 15)
-    //     .attr("r", function(d){ return size(d.measure_value) })
+    //     .attr("r", 15)
+    //     // .attr("r", function(d){ return size(d.measure_value) })
     //     .attr("fill", function(d){ return color(d.type) })
     //     .attr('stroke', '#ccc')
     //     .attr('stroke-width', 1);
-    //     // .text(function(d) { return d.title });
+    // //     // .text(function(d) { return d.title });
     //     // .on('mouseover', function(d) {
     //     //     console.log(d);
     //     //     tooltip.transition()
