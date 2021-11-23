@@ -1,7 +1,9 @@
 // Method that will be used when we update the data
 function updateMap(allEventsList) {
    // update map data
-   updateMapData(allEventsList);
+   console.log("Update updateMapData called!");
+   console.log("Map data length: " + allEventsList.length);
+  //  updateMapData(allEventsList);
 }
 
 // function to create map with d3.js
