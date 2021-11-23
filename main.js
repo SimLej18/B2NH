@@ -15,8 +15,9 @@ var world_data = null;
 initApp();
 
 async function initApp() {
-    await fetchAllData();
     createTimeline();
+    await fetchAllData();
+    updateTimeline();
     createMap();
 }
 

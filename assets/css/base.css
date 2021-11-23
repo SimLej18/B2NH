@@ -78,6 +78,10 @@ li {
 
 /* --- Timeline CSS --- */
 
+.timeline {
+    width: 723px;
+}
+
 .timeline > div {
     border-top: 3px solid rgb(196, 252, 251);
     border-right: 3px solid rgb(196, 252, 251);
@@ -91,9 +95,8 @@ li {
 }
 
 #timelineCanvas {
-    background-color: red;
     height: 100px;
-    width: 100%; 
+    width: 700px;
 }
 
 

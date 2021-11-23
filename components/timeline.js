@@ -38,20 +38,25 @@ async function createTimeline() {
 	var canvas = document.getElementById('timelineCanvas');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
-	// Create a Paper.js Path to draw a line into it:
-	var path = new paper.Path();
 
+    with (paper) {
+        // Create the line bar
+        var lineBar = new Path.Rectangle(new Point(50, 65), new Size(600, 5));
+        lineBar.fillColor = "black";
 
-	// Give the stroke a color
-	path.strokeColor = 'black';
-	var start = new paper.Point(100, 100);
-	// Move to start and draw a line from there
-	path.moveTo(start);
-	// Note that the plus operator on Point objects does not work
-	// in JavaScript. Instead, we need to call the add() function:
-	path.lineTo(start.add([ 200, -50 ]));
-	// Draw the view now:
-	paper.view.draw();
+        var leftCursor = new Path.Rectangle(new Point(50, 55), new Size(20, 25));
+        leftCursor.fillColor = "black";
+
+        var rightCursor = new Path.Rectangle(new Point(630, 55), new Size(20, 25));
+        rightCursor.fillColor = "black";
+
+    	// Draw the view now:
+    	view.draw();
+    }
+}
+
+function updateTimeline() {
+
 }
 
 /* LEGACY CODE
