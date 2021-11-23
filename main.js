@@ -52,7 +52,17 @@ async function fetchAllData() {
             allEventsList = info.data;
 
             for (var i = 0 ; i < info.data.length ; i++) {
-                allEventsDict[info.data[i].type+"s"].push(info.data[i]);
+                switch (info.data[i].type) {
+                    case "irruption":
+                        allEventsDict["VolcanoEvents"].push(info.data[i]);
+                        break;
+                    case "earthquake":
+                        allEventsDict["EarthquakeEvents"].push(info.data[i]);
+                        break;
+                    case "tsunami":
+                        allEventsDict["TsunamiEvents"].push(info.data[i]);
+                        break;
+                }
             }
 
         }).catch((error) => console.error("erreur du fetch:", error));
