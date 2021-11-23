@@ -27,8 +27,8 @@ function displayTsunami(info) {
 
 function displayVolcano(info,index,month) {
     i=1
-    if(info.data.properties.title!=(null||"unknown")){
-    document.getElementById(`element${i}`).innerHTML=`Volcano : &nbsp🌋 ${info.data.properties.title}🌋 `;
+    if(info.data.title!=(null||"unknown")){
+    document.getElementById(`element${i}`).innerHTML=`Volcano : &nbsp🌋 ${info.data.title}🌋 `;
     i++
     }
 
