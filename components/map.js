@@ -55,7 +55,6 @@ function createMap() {
         .append('div')
         .attr('class', 'tooltip')
         .style('size', '10px')
-        .style('background-color', '#fff')
         .style('border', 'solid')
         .style('border-width', '1px')
         .style('border-radius', '5px')
@@ -73,6 +72,8 @@ function createMap() {
     .attr('fill', '#fff')
     .attr('stroke', '#ccc')
     .attr('stroke-width', '1px');
+
+
    
     // insert map data from geojson data
     map.selectAll('path')
@@ -88,7 +89,18 @@ function createMap() {
     .attr("r", "3px")
     .attr("fill", function(d){ return color(d.type) })
     .attr('stroke', '#ccc')
-    .attr('stroke-width', 1);
+    .attr('stroke-width', 1)
+    .on('mouseover', function(e, d) {
+      tooltip.transition()
+          .duration(200)
+          .style('opacity', .9);
+      tooltip.html(d.title + '<br/>' + d.type + '<br/>' + d.measure_type + ':' + d.measure_value + '<br/>' + d.dateTimeForHumans);
+  })
+  .on('mouseout', function(d) {
+      tooltip.transition()
+          .duration(500)
+          .style('opacity', 0);
+  });
 
 
    
