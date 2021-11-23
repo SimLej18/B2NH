@@ -65,7 +65,15 @@ function displayVolcano(info,index,month) {
     }
 }
 
-fetch("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
+
+// This function is called when the user clicks on the button of an event
+function updateInfoPanel(url_of_event) {
+  fetchEvent(url_of_event);
+  console.log(url_of_event);
+}
+
+function fetchEvent(url_of_event) {
+  fetch(url_of_event)
   .then((response) => {
     if (response.ok) {
       return response.json();
@@ -86,5 +94,7 @@ fetch("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
     }
   })
   .catch((error) => console.error("erreur du fetch:", error));
+}
 
- 
+// data fetched at the beginning of the page
+fetchEvent("https://b2nh-api.tintamarre.be/api/v1/events/random");

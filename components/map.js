@@ -103,11 +103,9 @@ function createMap() {
           .style('opacity', 0);
   })
   .on('click', function(e, d) {
-      console.log(d.self_url);
+      updateInfoPanel(d.self_url);
   });
 
-
-   
 
     //     .append('path')
     //     .attr('d', path)
