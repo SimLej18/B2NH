@@ -7,7 +7,6 @@ function updateMap(allEventsList) {
 // function to create map with d3.js
 function createMap() {
 
-    console.log(allEventsList);
     console.log("Map launched!");
     console.log("Map data length: " + allEventsList.length);
     // create map with d3.js
@@ -40,7 +39,7 @@ function createMap() {
 
        // Create a color scale
        var color = d3.scaleOrdinal()
-       .domain(["VolcanoEvent", "EarthquakeEvent", "TsunamiEvent" ])
+       .domain(["irruption", "earthquake", "tsunami" ])
        .range([ "red", "green", "blue"])
 
 
@@ -57,34 +56,46 @@ function createMap() {
         .style('position', 'absolute')
         .style('z-index', '10');
 
-    // insert map data from geojson data
+    // insert map data
     map.selectAll('path')
-        .data(hard_coded_data)
-        .enter()
-        .append('path')
-        .attr('d', path)
-        .attr('class', 'map-path')
-        // .attr("r", 15)
-        .attr("r", function(d){ return size(d.measure_value) })
-        .attr("fill", function(d){ return color(d.type) })
-        .attr('stroke', '#ccc')
-        .attr('stroke-width', 1)
-        .text(function(d) { return d.title })
-        .on('mouseover', function(d) {
-            console.log(d);
-            tooltip.transition()
-                .duration(200)
-                .style('opacity', .9);
-            tooltip.html(d.title)
-                .style('left', (d3.event.pageX + 5) + 'px')
-                .style('top', (d3.event.pageY - 28) + 'px');
-        }
-        )
-        .on('mouseout', function(d) {
-            tooltip.transition()
-                .duration(500)
-                .style('opacity', 0);
-        }
-        );
+                .data(world_data.features)
+                .enter()
+                .append('path')
+                .attr('d', path)
+                .attr('class', 'country')
+                .attr('fill', '#cfcfcf')
+                .attr('stroke', '#fff')
+                .attr('stroke-width', '1px');
+    
+
+    // insert map data from geojson data
+    // map.selectAll('path')
+    //     .data(allEventsList)
+    //     .enter()
+    //     .append('path')
+    //     // .attr('d', path)
+    //     .attr('class', 'map-path')
+    //     // .attr("r", 15)
+    //     .attr("r", function(d){ return size(d.measure_value) })
+    //     .attr("fill", function(d){ return color(d.type) })
+    //     .attr('stroke', '#ccc')
+    //     .attr('stroke-width', 1);
+    //     // .text(function(d) { return d.title });
+    //     // .on('mouseover', function(d) {
+    //     //     console.log(d);
+    //     //     tooltip.transition()
+    //     //         .duration(200)
+    //     //         .style('opacity', .9);
+    //     //     tooltip.html(d.title)
+    //     //         .style('left', (d3.event.pageX + 5) + 'px')
+    //     //         .style('top', (d3.event.pageY - 28) + 'px');
+    //     // }
+    //     // )
+    //     // .on('mouseout', function(d) {
+    //     //     tooltip.transition()
+    //     //         .duration(500)
+    //     //         .style('opacity', 0);
+    //     // }
+    //     // );
 
 }

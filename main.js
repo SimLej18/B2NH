@@ -34,6 +34,19 @@ function resetVars() {
 async function fetchAllData() {
     resetVars();
 
+    // get world data
+    await fetch(world_data_url)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Something went wrong ...');
+            }
+        }).then(data => {
+            world_data = data;
+        }).catch((error) => console.error("erreur du fetch:", error));
+
+
     // Fetch volcanoes
     await fetch("https://b2nh-api.tintamarre.be/api/v1/volcanoes/")
         .then((response) => {
