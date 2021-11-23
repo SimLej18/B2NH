@@ -20,24 +20,28 @@
     };
   }
 
+  createMap();
+
+  async function createMap() {
+    await fetchAllData();
+    // Data variables are available in main.js
+    console.log(allEventsList);
+
+    console.log("Map ready!");
+}
   
-// define empty data object to store data
-let data = {};
-let volcanoes_map_url = "https://b2nh-api.tintamarre.be/api/v1/volcanoes_map";
-let world_map_url = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
-let events_url = "https://b2nh-api.tintamarre.be/api/v1/filter_map/start/-5000/end/2021";
 
 // function to get data from url for d3 map
-const getData = (url) => {
-    return fetch(url)
-        .then(res => res.json())
-        .then(data => data)
-    }
+// const getData = (url) => {
+//     return fetch(url)
+//         .then(res => res.json())
+//         .then(data => data)
+//     }
 
 // when data is loaded, create map
-getData(events_url).then(data => {
-    createMap(data);
-});
+// getData(events_url).then(data => {
+//     createMap(data);
+// });
 
 // Method that will be used when we update the data
 updateMap = () => {
@@ -49,7 +53,7 @@ updateMap = () => {
 }
 
 // function to create map with d3.js
-const createMap = (data) => {
+const buildMap = (data) => {
     console.log(data);
     // create map with d3.js
     const width = 960;
