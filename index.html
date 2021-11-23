@@ -8,10 +8,11 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
     <script src="https://d3js.org/d3.v7.min.js" defer></script>
+    <script src="./assets/js/paper.js" defer></script>
 
     <!-- Components -->
     <script src="./components/map.js" defer></script>
-    <script src="./components/timeline.js" defer></script>
+    <script src="./components/timeline.js" canvas="timelineCanvas" defer></script>
     <script src="./components/infopanel.js" defer></script>
     <script src="./components/routepanel.js" defer></script>
 
@@ -47,7 +48,7 @@
                         </div>
                     </div>
                     <div class="panelBody timelineBody" id="timeline">
-                        / here is the timeline \
+                        <canvas id="timelineCanvas"></canvas>
                     </div>
                 </div>
             </div>

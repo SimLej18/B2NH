@@ -90,6 +90,12 @@ li {
     justify-content: space-between;
 }
 
+#timelineCanvas {
+    background-color: red;
+    height: 100px;
+    width: 100%; 
+}
+
 
 /* --- Infopanel CSS --- */
 
