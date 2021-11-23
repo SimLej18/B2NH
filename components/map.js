@@ -1,57 +1,15 @@
-// const getData = async (url) => (
-//     await fetch(url)
-//     .then(
-//         data => data.json()
-//     )
-//   );
-
-  const wrapperFunc = async () => {
-    let volcanoes_map_url = "https://b2nh-api.tintamarre.be/api/v1/volcanoes_map";
-    let world_map_url = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
-    let world_data = await getData(world_map_url);
-    let volcanoes = await getData(volcanoes_map_url);
-    // assign data to global variable
-    // world_data = world_data;
-    // volcanoes = volcanoes;
-    // return data
-    return {
-        world_data,
-        volcanoes
-    };
-  }
-
-  async function createMap() {
-    // Data variables are available in main.js
-    console.log(allEventsList);
-
-    console.log("Map ready!");
-}
-
-
-// function to get data from url for d3 map
-// const getData = (url) => {
-//     return fetch(url)
-//         .then(res => res.json())
-//         .then(data => data)
-//     }
-
-// when data is loaded, create map
-// getData(events_url).then(data => {
-//     createMap(data);
-// });
-
 // Method that will be used when we update the data
-updateMap = () => {
-    // get data from url
-    getData().then(data => {
-        // update map data
-        updateMapData(data);
-    });
+function updateMap(allEventsList) {
+   // update map data
+   updateMapData(allEventsList);
 }
 
 // function to create map with d3.js
-const buildMap = (data) => {
-    console.log(data);
+function createMap() {
+
+    console.log(allEventsList);
+    console.log("Map launched!");
+    console.log("Map data length: " + allEventsList.length);
     // create map with d3.js
     const width = 960;
     const height = 600;
@@ -101,23 +59,23 @@ const buildMap = (data) => {
 
     // insert map data from geojson data
     map.selectAll('path')
-        .data(data.features)
+        .data(hard_coded_data)
         .enter()
         .append('path')
         .attr('d', path)
         .attr('class', 'map-path')
         // .attr("r", 15)
-        .attr("r", function(d){ return size(d.properties.measure_value) })
-        .attr("fill", function(d){ return color(d.properties.type) })
+        .attr("r", function(d){ return size(d.measure_value) })
+        .attr("fill", function(d){ return color(d.type) })
         .attr('stroke', '#ccc')
         .attr('stroke-width', 1)
-        .text(function(d) { return d.properties.title })
+        .text(function(d) { return d.title })
         .on('mouseover', function(d) {
             console.log(d);
             tooltip.transition()
                 .duration(200)
                 .style('opacity', .9);
-            tooltip.html(d.properties.title)
+            tooltip.html(d.title)
                 .style('left', (d3.event.pageX + 5) + 'px')
                 .style('top', (d3.event.pageY - 28) + 'px');
         }
