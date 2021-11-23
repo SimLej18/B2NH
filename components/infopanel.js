@@ -27,8 +27,8 @@ function displayTsunami(info) {
 
 function displayVolcano(info,index,month) {
     i=1
-    if(info.data.geoJson.properties.title!=(null||"unknown")){
-    document.getElementById(`element${i}`).innerHTML=`Volcano : &nbsp🌋 ${info.data.geoJson.properties.title}🌋 `;
+    if(info.data.properties.title!=(null||"unknown")){
+    document.getElementById(`element${i}`).innerHTML=`Volcano : &nbsp🌋 ${info.data.properties.title}🌋 `;
     i++
     }
 
@@ -83,13 +83,13 @@ function fetchEvent(url_of_event) {
   })
   .then(info => {
     console.log(info);
-    if (type=="earthquake") {
+    if (info.data.type =="earthquake") {
     displayEarthquake(info);
     }
-    if (type=="tsunami") {
+    if (info.data.type=="tsunami") {
     displayTsunami(info);
     }
-    if (type=="volcano") {
+    if (info.data.type=="irruption") {
     displayVolcano(info,index,month);
     }
   })
