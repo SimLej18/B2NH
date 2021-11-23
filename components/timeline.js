@@ -44,15 +44,20 @@ async function createTimeline() {
 
         // Create the line bar and cursors
         var lineBar = new Path.Rectangle(new Point(50, 65), new Size(600, 5));
-        lineBar.fillColor = "black";
+        lineBar.fillColor = new Color(196/255, 252/255, 251/255);
 
         var leftCursor = new Path.Rectangle(new Point(50, 55), new Size(20, 25));
         leftCursor.data.clicked = false;
         leftCursor.fillColor = "black";
+        leftCursor.strokeColor = new Color(196/255, 252/255, 251/255);
+        leftCursor.strokeWidth = 4;
 
         var rightCursor = new Path.Rectangle(new Point(630, 55), new Size(20, 25));
         rightCursor.data.clicked = false;
         rightCursor.fillColor = "black";
+        rightCursor.strokeColor = new Color(196/255, 252/255, 251/255);
+        rightCursor.strokeWidth = 4;
+
 
         // Create the cursor drag functions
         tool.onMouseDown = function(e) {
