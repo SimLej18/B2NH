@@ -15,6 +15,7 @@ function displayEarthquake(info) {
     document.getElementById("element3").innerHTML=`🕐 : ${info.data.dateTime}`;
     document.getElementById('element4').innerHTML=`⚐ : ${info.data.locationName}`;
     document.getElementById('element5').innerHTML=`Damage : ${info.data.damageAmountOrder}`;
+    updateCircuitButton() // element8
 
 }
 
@@ -23,6 +24,7 @@ function displayTsunami(info) {
     document.getElementById('element2').innerHTML=`🕐 : ${info.data.dateTime}`;
     document.getElementById('element3').innerHTML=`⚐ : ${info.data.locationName}`;
     document.getElementById('element4').innerHTML=`damage : ${info.data.damageAmountOrder}`;
+    updateCircuitButton() // element8
 }
 
 function displayVolcano(info,index,month) {
@@ -63,6 +65,17 @@ function displayVolcano(info,index,month) {
     document.getElementById(`element${i}`).innerHTML=`Deaths amount: &nbsp${info.data.deathsAmountOrder}`; 
     i++
     }
+
+    updateCircuitButton() // element8
+}
+
+function updateCircuitButton(){
+  if (currentroute.includes('Remplacer ça par selectedEvent')) { // Remplacer par selectedEvent
+    document.getElementById(`element8`).innerHTML=`<button onclick = "removeDestinationClick()">Remove from circuit</button>`; 
+    }
+  else{
+    document.getElementById(`element8`).innerHTML=`<button onclick = "addDestinationClick()">Add to circuit</button>`;
+  }
 }
 
 
