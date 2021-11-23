@@ -34,9 +34,24 @@ function createMap() {
         .projection(projection);
 
     // Add a scale for bubble size
-    const size = d3.scaleLinear()
-    .domain([0,550])  // What's in the data
-    .range([2, 10]);  // Size in pixel
+    const size = d3.scaleLog()
+    .domain([1,550])  // What's in the data
+    .range([2, 7]);  // Size in pixel
+
+
+  //   const size = d3.scaleLinear(function (d) {
+  //     if (d.type == 'tsunami') {
+  //         return .domain([0,550]);
+  //     }
+  //     if (d.type == 'earthquake') {
+  //         return .domain([0,10]);
+  //     }
+  //     if (d.type == 'irruption') {
+  //         return .domain([0,10]);
+  //     }
+  // })
+  // .range([2, 10]);  // Size in pixel
+
 
 
        // Create a color scale
@@ -105,6 +120,7 @@ function createMap() {
   .on('click', function(e, d) {
       updateInfoPanel(d.self_url);
   });
+
 
 
     //     .append('path')
