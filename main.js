@@ -88,11 +88,17 @@ async function fetchAllData() {
             }
 
         }).catch((error) => console.error("erreur du fetch:", error));
+    filteredEvents = allEventsList;
 }
 
 function filterEvents(typeFilter = currentTypeFilter, timeFilter = currentTimeFilter) {
     console.assert(typeFilter.length == 3 && typeFilter.every((value) => (value == 0 || value == 1)), "Invalid type filter");
     console.assert(currentTimeFilter.length == 2 && currentTimeFilter[0] < currentTimeFilter[1] && currentTimeFilter[0] >= -5000 && currentTimeFilter[1] <= 2021, "Invalid time filter");
+
+    // Updates current filters
+    currentTypeFilter = typeFilter;
+    currentTimeFilter = timeFilter;
+
     filteredEvents = [];
 
     // Filter from type
