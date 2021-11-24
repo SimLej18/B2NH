@@ -34,9 +34,9 @@ function createMap() {
         .projection(projection);
 
     // Add a scale for bubble size
-    const size = d3.scaleLog()
-    .domain([1,550])  // What's in the data
-    .range([2, 7]);  // Size in pixel
+    const size = d3.scaleLinear()
+    .domain([1,10])  // What's in the data
+    .range([2, 8]);  // Size in pixel
 
 
   //   const size = d3.scaleLinear(function (d) {
@@ -59,12 +59,16 @@ function createMap() {
        .domain(["irruption", "earthquake", "tsunami" ])
        .range([ "red", "green", "blue"]);
 
+      // for earthquake ?
+      //  var colorScale = d3.scaleLinear()
+      //  .domain([5, 6.3, 8.3])
+      //  .range(["green", "yellow", "red"]);
+
              // Create a type scale
       var type = d3.scaleOrdinal()
       .domain(["irruption", "earthquake", "tsunami" ])
       .range([ "triangle", "circle", "circle"]);
       
-
     // create tooltip
     const tooltip = d3.select('#info-item-tooltip')
         .append('div')
@@ -89,7 +93,6 @@ function createMap() {
     .attr('stroke', '#ccc')
     .attr('stroke-width', '1px');
 
-
    
     // insert map data from geojson data
     map.selectAll('path')
@@ -103,16 +106,16 @@ function createMap() {
         ]) + ")";
       })
     .attr("r", function(d){ return size(d.measure_value)} )
-    .attr("fill", function(d){ return color(d.type) })
-    .attr('stroke', '#ccc')
-    .attr('stroke-width', 1)
+    .attr('stroke', function(d){ return color(d.type) })
+    .attr('stroke-width', 2)
+    .attr('fill-opacity', 0)
     .on('mouseover', function(e, d) {
       tooltip.transition()
           .duration(200)
-          .style('opacity', .9);
+          .style('opacity', 1);
       tooltip.html(d.type + '<br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans);
   })
-  .on('mouseout', function(d) {
+  .on('mouseout', function(e, d) {
       tooltip.transition()
           .duration(500)
           .style('opacity', 0);
@@ -121,32 +124,5 @@ function createMap() {
       updateInfoPanel(d.self_url);
   });
 
-
-
-    //     .append('path')
-    //     .attr('d', path)
-    //     .attr('class', 'map-path')
-    //     .attr("r", 15)
-    //     // .attr("r", function(d){ return size(d.measure_value) })
-    //     .attr("fill", function(d){ return color(d.type) })
-    //     .attr('stroke', '#ccc')
-    //     .attr('stroke-width', 1);
-    // //     // .text(function(d) { return d.title });
-    //     // .on('mouseover', function(d) {
-    //     //     console.log(d);
-    //     //     tooltip.transition()
-    //     //         .duration(200)
-    //     //         .style('opacity', .9);
-    //     //     tooltip.html(d.title)
-    //     //         .style('left', (d3.event.pageX + 5) + 'px')
-    //     //         .style('top', (d3.event.pageY - 28) + 'px');
-    //     // }
-    //     // )
-    //     // .on('mouseout', function(d) {
-    //     //     tooltip.transition()
-    //     //         .duration(500)
-    //     //         .style('opacity', 0);
-    //     // }
-    //     // );
 
 }

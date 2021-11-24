@@ -131,7 +131,7 @@ function selectVolcano(id) {
 }
 
 function selectEvent(type, id) {
-    console.assert(type == "volcano" || type == "earthquake" || type == "tsunami", "Invalid type.");
+    console.assert(type == "irruption" || type == "earthquake" || type == "tsunami", "Invalid type.");
 
     fetch("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
         .then((response) => {
