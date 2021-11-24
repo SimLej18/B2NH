@@ -1,10 +1,10 @@
-let data = [];
+let map_data = [];
 
 // Method that will be used when we update the data
 function updateMap() {
    // update map data
    console.log("updateMap called!");
-   data = filteredEvents;
+   map_data = filteredEvents;
    draw();
 
 }
@@ -12,7 +12,7 @@ function updateMap() {
 // function to create map with d3.js
 function createMap() {
     console.log("createMap called!");
-    data = allEventsList;
+    map_data = allEventsList;
     draw();
  
 }
@@ -29,17 +29,30 @@ function draw() {
       .attr('height', '100%')
       .attr('viewBox', '0 0 ' + width + ' ' + height)
       .attr('preserveAspectRatio', 'xMidYMid meet')
-      .attr('class', 'map');
+      .attr('class', 'map');  
 
   // create projection
+  //   Alternative
+  //   d3.geoMercator()
+  //   d3.geoConicConformal()
+  //   d3.geoEquirectangular()
+  //   d3.geoOrthographic()
+
   const projection = d3.geoMercator()
       .center([0, 0])
       .scale(width / 2 / Math.PI)
       .translate([width / 2, height / 2]);
 
   // create path
-  const path = d3.geoPath()
+  const path = d3
+      .geoPath()
       .projection(projection);
+
+  const zoom = d3.zoom()
+      .scaleExtent([1, 8])
+      .on('zoom', zoomed);
+  
+  map.call(zoom);
 
   // Add a scale for bubble size
   const size = d3.scaleLinear()
@@ -76,7 +89,8 @@ function draw() {
     var type = d3.scaleOrdinal()
     .domain(["irruption", "earthquake", "tsunami" ])
     .range([ "triangle", "circle", "circle"]);
-    
+ 
+
   // create tooltip
   const tooltip = d3.select('#info-item-tooltip')
       .append('div')
@@ -91,7 +105,7 @@ function draw() {
       .style('z-index', '10');
 
        // insert map data
-  map.selectAll('path')
+  var world_map = map.selectAll('path')
   .data(world_data.features)
   .enter()
   .append('path')
@@ -101,10 +115,10 @@ function draw() {
   .attr('stroke', '#ccc')
   .attr('stroke-width', '1px');
 
- 
+
   // insert map data from geojson data
-  map.selectAll('path')
-  .data(data)
+  var points_map_data = map.selectAll('path')
+  .data(map_data)
   .enter()
   .append("circle")
   .attr("transform", function(d) {
@@ -115,22 +129,27 @@ function draw() {
     })
   .attr("r", function(d){ return size(d.measure_value)} )
   .attr('stroke', function(d){ return color(d.type) })
-  .attr('stroke-width', 2)
+  .attr('stroke-width', 1)
   .attr('fill-opacity', 0)
   .on('mouseover', function(e, d) {
     tooltip.transition()
         .duration(200)
         .style('opacity', 1);
-    tooltip.html(d.type + '<br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans);
+    tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans);
 })
 .on('mouseout', function(e, d) {
     tooltip.transition()
-        .duration(500)
+        .duration(1000)
         .style('opacity', 0);
 })
 .on('click', function(e, d) {
     updateInfoPanel(d.self_url);
 });
+
+
+function zoomed(e) {
+    map.attr('transform', e.transform);
+ } 
 
 }
 
