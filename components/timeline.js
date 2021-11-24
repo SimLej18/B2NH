@@ -94,6 +94,11 @@ async function createTimeline() {
     	view.draw();
     }
 }
+
+function updateTimeline() {
+
+}
+
 /*
 function updateTimeline() {
     with (paper) {
