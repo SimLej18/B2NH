@@ -13,6 +13,8 @@ body {
     background-image: url("../images/sci-fi-bg.png");
     font-family: 'Aero';
     color: rgb(196, 252, 251);
+    height: 100%;
+    overflow: hidden
 }
 
 /* remove bullet */
