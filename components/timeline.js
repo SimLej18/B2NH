@@ -46,17 +46,61 @@ async function createTimeline() {
         var lineBar = new Path.Rectangle(new Point(50, 65), new Size(600, 5));
         lineBar.fillColor = new Color(196/255, 252/255, 251/255);
 
-        var leftCursor = new Path.Rectangle(new Point(50, 55), new Size(20, 25));
+        var leftCursor = new Path.Rectangle(new Point(30, 55), new Size(20, 25));
         leftCursor.data.clicked = false;
+        leftCursor.data.year = timeRange[0];
         leftCursor.fillColor = "black";
         leftCursor.strokeColor = new Color(196/255, 252/255, 251/255);
         leftCursor.strokeWidth = 4;
 
-        var rightCursor = new Path.Rectangle(new Point(630, 55), new Size(20, 25));
+        var rightCursor = new Path.Rectangle(new Point(650, 55), new Size(20, 25));
         rightCursor.data.clicked = false;
+        rightCursor.data.year = timeRange[1];
         rightCursor.fillColor = "black";
         rightCursor.strokeColor = new Color(196/255, 252/255, 251/255);
         rightCursor.strokeWidth = 4;
+
+
+        // Create the cursor drag functions
+        tool.onMouseDown = function(e) {
+            if (leftCursor.contains(e.point)) {
+                leftCursor.data.clicked = true;
+            }
+            else if (rightCursor.contains(e.point)) {
+                rightCursor.data.clicked = true;
+            }
+        }
+
+        tool.onMouseUp = function(e) {
+            leftCursor.data.clicked = false;
+            rightCursor.data.clicked = false;
+            timeRange = [leftCursor.data.year, rightCursor.data.year];
+            filterEvents(checkboxes, timeRange);
+            updateMap();
+        }
+
+        tool.onMouseDrag = function(e) {
+            if (leftCursor.data.clicked) {
+                leftCursor.position = new Point(Math.max(Math.min((e.point.x-5), rightCursor.position.x-20), 40), 67.5);
+                leftCursor.data.year = getCursorYear(leftCursor.position.x, "left");
+            }
+            if (rightCursor.data.clicked) {
+                rightCursor.position = new Point(Math.max(Math.min((e.point.x-5), 660), leftCursor.position.x+20), 67.5);
+                rightCursor.data.year = getCursorYear(rightCursor.position.x, "right");
+            }
+        }
+
+    	// Draw the view now:
+    	view.draw();
+    }
+}
+/*
+function updateTimeline() {
+    with (paper) {
+        var tool = new Tool();
+        for (var event of filteredEvents) {
+
+        }
 
 
         // Create the cursor drag functions
@@ -87,9 +131,22 @@ async function createTimeline() {
     	view.draw();
     }
 }
+*/
 
-function updateTimeline() {
+function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, barLineLength=600, timeRange=[-5000, 2021]) {
+    console.assert(cursorSide == "left" || cursorSide == "right", "Invalid cursorSide");
+    var year;
 
+    if (cursorSide == "left") {
+        var x = cursorPos-barLineOffset+cursorWidth/2;
+        year = x / barLineLength * (Math.abs(timeRange[0]) + Math.abs(timeRange[1])) - Math.abs(timeRange[0]);
+    }
+    if (cursorSide == "right") {
+        var x = cursorPos-barLineOffset-cursorWidth/2;
+        year = x / barLineLength * (Math.abs(timeRange[0]) + Math.abs(timeRange[1])) - Math.abs(timeRange[0]);
+    }
+
+    return Math.ceil(year);
 }
 
 /* LEGACY CODE
