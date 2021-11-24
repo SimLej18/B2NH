@@ -5,6 +5,7 @@ function updateMap() {
    // update map data
    console.log("updateMap called!");
    map_data = filteredEvents;
+   removeMap();
    draw();
 
 }
@@ -14,7 +15,10 @@ function createMap() {
     console.log("createMap called!");
     map_data = allEventsList;
     draw();
- 
+}
+
+function removeMap() {
+  d3.select('#map').selectAll('svg').remove();
 }
 
 function draw() {
