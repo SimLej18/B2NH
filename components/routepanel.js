@@ -32,8 +32,15 @@ function updateRoute() {
 
     completelist.innerHTML = ""
     for (let i = 0; i < currentroute.length; i++) {
-        completelist.innerHTML += "<li>" + currentroute[i]["title"] + "<button onclick = 'routeUp(" + i + ")'>Up</button> <button onclick = 'routeDown(" + i + ")'>Down</button></li>";
-      } 
+        completelist.innerHTML += "<li>" + currentroute[i]["title"];
+        if(i >= 1){
+            completelist.innerHTML += " <button onclick = 'routeUp(" + i + ")'>Up</button>"
+        }
+        if(i < currentroute.length-1){
+            completelist.innerHTML += "<button onclick = 'routeDown(" + i + ")'>Down</button>"
+        }
+        completelist.innerHTML += "</li>"
+    } 
 
     if (currentroute.length == 0){
         completelist.innerHTML = "<p>Create your own circuit !</p>"
@@ -69,7 +76,7 @@ function routeUp(i){
 }
 
 function routeDown(i){
-    console.assert(i<=maxlimit, "i should be smaller than " + maxlimit + ". Your i: " + i)
+    console.assert(i< maxlimit-1, "i should be smaller than " + maxlimit-1 + ". Your i: " + i)
     const tmp = currentroute[i]
     currentroute[i] = currentroute[i+1]
     currentroute[i+1] = tmp
