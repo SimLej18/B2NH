@@ -5,7 +5,9 @@ function infopanelAnchorClick() {
     $('.infopanelBody').toggle();
 }
 
-function display(keys,labels){
+
+
+function display(keys,labels,couleur){
   for(i=0;i<8;i++){
     $(`#element${i}`).html(``)
   }
@@ -13,9 +15,30 @@ function display(keys,labels){
   for(i=0;i<keys.length;i++){
     if(keys[i]!=(null||"unknown")){
     $(`#element${j}`).html(labels[i])
+    if(i==1){
+        drawbar(couleur,j,keys[1])
+      }
     j++
     }
+    
   }
+
+}
+
+// function used to draw the coloured svg bar
+function drawbar(couleur,j,keys){
+
+var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("height","42px")
+    var size=couleur[4]
+    var data = Array.from({length: couleur[2]}, (_, i) => i + 1)
+    var myColor = d3.scaleLinear().domain([1,couleur[2]]).range([couleur[0],couleur[1]])
+    svg.selectAll(".firstrow").data(data).enter().append("rect")
+    .attr("x", function(d,i){return 15+size*i}).attr("y", 10)
+    .attr("width",size).attr("height",15).attr("fill", function(d){return myColor(d) })
+    svg.append('rect').attr("x",15+keys*size).attr("y",10).attr("width",2).attr("height",16).attr("fill", 'rgb(196, 252, 251)')
+    svg.append('text').text("0").attr("x",0).attr("y",17).attr("dy", ".35em").style('fill', 'rgb(196, 252, 251)')
+    svg.append('text').text(String(couleur[2])).attr("x",size*(couleur[2])+20).attr("y",17).attr("dy", ".35em").style('fill', 'rgb(196, 252, 251)')
+    svg.append('text').text(String(couleur[5])).attr("x",keys*size).attr("y",40).style('fill', 'rgb(196, 252, 251)').style("font-size", "14px")
 }
 
 // This function is called when the user clicks on the button of an event
@@ -39,25 +62,28 @@ function fetchEvent(url_of_event) {
     
     if (info.data.type =="earthquake") {
     keys = ["name",info.data.eqMagnitude,info.data.dateTime,info.data.country,info.data.damageAmountOrder,info.data.deathsAmountOrder]
-    labels = ["🌏Earthquake🌏", `Magnitude : ${info.data.eqMagnitude}`,
+    labels = ["🌏Earthquake🌏", `&nbsp Earthquake Magnitude :`,
     `🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
-    `⚐ : &nbsp${info.data.country}`,`Damage : &nbsp${info.data.damageAmountOrder}`,`Deaths amount: &nbsp${info.data.deathsAmountOrder}`]
-    display(keys,labels);
+    `⚐ : &nbsp${info.data.country}`,`Damage ⚡ : &nbsp${info.data.damageAmountOrder}`,` Victims 💀 : &nbsp${info.data.deathsAmountOrder}`]
+    couleur = ['white','green',10,"red",16,info.data.eqMagnitude]
+    display(keys,labels,couleur);
     }
 
     if (info.data.type=="tsunami") {
-    keys = ["name",info.data.dateTime,info.data.country,info.data.damageAmountOrder,info.data.deathsAmountOrder]
-    labels = ["🌊Tsunami🌊",`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
-    `⚐ : &nbsp${info.data.country}`,`Damage : &nbsp${info.data.damageAmountOrder}`,`Deaths amount: &nbsp${info.data.deathsAmountOrder}`]
-    display(keys,labels);
+    keys = ["name",info.data.tis,info.data.dateTime,info.data.country,info.data.damageAmountOrder,info.data.deathsAmountOrder]
+    labels = ["🌊Tsunami🌊",`&nbsp &nbsp Tsunami intensity :`,`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
+    `⚐ : &nbsp${info.data.country}`,`Damage ⚡ : &nbsp${info.data.damageAmountOrder}`,` Victims 💀 : &nbsp${info.data.deathsAmountOrder}`]
+    couleur = ['white','blue',10,"red",16,info.data.tis]
+    display(keys,labels,couleur);
     }
 
     if (info.data.type=="irruption") {
     keys = [info.data.volcano.name,info.data.volcano_explosivity_index,info.data.dateTime,info.data.country,info.data.damageAmountOrder,info.data.deathsAmountOrder]
-    labels = [`🌋Volcano : &nbsp ${info.data.volcano.name}🌋`,`Explosivity index : &nbsp ${index[info.data.volcano_explosivity_index]}`,
+    labels = [`🌋Volcano : &nbsp ${info.data.volcano.name}🌋`,`&nbsp Explosivity index :`,
     `🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,`⚐ : &nbsp${info.data.volcano.country}`,
-    `Damage : &nbsp${info.data.damageAmountOrder}`,`Deaths amount: &nbsp${info.data.deathsAmountOrder}`]
-    display(keys,labels);
+    `Damage ⚡ : &nbsp${info.data.damageAmountOrder}`,`Victims 💀: &nbsp${info.data.deathsAmountOrder}`]
+    couleur = ['LightYellow','red',8,"blue",20,index[info.data.volcano_explosivity_index]]
+    display(keys,labels,couleur);
     }
   })
   .catch((error) => console.error("erreur du fetch:", error));
