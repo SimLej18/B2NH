@@ -64,18 +64,18 @@ function draw() {
       .projection(projection);
 
   const zoom = d3.zoom()
-      .scaleExtent([1, 8])
+      .scaleExtent([1, 15])
       .on('zoom', zoomed);
   
   map.call(zoom);
 
   // Add a scale for bubble size
-  const size = d3.scaleLinear()
-  .domain([1,10])  // What's in the data
-  .range([2, 60]);  // Size in pixel
+  var size = d3.scaleLinear()
+   .domain([1,10])  // What's in the data
+   .range([50, 100]);  // Size in pixel
 
-     // Create a color scale
-     var color = d3.scaleOrdinal()
+   // Create a color scale
+   var color = d3.scaleOrdinal()
      .domain(["irruption", "earthquake", "tsunami" ])
      .range([ "red", "green", "blue"]);
 
@@ -101,8 +101,6 @@ var symbol_type = d3.symbol().type(function(d) {
 }).size(function(d) {
     return size(d.measure_value);
 });
-
-
 
   // create tooltip
   const tooltip = d3.select('#info-item-tooltip')
