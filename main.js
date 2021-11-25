@@ -72,22 +72,29 @@ async function fetchAllData() {
             }
         }).then(info => {
             allEventsList = info.data;
-
-            for (var i = 0 ; i < info.data.length ; i++) {
-                switch (info.data[i].type) {
-                    case "irruption":
-                        allEventsDict["VolcanoEvents"].push(info.data[i]);
-                        break;
-                    case "earthquake":
-                        allEventsDict["EarthquakeEvents"].push(info.data[i]);
-                        break;
-                    case "tsunami":
-                        allEventsDict["TsunamiEvents"].push(info.data[i]);
-                        break;
-                }
-            }
-
         }).catch((error) => console.error("erreur du fetch:", error));
+
+    // Sorts allEventsList by year
+    allEventsList.sort((a, b) => {
+        return parseInt(a["year"]) > parseInt(b["year"]) ? 1 : -1;
+    });
+
+    // Dispatch invents by type in allEventsDict
+    for (var i = 0 ; i < allEventsList.length ; i++) {
+        switch (allEventsList[i].type) {
+            case "irruption":
+                allEventsDict["VolcanoEvents"].push(allEventsList[i]);
+                break;
+            case "earthquake":
+                allEventsDict["EarthquakeEvents"].push(allEventsList[i]);
+                break;
+            case "tsunami":
+                allEventsDict["TsunamiEvents"].push(allEventsList[i]);
+                break;
+        }
+    }
+
+    // Initialize filteredEvents to all events at start
     filteredEvents = allEventsList;
 }
 
