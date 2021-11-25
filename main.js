@@ -7,6 +7,7 @@ var allEventsList = [];
 var currentTypeFilter = [1, 1, 1];  // All events shown by default
 var currentTimeFilter = [-5000, 2021];  // All events shown by default
 var filteredEvents = [];
+var filteredEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents": []};
 var selectedVolcano = null;
 var selectedEvent = null;
 var world_data = null;
@@ -27,7 +28,7 @@ function resetVars() {
     allEventsList = [];
     currentTypeFilter = [1, 1, 1];
     currentTimeFilter = [-5000, 2021];
-    filtredEvents = [];
+    filteredEvents = [];
     selectedVolcano = null;
     selectedEvent = null;
 }
@@ -76,7 +77,7 @@ async function fetchAllData() {
 
     // Sorts allEventsList by year
     allEventsList.sort((a, b) => {
-        return parseInt(a["year"]) > parseInt(b["year"]) ? 1 : -1;
+        return a["year"] > b["year"] ? 1 : -1;
     });
 
     // Dispatch invents by type in allEventsDict
@@ -94,39 +95,77 @@ async function fetchAllData() {
         }
     }
 
-    // Initialize filteredEvents to all events at start
-    filteredEvents = allEventsList;
+    // Initialize filteredEvents to all events at start (shallow copies)
+    filteredEvents = [...allEventsList];
+    filteredEventsDict = {"VolcanoEvents": [...allEventsDict["VolcanoEvents"]], "EarthquakeEvents": [...allEventsDict["EarthquakeEvents"]], "TsunamiEvents": [...allEventsDict["TsunamiEvents"]]};
 }
 
 function filterEvents(typeFilter = currentTypeFilter, timeFilter = currentTimeFilter) {
     console.assert(typeFilter.length == 3 && typeFilter.every((value) => (value == 0 || value == 1)), "Invalid type filter: "+typeFilter);
-    console.assert(timeFilter.length == 2 && timeFilter[0] < timeFilter[1] && timeFilter[0] >= -5000 && timeFilter[1] <= 2021, "Invalid time filter: "+timeFilter);
+    console.assert(timeFilter.length == 2 && timeFilter[0] <= timeFilter[1] && timeFilter[0] >= -5000 && timeFilter[1] <= 2021, "Invalid time filter: "+timeFilter);
 
     // Updates current filters
-    currentTypeFilter = typeFilter;
-    currentTimeFilter = timeFilter;
+    var previousTimeFilter = [...currentTimeFilter];
+    currentTypeFilter = [...typeFilter];
+    currentTimeFilter = [...timeFilter];
 
     filteredEvents = [];
 
+
     // Filter from type
-    var filteredTypeEvents = []
+
+    filteredEventsDict["VolcanoEvents"] = filterFromTime(filteredEventsDict["VolcanoEvents"], allEventsDict["VolcanoEvents"], currentTimeFilter, previousTimeFilter);
     if (typeFilter[0] == 1) {  // Add volcanoes
-        filteredTypeEvents = filteredTypeEvents.concat(allEventsDict["VolcanoEvents"]);
-    }
-    if (typeFilter[1] == 1) {  // Add tsunamis
-        filteredTypeEvents = filteredTypeEvents.concat(allEventsDict["TsunamiEvents"]);
-    }
-    if (typeFilter[2] == 1) {  // Add earthquakes
-        filteredTypeEvents = filteredTypeEvents.concat(allEventsDict["EarthquakeEvents"]);
+        filteredEvents = filteredEvents.concat(filteredEventsDict["VolcanoEvents"]);
     }
 
-    // Filter from time
-    for (var i = 0 ; i < filteredTypeEvents.length ; i++) {
-        var year = parseInt(filteredTypeEvents[i].dateTime.split('-')[0]);
-        if (year >= timeFilter[0] && year <= timeFilter[1]) {
-            filteredEvents.push(filteredTypeEvents[i])
+    filteredEventsDict["TsunamiEvents"] = filterFromTime(filteredEventsDict["TsunamiEvents"], allEventsDict["TsunamiEvents"], currentTimeFilter, previousTimeFilter);
+    if (typeFilter[1] == 1) {  // Add tsunamis
+        filteredEvents = filteredEvents.concat(filteredEventsDict["TsunamiEvents"]);
+    }
+
+    filteredEventsDict["EarthquakeEvents"] = filterFromTime(filteredEventsDict["EarthquakeEvents"], allEventsDict["EarthquakeEvents"], currentTimeFilter, previousTimeFilter);
+    if (typeFilter[2] == 1) {  // Add earthquakes
+        filteredEvents = filteredEvents.concat(filteredEventsDict["EarthquakeEvents"]);
+    }
+}
+
+function filterFromTime(list, fullList, newTimeFilter, previousTimeFilter) {
+    // Given a sorted list and a time filter, filter the list efficiently
+    if (newTimeFilter[0] > previousTimeFilter[0]) {
+        while (list.length > 0 && list[0]["year"] < newTimeFilter[0]) {
+            list.shift();  // Removes first element
         }
     }
+    if (newTimeFilter[0] < previousTimeFilter[0]) {
+        var i = 0;
+        var retrievedEvents = [];
+        while (i < fullList.length && fullList[i]["year"] < previousTimeFilter[0]) {
+            if (fullList[i]["year"] >= newTimeFilter[0]) {
+                retrievedEvents.push(fullList[i])
+            }
+            i++;
+        }
+        list = retrievedEvents.concat(list);
+    }
+    if (newTimeFilter[1] < previousTimeFilter[1] && list.length > 0) {
+        while (list.length > 0 && list[list.length - 1].year > newTimeFilter[1]) {
+            list.pop();  // Removes last element
+        }
+    }
+    if (newTimeFilter[1] > previousTimeFilter[1]) {
+        var i = fullList.length-1;
+        var retrievedEvents = [];
+        while (i >= 0 && fullList[i]["year"] > previousTimeFilter[1]) {
+            if (fullList[i]["year"] <= newTimeFilter[1]) {
+                retrievedEvents.unshift(fullList[i])
+            }
+            i--;
+        }
+        list = list.concat(retrievedEvents);
+    }
+
+    return list;
 }
 
 function selectVolcano(id) {
