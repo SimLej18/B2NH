@@ -10,6 +10,10 @@ function updateMap() {
 
 }
 
+function addDestinationToMap() {
+    console.log("addDestinationToMap called!");
+}
+
 // function to create map with d3.js
 function createMap() {
     console.log("createMap called!");
@@ -18,7 +22,14 @@ function createMap() {
 }
 
 function removeMap() {
-  d3.select('#map').selectAll('svg').remove();
+    // d3.select('#map').selectAll('*').remove();
+  d3.select('#map')
+  .selectAll('svg')
+  .remove()
+  .selectAll('path')
+  .remove()
+  .selectAll('circle')
+  .remove();
 }
 
 function draw() {
@@ -122,7 +133,7 @@ function draw() {
 
   // insert map data from geojson data
   var points_map_data = map.selectAll('path')
-  .data(map_data)
+  .data(map_data, ({id}) => id + type)
   .enter()
   .append("circle")
   .attr("transform", function(d) {
