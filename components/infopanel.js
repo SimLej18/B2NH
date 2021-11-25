@@ -6,7 +6,7 @@ function infopanelAnchorClick() {
 }
 
 function display(keys,labels){
-  for(i=0;i<8;i++){
+  for(i=0;i<7;i++){
     $(`#element${i}`).html(``)
   }
   j=1
@@ -16,6 +16,7 @@ function display(keys,labels){
     j++
     }
   }
+  updateCircuitButton()
 }
 
 // This function is called when the user clicks on the button of an event
@@ -65,3 +66,13 @@ function fetchEvent(url_of_event) {
 
 // data fetched at the beginning of the page
 fetchEvent("https://b2nh-api.tintamarre.be/api/v1/events/random");
+
+function updateCircuitButton(){
+  // if (currentroute.includes('Remplacer ça par selectedEvent')) { // Remplacer par selectedEvent
+  if (Math.random() < 0.5){
+    document.getElementById(`circuitbutton`).innerHTML=`<button onclick = "removeDestinationClick()">Remove from circuit</button>`; 
+    }
+  else{
+    document.getElementById(`circuitbutton`).innerHTML=`<button onclick = "addDestinationClick()">Add to circuit</button>`;
+  }
+}
