@@ -72,23 +72,7 @@ function draw() {
   // Add a scale for bubble size
   const size = d3.scaleLinear()
   .domain([1,10])  // What's in the data
-  .range([2, 8]);  // Size in pixel
-
-
-//   const size = d3.scaleLinear(function (d) {
-//     if (d.type == 'tsunami') {
-//         return .domain([0,550]);
-//     }
-//     if (d.type == 'earthquake') {
-//         return .domain([0,10]);
-//     }
-//     if (d.type == 'irruption') {
-//         return .domain([0,10]);
-//     }
-// })
-// .range([2, 10]);  // Size in pixel
-
-
+  .range([2, 60]);  // Size in pixel
 
      // Create a color scale
      var color = d3.scaleOrdinal()
@@ -103,8 +87,22 @@ function draw() {
            // Create a type scale
     var type = d3.scaleOrdinal()
     .domain(["irruption", "earthquake", "tsunami" ])
-    .range([ "triangle", "circle", "circle"]);
+    .range([ "triangle", "rect", "circle"]);
  
+    // use this for generating symbols
+var symbol_type = d3.symbol().type(function(d) { 
+	if(d.type == 'tsunami') {
+		return d3.symbolWye;
+	}
+	else if(d.type == 'irruption') {
+		return d3.symbolTriangle;
+	}
+	else return d3.symbolCircle;
+}).size(function(d) {
+    return size(d.measure_value);
+});
+
+
 
   // create tooltip
   const tooltip = d3.select('#info-item-tooltip')
@@ -135,17 +133,19 @@ function draw() {
   var points_map_data = map.selectAll('path')
   .data(map_data, ({id}) => type + '_' + id)
   .enter()
-  .append("circle")
+  .append('path')
+  .attr("d", symbol_type)
+//  .append("circle")
   .attr("transform", function(d) {
       return "translate(" + projection([
         d.longitude,
         d.latitude
       ]) + ")";
     })
-  .attr("r", function(d){ return size(d.measure_value)} )
   .attr('stroke', function(d){ return color(d.type) })
   .attr('stroke-width', 1)
-  .attr('fill-opacity', 0)
+  .attr('fill', function(d){ return color(d.type) })
+  .attr('fill-opacity', 0.5)
   .on('mouseover', function(e, d) {
     tooltip.transition()
         .duration(200)
