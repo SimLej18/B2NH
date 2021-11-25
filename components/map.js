@@ -51,10 +51,10 @@ function draw() {
   //   d3.geoMercator()
   //   d3.geoConicConformal()
   //   d3.geoEquirectangular()
-  //   d3.geoOrthographic()
+  //   d3.geoOrthographic() // spherical
 
   const projection = d3.geoMercator()
-      .center([0, 0])
+      .center([4.858293, 50.46651])
       .scale(width / 2 / Math.PI)
       .translate([width / 2, height / 2]);
 
@@ -133,7 +133,7 @@ function draw() {
 
   // insert map data from geojson data
   var points_map_data = map.selectAll('path')
-  .data(map_data, ({id}) => id + type)
+  .data(map_data, ({id}) => type + '_' + id)
   .enter()
   .append("circle")
   .attr("transform", function(d) {
