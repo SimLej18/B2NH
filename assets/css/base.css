@@ -132,11 +132,11 @@ li {
     flex-direction: column;
     justify-content: left;
     width: 10%;
+    /*pour faire une jolie transition de couleur quand on passe dessus*/
     -o-transition:.5s;
     -ms-transition:.5s;
     -moz-transition:.5s;
     -webkit-transition:.5s;
-    /* ...and now for the proper property */
     transition:.5s;
 }
 

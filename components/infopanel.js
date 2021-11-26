@@ -62,7 +62,7 @@ var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("he
 // This function is called when the user clicks on the button of an event
 function updateInfoPanel(url_of_event) {
   if ($("#commentary").is(":visible")){
-    $('#commentary').fadeToggle(50)
+    $('#commentary').toggle()
     $('#togglecommentary').html('&nbsp &nbsp  description')
   fetchEvent(url_of_event);
   console.log(url_of_event);
