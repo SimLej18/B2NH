@@ -104,7 +104,7 @@ function drawdamage(svgitems,j,keys){
 // This function is called when the user clicks on the button of an event
 function updateInfoPanel(url_of_event) {
   if ($("#commentary").is(":visible")){
-    $('#commentary').toggle
+    $('#commentary').toggle()
     $('#togglecommentary').html('&nbsp &nbsp  description')
   fetchEvent(url_of_event);
   console.log(url_of_event);
