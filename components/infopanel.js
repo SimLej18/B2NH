@@ -106,8 +106,8 @@ function updateInfoPanel(url_of_event) {
   if ($("#commentary").is(":visible")){
     $('#commentary').toggle()
     $('#togglecommentary').html('&nbsp &nbsp  description')
-  fetchEvent(url_of_event);
-  console.log(url_of_event);
+    selectedEvent = url_of_event;
+    fetchEvent(selectedEvent);
   $(`#infos`).fadeToggle();
   
   }
