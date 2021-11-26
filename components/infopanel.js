@@ -136,36 +136,33 @@ function fetchEvent(url_of_event) {
   })
   .then(info => {
     console.log(info);
-
+    redamage=/null|Limited|Moderate|Severe|Extreme/g;
+    redeaths=/null|Few|Some|Many|Very Many/g;
     
     if (info.data.type =="earthquake") {
     keys = ["name",info.data.dateTime,info.data.country,info.data.eqMagnitude,info.data.damageAmountOrder,info.data.deathsAmountOrder]
     labels = ["🌏Earthquake🌏",`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.country}`, `&nbsp Earthquake Magnitude `,`⚡ Damage (M$) ⚡ `,`💀 Victims 💀 `]
-    svgitems = ['LightYellow','green',10,"red",16,info.data.eqMagnitude,`${/\w+/g.exec(`${info.damageAmountOrderLabel}`)}`,`${/\w+/g.exec(`${info.deathsAmountOrderLabel}`)}`]
-    comments=info.data.comments
-    display(keys,labels,svgitems,comments);
-    
+    svgitems = ['LightYellow','green',10,"red",16,info.data.eqMagnitude,`${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`,`${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]    
     }
 
     if (info.data.type=="tsunami") {
     keys = ["name",info.data.dateTime,info.data.country,info.data.tis,info.data.damageAmountOrder,info.data.deathsAmountOrder]
     labels = ["🌊Tsunami🌊",`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.country}`,`&nbsp &nbsp Tsunami intensity`,`⚡ Damage (M$) ⚡`,`💀 Victims 💀`]
-    svgitems = ['LightBlue','Blue',10,"red",16,info.data.tis,String(info.data.damageAmountOrderLabel),String(info.data.deathsAmountOrderLabel)]
-    comments=info.data.comments
-    display(keys,labels,svgitems,comments);
+    svgitems = ['LightBlue','Blue',10,"red",16,info.data.tis,`${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`,`${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
     }
 
     if (info.data.type=="irruption") {
     keys = [info.data.volcano.name,info.data.dateTime,info.data.country,info.data.volcano_explosivity_index,info.data.damageAmountOrder,info.data.deathsAmountOrder]
     labels = [`🌋Volcano : &nbsp ${info.data.volcano.name}🌋`,`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.volcano.country}`,`&nbsp Explosivity index`,`⚡ Damage (M$) ⚡`,`💀 Victims 💀`]
-    svgitems = ['LightYellow','Red',8,"blue",20,index[info.data.volcano_explosivity_index],String(info.data.damageAmountOrderLabel),String(info.data.deathsAmountOrderLabel)]
+    svgitems = ['LightYellow','Red',8,"blue",20,index[info.data.volcano_explosivity_index],`${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`,`${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
+    } 
+
     comments=info.data.comments
     display(keys,labels,svgitems,comments);
-    }
-  })
+    })
   .catch((error) => console.error("erreur du fetch:", error));
 }
 
