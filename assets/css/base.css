@@ -183,7 +183,7 @@ li {
     color:rgb(20, 30, 88);
 }
 
-#togglecommentary2{
+#togglerelations{
     border: 3px solid rgb(196, 252, 251);
     background-color: rgb(20, 30, 88);
     -moz-border-radius:10px;
@@ -192,7 +192,7 @@ li {
     width:120px;
 }
 
-#togglecommentary2:hover{
+#togglerelations:hover{
     background-color:rgb(196, 252, 251);
     color:rgb(20, 30, 88);
 }

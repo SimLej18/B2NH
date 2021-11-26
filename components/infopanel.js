@@ -1,4 +1,5 @@
 $('#commentary').toggle();
+$('#relations').toggle();
 //sert pour les volcans pour leur indice d'explosivité
 
 let index=["Effusive","Gentle","Explosive","Catastrophic","Cataclysmic","Paroxysmic","Colossal","Super-colossal","Mega-colossal"]
@@ -8,16 +9,40 @@ function infopanelAnchorClick() {
   $('.infopanelBody').toggle();
   
 }
- 
+
+function GoToRelation(i) {
+  type=`${/tsunami|earthquake|volcano/g.exec(`${$(`#relation${i}`).text()}`)}`
+  id=`${/\d+/g.exec(`${$(`#relation${i}`).text()}`)}`
+  updateInfoPanel("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
+}
+
+function relationsClick() {
+  if ($("#relations").is(":visible")){
+    $('#togglerelations').html('Show related events')
+    $('#relations').toggle();
+    $('#infos').toggle();
+    $('#togglecommentary').toggle()
+    }
+    else{
+    $('#togglerelations').html('&nbsp &nbsp close')
+    $('#infos').toggle();
+    $('#togglecommentary').toggle()
+    $('#relations').toggle();
+    }
+
+}
+
 function commentaryClick(){
 if ($("#commentary").is(":visible")){
 $('#togglecommentary').html('&nbsp &nbsp  description')
 $('#commentary').toggle();
 $('#infos').toggle();
+$('#togglerelations').toggle()
 }
 else{
 $('#togglecommentary').html('&nbsp &nbsp close')
 $('#infos').toggle();
+$('#togglerelations').toggle()
 $('#commentary').toggle();
 }
   
@@ -25,7 +50,7 @@ $('#commentary').toggle();
   
 }
 
-function display(keys,labels){
+function display(keys,labels,svgitems,comments,relations){
   for(i=0;i<7;i++){
     $(`#element${i}`).html(``)
   }
@@ -46,6 +71,13 @@ function display(keys,labels){
     }
   }
   $('#commentary').html(comments)
+  relationType=["earthquake : ","tsunami : ","volcano : "]
+  for (i=0;i<3;i++){
+    $(`#relation${i}`).html("")
+    if(relations[i]!=0){
+  $(`#relation${i}`).html(relationType[i]+relations[i])
+    }
+  }
 }
 
 // function used to draw the coloured svg bar
@@ -109,21 +141,35 @@ function updateInfoPanel(url_of_event) {
     selectedEvent = url_of_event;
     fetchEvent(selectedEvent);
   $(`#infos`).fadeToggle();
+  $('#togglerelations').toggle();
   
   }
-  else{
+  else if ($('#relations').is(':visible')){
+  $('#relations').toggle()
+  $('#togglerelations').html('Show related events')
+  selectedEvent = url_of_event;
+  fetchEvent(selectedEvent);
+  $(`#infos`).fadeToggle();
+  $(`#togglecommentary`).toggle();
+  
+  }
+  else {
   $(`#infos`).fadeToggle(50);
   $('#togglecommentary').fadeToggle(50)
+  $('#togglerelations').fadeToggle(50);
   $('#addDestination').fadeToggle(50)
   fetchEvent(url_of_event);
   console.log(url_of_event);
   
   $(`#infos`).fadeToggle();
   $('#togglecommentary').fadeToggle()
-  $('#addDestination').fadeToggle()
+  $('#addDestination').fadeToggle()  
+  $('#togglerelations').fadeToggle();
   }
   updateCircuitButton()
 }
+
+
 
 //this function stores all the infos that must be displayed on the infopanel
 function fetchEvent(url_of_event) {
@@ -144,14 +190,16 @@ function fetchEvent(url_of_event) {
     keys = ["name",info.data.dateTime,info.data.country,info.data.eqMagnitude,info.data.damageAmountOrder,info.data.deathsAmountOrder]
     labels = ["🌏Earthquake🌏",`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.country}`, `&nbsp Earthquake Magnitude `,`⚡ Damage (M$) ⚡ `,`💀 Victims 💀 `]
-    svgitems = ['LightYellow','green',10,"red",16,info.data.eqMagnitude,`${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`,`${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]    
+    svgitems = ['LightYellow','green',10,"red",16,info.data.eqMagnitude,`${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`,`${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
+    relations=[0,info.data.tsunamiEventId,info.data.volcanoEventId]    
     }
 
     if (info.data.type=="tsunami") {
     keys = ["name",info.data.dateTime,info.data.country,info.data.tis,info.data.damageAmountOrder,info.data.deathsAmountOrder]
-    labels = ["🌊Tsunami🌊",`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
+    labels = ["🌊Tsunami🌊",`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.country}`,`&nbsp &nbsp Tsunami intensity`,`⚡ Damage (M$) ⚡`,`💀 Victims 💀`]
     svgitems = ['LightBlue','Blue',10,"red",16,info.data.tis,`${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`,`${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
+    relations=[info.data.earthquakeEventId,0,info.data.volcanoEventId]
     }
 
     if (info.data.type=="irruption") {
@@ -159,10 +207,12 @@ function fetchEvent(url_of_event) {
     labels = [`🌋Volcano : &nbsp ${info.data.volcano.name}🌋`,`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.volcano.country}`,`&nbsp Explosivity index`,`⚡ Damage (M$) ⚡`,`💀 Victims 💀`]
     svgitems = ['LightYellow','Red',8,"blue",20,index[info.data.volcano_explosivity_index],`${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`,`${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
+    relations=["1","10",0]
     } 
 
     comments=info.data.comments
-    display(keys,labels,svgitems,comments);
+    
+    display(keys,labels,svgitems,comments,relations);
     })
   .catch((error) => console.error("erreur du fetch:", error));
 }
