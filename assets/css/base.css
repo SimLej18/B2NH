@@ -54,6 +54,10 @@ li {
     flex-direction: column-reverse;
 }
 
+.eventTypeSelector {
+    position :relative;
+    right:5%
+}
 .rightPanelsContainer {
     width: 40%;
     display: flex;
@@ -100,6 +104,7 @@ li {
     -webkit-transition:.5s;
     /* ...and now for the proper property */
     transition:.5s;
+    clip-path: polygon(100% 100%,95% 7%, 0% 7%, 0% 100%);
 }
 
 .timelineAnchor:hover{
@@ -127,11 +132,15 @@ li {
     border-bottom: 3px solid rgb(196, 252, 251);
 }
 
+
 .infopanelAnchor {
     display: flex;
     flex-direction: column;
     justify-content: left;
     width: 10%;
+    /*test de clip*/
+    clip-path: polygon(4% 75%, 4% 0%, 100% 0%, 100% 100%);
+
     /*pour faire une jolie transition de couleur quand on passe dessus*/
     -o-transition:.5s;
     -ms-transition:.5s;
@@ -228,20 +237,23 @@ li {
     -webkit-transition:.5s;
     /* ...and now for the proper property */
     transition:.5s;
+    clip-path: polygon(4% 25%,4% 100%, 100% 100%, 100% 0%);
 }
 
 .routepanelAnchor:hover{
     background-color:rgb(196, 252, 251);
     color:rgb(20, 30, 88);
+    
 }
 
 .routepanelTitle {
-    transform: rotate(-90deg);
+    transform: rotat(-90deg);
     margin-bottom: 30px;
 }
 
 .routepanelBody {
     min-width: 25vh;
+    
 }
 
 
