@@ -25,8 +25,8 @@ $('#commentary').toggle();
   
 }
 
-function display(keys,labels,svgitems,comments){
-  for(i=0;i<8;i++){
+function display(keys,labels){
+  for(i=0;i<7;i++){
     $(`#element${i}`).html(``)
   }
   j=1
@@ -106,8 +106,8 @@ function updateInfoPanel(url_of_event) {
   if ($("#commentary").is(":visible")){
     $('#commentary').toggle()
     $('#togglecommentary').html('&nbsp &nbsp  description')
-  fetchEvent(url_of_event);
-  console.log(url_of_event);
+    selectedEvent = url_of_event;
+    fetchEvent(selectedEvent);
   $(`#infos`).fadeToggle();
   
   }
@@ -122,6 +122,7 @@ function updateInfoPanel(url_of_event) {
   $('#togglecommentary').fadeToggle()
   $('#addDestination').fadeToggle()
   }
+  updateCircuitButton()
 }
 
 //this function stores all the infos that must be displayed on the infopanel
