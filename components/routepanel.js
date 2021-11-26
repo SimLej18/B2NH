@@ -8,6 +8,7 @@ function routepanelAnchorClick() {
 
 // Ajoute l'evènement sélectionné au trajet
 function addDestinationClick() {
+    console.log(selectedEvent)
     // Currently add random event from the allEventsList
     console.log('A new destination is added')
     currentroute.push(allEventsList[Math.floor(Math.random() * (allEventsList.length-1))]) // Change this
@@ -31,9 +32,54 @@ function updateRoute() {
 
     completelist.innerHTML = ""
     for (let i = 0; i < currentroute.length; i++) {
-        completelist.innerHTML += "<li> " + currentroute[i]["title"] + "</li>";
-      } 
+        completelist.innerHTML += "<li>" + currentroute[i]["title"];
+        if(i >= 1){
+            completelist.innerHTML += " <button onclick = 'routeUp(" + i + ")'>Up</button>"
+        }
+        if(i < currentroute.length-1){
+            completelist.innerHTML += "<button onclick = 'routeDown(" + i + ")'>Down</button>"
+        }
+        completelist.innerHTML += "</li>"
+    } 
+
+    if (currentroute.length == 0){
+        completelist.innerHTML = "<p>Create your own circuit !</p>"
+    }
 
     //infopanel
     updateCircuitButton()
+}
+
+
+function updateCircuitButton(){
+    // if (currentroute.includes('Remplacer ça par selectedEvent')) { // Remplacer par selectedEvent
+    if (Math.random() < 0.3){
+      document.getElementById(`circuitbutton`).innerHTML=`<button onclick = "removeDestinationClick()">Remove from circuit</button>`; 
+      }
+    else{
+        if (currentroute.length >= maxlimit){
+            document.getElementById(`circuitbutton`).innerHTML=`<div>You circuit is full !</div>`;
+        }
+        else{
+            document.getElementById(`circuitbutton`).innerHTML=`<button onclick = "addDestinationClick()">Add to circuit</button>`;
+        }
+    }
+  }
+
+function routeUp(i){
+    console.assert(i>=1, "i should be higher than 1. Your i: " + i)
+    const tmp = currentroute[i]
+    currentroute[i] = currentroute[i-1]
+    currentroute[i-1] = tmp
+
+    updateRoute()
+}
+
+function routeDown(i){
+    console.assert(i< maxlimit-1, "i should be smaller than " + maxlimit-1 + ". Your i: " + i)
+    const tmp = currentroute[i]
+    currentroute[i] = currentroute[i+1]
+    currentroute[i+1] = tmp
+
+    updateRoute()
 }
