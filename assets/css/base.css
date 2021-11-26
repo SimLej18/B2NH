@@ -94,6 +94,17 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    /* ...and now for the proper property */
+    transition:.5s;
+}
+
+.timelineAnchor:hover{
+    background-color:rgb(196, 252, 251);
+    color:rgb(20, 30, 88);  
 }
 
 #timelineCanvas {
@@ -121,6 +132,17 @@ li {
     flex-direction: column;
     justify-content: left;
     width: 10%;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    /* ...and now for the proper property */
+    transition:.5s;
+}
+
+.infopanelAnchor:hover{
+    background-color:rgb(196, 216, 252);
+    color:rgb(20, 30, 88);
 }
 
 .infopanelTitle {
@@ -128,15 +150,63 @@ li {
     margin-top: 60px;
 }
 
+#commentary{
+    display:block;
+    height: 250px;
+    overflow-y: scroll;
+}
 .infopanelBody {
     min-width: 25vh;
 }
 
+#togglecommentary{
+    border: 3px solid rgb(196, 252, 251);
+    background-color: rgb(20, 30, 88);
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    width:120px;
+}
+
+#togglecommentary:hover{
+    background-color:rgb(196, 252, 251);
+    color:rgb(20, 30, 88);
+}
+
+#togglecommentary2{
+    border: 3px solid rgb(196, 252, 251);
+    background-color: rgb(20, 30, 88);
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    width:120px;
+}
+
+#togglecommentary2:hover{
+    background-color:rgb(196, 252, 251);
+    color:rgb(20, 30, 88);
+}
+
+
+#addDestination {
+    border: 3px solid rgb(196, 252, 251);
+    background-color: rgb(20, 30, 88);
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    width:120px;
+}
+
+#addDestination:hover{
+    background-color:rgb(196, 252, 251);
+    color:rgb(20, 30, 88);
+}
 
 /* --- Routepanel CSS --- */
 
 .routepanel {
     min-height: 40vh;
+    right: "-500px";
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -151,7 +221,18 @@ li {
     display: flex;
     flex-direction: column;
     justify-content: end;
-    width: 10%
+    width: 10%;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    /* ...and now for the proper property */
+    transition:.5s;
+}
+
+.routepanelAnchor:hover{
+    background-color:rgb(196, 252, 251);
+    color:rgb(20, 30, 88);
 }
 
 .routepanelTitle {

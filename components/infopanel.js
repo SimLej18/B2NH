@@ -1,13 +1,24 @@
-
+$('#commentary').toggle();
+$('#togglecommentary2').toggle();
 //sert pour les volcans pour leur indice d'explosivité
+
 let index=["Effusive","Gentle","Explosive","Catastrophic","Cataclysmic","Paroxysmic","Colossal","Super-colossal","Mega-colossal"]
+
 function infopanelAnchorClick() {
-    $('.infopanelBody').toggle();
+
+  $('.infopanelBody').toggle();
+  
+}
+ 
+function commentaryClick(){
+  $('#infos').fadeToggle();
+  $('#togglecommentary').toggle();
+  $('#togglecommentary2').toggle();
+  $('#commentary').fadeToggle();
+  
 }
 
-
-
-function display(keys,labels,couleur){
+function display(keys,labels,couleur,comments){
   for(i=0;i<8;i++){
     $(`#element${i}`).html(``)
   }
@@ -20,9 +31,8 @@ function display(keys,labels,couleur){
       }
     j++
     }
-    
   }
-
+  $('#commentary').html(comments)
 }
 
 // function used to draw the coloured svg bar
@@ -39,12 +49,18 @@ var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("he
     svg.append('text').text("0").attr("x",0).attr("y",17).attr("dy", ".35em").style('fill', 'rgb(196, 252, 251)')
     svg.append('text').text(String(couleur[2])).attr("x",size*(couleur[2])+20).attr("y",17).attr("dy", ".35em").style('fill', 'rgb(196, 252, 251)')
     svg.append('text').text(String(couleur[5])).attr("x",keys*size).attr("y",40).style('fill', 'rgb(196, 252, 251)').style("font-size", "14px")
+    d3
 }
 
 // This function is called when the user clicks on the button of an event
 function updateInfoPanel(url_of_event) {
+  $(`#infos`).fadeToggle(50);
+  $('#togglecommentary').fadeToggle(50)
   fetchEvent(url_of_event);
   console.log(url_of_event);
+  
+  $(`#infos`).fadeToggle();
+  $('#togglecommentary').fadeToggle()
 }
 
 function fetchEvent(url_of_event) {
@@ -65,16 +81,19 @@ function fetchEvent(url_of_event) {
     labels = ["🌏Earthquake🌏", `&nbsp Earthquake Magnitude :`,
     `🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.country}`,`Damage ⚡ : &nbsp${info.data.damageAmountOrder}`,` Victims 💀 : &nbsp${info.data.deathsAmountOrder}`]
-    couleur = ['white','green',10,"red",16,info.data.eqMagnitude]
-    display(keys,labels,couleur);
+    couleur = ['LightYellow','green',10,"red",16,info.data.eqMagnitude]
+    comments=info.data.comments
+    display(keys,labels,couleur,comments);
+    
     }
 
     if (info.data.type=="tsunami") {
     keys = ["name",info.data.tis,info.data.dateTime,info.data.country,info.data.damageAmountOrder,info.data.deathsAmountOrder]
     labels = ["🌊Tsunami🌊",`&nbsp &nbsp Tsunami intensity :`,`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.country}`,`Damage ⚡ : &nbsp${info.data.damageAmountOrder}`,` Victims 💀 : &nbsp${info.data.deathsAmountOrder}`]
-    couleur = ['white','blue',10,"red",16,info.data.tis]
-    display(keys,labels,couleur);
+    couleur = ['LightBlue','Blue',10,"red",16,info.data.tis]
+    comments=info.data.comments
+    display(keys,labels,couleur,comments);
     }
 
     if (info.data.type=="irruption") {
@@ -82,8 +101,9 @@ function fetchEvent(url_of_event) {
     labels = [`🌋Volcano : &nbsp ${info.data.volcano.name}🌋`,`&nbsp Explosivity index :`,
     `🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,`⚐ : &nbsp${info.data.volcano.country}`,
     `Damage ⚡ : &nbsp${info.data.damageAmountOrder}`,`Victims 💀: &nbsp${info.data.deathsAmountOrder}`]
-    couleur = ['LightYellow','red',8,"blue",20,index[info.data.volcano_explosivity_index]]
-    display(keys,labels,couleur);
+    couleur = ['LightYellow','Red',8,"blue",20,index[info.data.volcano_explosivity_index]]
+    comments=info.data.comments
+    display(keys,labels,couleur,comments);
     }
   })
   .catch((error) => console.error("erreur du fetch:", error));
