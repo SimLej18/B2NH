@@ -1,5 +1,4 @@
 $('#commentary').toggle();
-$('#togglecommentary2').toggle();
 //sert pour les volcans pour leur indice d'explosivité
 
 let index=["Effusive","Gentle","Explosive","Catastrophic","Cataclysmic","Paroxysmic","Colossal","Super-colossal","Mega-colossal"]
@@ -11,10 +10,18 @@ function infopanelAnchorClick() {
 }
  
 function commentaryClick(){
-  $('#infos').fadeToggle();
-  $('#togglecommentary').toggle();
-  $('#togglecommentary2').toggle();
-  $('#commentary').fadeToggle();
+if ($("#commentary").is(":visible")){
+$('#togglecommentary').html('&nbsp &nbsp  description')
+$('#commentary').toggle();
+$('#infos').toggle();
+}
+else{
+$('#togglecommentary').html('&nbsp &nbsp close')
+$('#infos').toggle();
+$('#commentary').toggle();
+}
+  
+  
   
 }
 
@@ -54,13 +61,25 @@ var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("he
 
 // This function is called when the user clicks on the button of an event
 function updateInfoPanel(url_of_event) {
+  if ($("#commentary").is(":visible")){
+    $('#commentary').fadeToggle(50)
+    $('#togglecommentary').html('&nbsp &nbsp  description')
+  fetchEvent(url_of_event);
+  console.log(url_of_event);
+  $(`#infos`).fadeToggle();
+  
+  }
+  else{
   $(`#infos`).fadeToggle(50);
   $('#togglecommentary').fadeToggle(50)
+  $('#addDestination').fadeToggle(50)
   fetchEvent(url_of_event);
   console.log(url_of_event);
   
   $(`#infos`).fadeToggle();
   $('#togglecommentary').fadeToggle()
+  $('#addDestination').fadeToggle()
+  }
 }
 
 function fetchEvent(url_of_event) {
