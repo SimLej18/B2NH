@@ -149,15 +149,26 @@ var symbol_type = d3.symbol().type(function(d) {
         .duration(200)
         .style('opacity', 1);
     tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans);
+    d3.select(this)
+    .attr('fill', 'yellow')
+    .attr('fill-opacity', 1); 
+  
 })
 .on('mouseout', function(e, d) {
     tooltip.transition()
         .duration(1000)
         .style('opacity', 0);
+        d3.select(this)
+        .attr('fill', function(d){ return color(d.type) })
+        .attr("d", symbol_type);
 })
 .on('click', function(e, d) {
     updateInfoPanel(d.self_url);
+    d3.select(this)
+    .attr('fill', 'yellow')
+    .attr('fill-opacity', 1);
 });
+
 
 
 function zoomed(e) {
