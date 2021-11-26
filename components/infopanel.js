@@ -196,7 +196,7 @@ function fetchEvent(url_of_event) {
 
     if (info.data.type=="tsunami") {
     keys = ["name",info.data.dateTime,info.data.country,info.data.tis,info.data.damageAmountOrder,info.data.deathsAmountOrder]
-    labels = ["🌊Tsunami🌊",`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
+    labels = ["🌊Tsunami🌊",`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.country}`,`&nbsp &nbsp Tsunami intensity`,`⚡ Damage (M$) ⚡`,`💀 Victims 💀`]
     svgitems = ['LightBlue','Blue',10,"red",16,info.data.tis,`${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`,`${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
     relations=[info.data.earthquakeEventId,0,info.data.volcanoEventId]
