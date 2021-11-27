@@ -8,10 +8,8 @@ function routepanelAnchorClick() {
 
 // Ajoute l'evènement sélectionné au trajet
 function addDestinationClick() {
-    console.log(selectedEvent)
-    // Currently add random event from the allEventsList
     console.log('A new destination is added')
-    currentroute.push(allEventsList[Math.floor(Math.random() * (allEventsList.length-1))]) // Change this
+    currentroute.push(selectedEvent)
     console.log('Current circuit: ' + currentroute)
     updateRoute()
 }
@@ -20,7 +18,7 @@ function addDestinationClick() {
 function removeDestinationClick() {
     // Pour l'instant ça supprime un élément au hasard
     console.log('A destination has been removed')
-    currentroute.splice(currentroute.indexOf(currentroute[Math.floor(Math.random() * (currentroute.length-1))]), 1) // Change this
+    currentroute.splice(currentroute.indexOf(selectedEvent), 1) // Change this
     console.log('Current circuit: ' + currentroute)
     updateRoute()
 }
@@ -51,9 +49,10 @@ function updateRoute() {
 }
 
 
+// Met à jour le bouton d'ajout/suppression de destination, dans l'infopanel
 function updateCircuitButton(){
-    // if (currentroute.includes('Remplacer ça par selectedEvent')) { // Remplacer par selectedEvent
-    if (Math.random() < 0.3){
+    if (currentroute.includes(selectedEvent)) {
+    //if (Math.random() < 0.3){
       document.getElementById(`circuitbutton`).innerHTML=`<button onclick = "removeDestinationClick()">Remove from circuit</button>`; 
       }
     else{

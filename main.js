@@ -178,7 +178,7 @@ function selectVolcano(id) {
                 throw new Error("Pas de réponse de l'API");
             }
         }).then(info => {
-            selected_event = info;
+            selectedEvent = info;
         }).catch((error) => console.error("erreur du fetch:", error));
 }
 
@@ -194,6 +194,6 @@ function selectEvent(type, id) {
                 throw new Error("Pas de réponse de l'API");
             }
         }).then(info => {
-            selected_event = info;
+            selectedEvent = info;
         }).catch((error) => console.error("erreur du fetch:", error));
 }
