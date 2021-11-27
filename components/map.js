@@ -75,19 +75,37 @@ function draw() {
    .range([50, 100]);  // Size in pixel
 
    // Create a color scale
-   var color = d3.scaleOrdinal()
-     .domain(["irruption", "earthquake", "tsunami" ])
-     .range([ "red", "green", "blue"]);
+   var color = function(d) { 
+	if(d.type == 'tsunami') {
+		return colorScaleTsunami(d.measure_value);
+	}
+	else if(d.type == 'irruption') {
+		return colorScaleIrruption(d.measure_value);
+	}
+	else return colorScaleEarthquake(d.measure_value);
+    };
+   
+//    d3.scaleOrdinal()
+//      .domain(["irruption", "earthquake", "tsunami" ])
+//      .range([ "red", "green", "blue"]);
 
     // for earthquake ?
-    //  var colorScale = d3.scaleLinear()
-    //  .domain([5, 6.3, 8.3])
-    //  .range(["green", "yellow", "red"]);
+     var colorScaleEarthquake = d3.scaleLinear()
+     .domain([5,10])
+     .range(["#8ec77c", "#008101"]);
+     
+     var colorScaleIrruption = d3.scaleLinear()
+     .domain([3.5, 8])
+     .range(["#ffb6a0", '#ff0000']);
+     
+     var colorScaleTsunami = d3.scaleLinear()
+     .domain([3.5, 10])
+     .range(["#3448f7", '#0000ff']);
 
-           // Create a type scale
-    var type = d3.scaleOrdinal()
-    .domain(["irruption", "earthquake", "tsunami" ])
-    .range([ "triangle", "rect", "circle"]);
+ // Create a type scale
+    // var type = d3.scaleOrdinal()
+    // .domain(["irruption", "earthquake", "tsunami" ])
+    // .range([ "triangle", "rect", "circle"]);
  
     // use this for generating symbols
 var symbol_type = d3.symbol().type(function(d) { 
@@ -116,7 +134,7 @@ var symbol_type = d3.symbol().type(function(d) {
 
   // insert map data from geojson data
   var points_map_data = map.selectAll('path')
-  .data(map_data, ({id}) => type + '_' + id)
+  .data(map_data, ({type,id}) => type + '_' + id)
   .enter()
   .append('path')
   .attr("d", symbol_type)
@@ -127,9 +145,9 @@ var symbol_type = d3.symbol().type(function(d) {
         d.latitude
       ]) + ")";
     })
-  .attr('stroke', function(d){ return color(d.type) })
+  .attr('stroke', function(d){ return color(d) })
   .attr('stroke-width', 1)
-  .attr('fill', function(d){ return color(d.type) })
+  .attr('fill', function(d){ return color(d) })
   .attr('fill-opacity', 0.5)
   .on('mouseover', function(e, d) {
     tooltip.attr('id', 'info-item-tooltip')
@@ -147,7 +165,7 @@ var symbol_type = d3.symbol().type(function(d) {
         .duration(1000)
         .style('opacity', 0);
         d3.select(this)
-        .attr('fill', function(d){ return color(d.type) })
+        .attr('fill', function(d){ return color(d) })
         .attr("d", symbol_type);
 })
 .on('click', function(e, d) {
