@@ -7,7 +7,6 @@ function updateMap() {
    map_data = filteredEvents;
    removeMap();
    draw();
-
 }
 
 function addDestinationToMap() {
@@ -22,7 +21,6 @@ function createMap() {
 }
 
 function removeMap() {
-    // d3.select('#map').selectAll('*').remove();
   d3.select('#map')
   .selectAll('svg')
   .remove()
@@ -37,6 +35,10 @@ function draw() {
 
   const width = 960;
   const height = 600;
+
+    // create tooltip
+  const tooltip = d3.select('#tooltip')
+  .append('div');
 
   const map = d3.select('#map')
       .append('svg')
@@ -58,6 +60,7 @@ function draw() {
       .scale(width / 2 / Math.PI - 10)
       .translate([width / 2, height / 2]);
 
+
   // create path
   const path = d3
       .geoPath()
@@ -67,8 +70,8 @@ function draw() {
       .scaleExtent([1, 15])
       .on('zoom', zoomed);
   
-  map.call(zoom);
-
+   var g = map.call(zoom);
+  
   // Add a scale for bubble size
   var size = d3.scaleLinear()
    .domain([1,10])  // What's in the data
@@ -110,9 +113,8 @@ var symbol_type = d3.symbol().type(function(d) {
     return size(Math.pow(d.measure_value - 3.5, 2));
 });
 
-  // create tooltip
-  const tooltip = d3.select('#tooltip')
-      .append('div');
+
+
 
        // insert map data
   var world_map = map.selectAll('path')
@@ -159,17 +161,34 @@ var symbol_type = d3.symbol().type(function(d) {
         .attr("d", symbol_type);
 })
 .on('click', function(e, d) {
-    updateInfoPanel(d.self_url);
+    clickEvent(e, d);
     d3.select(this)
     .attr('fill', 'yellow')
     .attr('fill-opacity', 1);
 });
 
 
-
 function zoomed(e) {
     map.attr('transform', e.transform);
  } 
+
+ function clickEvent(e,d) {
+    //console.log(e, d);
+    updateInfoPanel(d.self_url);
+    var centroid = path.centroid(d),
+    translate = projection.translate();
+
+    projection.translate([
+    translate[0] - centroid[0] + width / 2,
+    translate[1] - centroid[1] + height / 2
+    ]);
+
+    zoom.translate(projection.translate());
+
+    map.selectAll("path").transition()
+    .duration(700)
+    .attr("d", path);
+}
 
 }
 
