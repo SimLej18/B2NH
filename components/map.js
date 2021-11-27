@@ -103,17 +103,8 @@ var symbol_type = d3.symbol().type(function(d) {
 });
 
   // create tooltip
-  const tooltip = d3.select('#info-item-tooltip')
-      .append('div')
-      .attr('class', 'tooltip')
-      .style('size', '10px')
-      .style('border', 'solid')
-      .style('border-width', '1px')
-      .style('border-radius', '5px')
-      .style('background-color', 'rgb(17 17 84)')
-      .style('padding', '10px')
-      .style('position', 'absolute')
-      .style('z-index', '10');
+  const tooltip = d3.select('#tooltip')
+      .append('div');
 
        // insert map data
   var world_map = map.selectAll('path')
@@ -121,11 +112,7 @@ var symbol_type = d3.symbol().type(function(d) {
   .enter()
   .append('path')
   .attr('d', path)
-  .attr('class', 'country')
-  .attr('fill', '#fff')
-  .attr('stroke', '#ccc')
-  .attr('stroke-width', '1px');
-
+  .attr('class', 'countries');
 
   // insert map data from geojson data
   var points_map_data = map.selectAll('path')
@@ -145,7 +132,8 @@ var symbol_type = d3.symbol().type(function(d) {
   .attr('fill', function(d){ return color(d.type) })
   .attr('fill-opacity', 0.5)
   .on('mouseover', function(e, d) {
-    tooltip.transition()
+    tooltip.attr('id', 'info-item-tooltip')
+        .transition()
         .duration(200)
         .style('opacity', 1);
     tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans);

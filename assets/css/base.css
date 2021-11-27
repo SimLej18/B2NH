@@ -258,10 +258,30 @@ li {
 }
 
 
-/* --- Tooltip CSS --- */
+/* used by map.js */
 
+/* --- Tooltip --- */
 #info-item-tooltip {
     fill: #707070;
     fill-opacity: 0.2;
     pointer-events: none;
+    size: 10px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: rgb(17 17 84);
+    padding: 10px;
+    position: absolute;
+    z-index: 10;
 }
+
+/* used by map.js */
+.countries {
+    fill: #fff;
+    stroke: #ccc;
+    stroke-width: 1px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    pointer-events: none;
+  }
+  
