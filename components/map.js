@@ -99,7 +99,7 @@ var symbol_type = d3.symbol().type(function(d) {
 	}
 	else return d3.symbolCircle;
 }).size(function(d) {
-    return size(d.measure_value);
+    return size(Math.pow(d.measure_value - 3.5, 2));
 });
 
   // create tooltip
