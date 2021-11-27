@@ -116,9 +116,6 @@ var symbol_type = d3.symbol().type(function(d) {
     return size(Math.pow(d.measure_value - 3.5, 2));
 });
 
-
-
-
        // insert map data
   var world_map = map.selectAll('path')
   .data(world_data.features)
@@ -172,34 +169,51 @@ var symbol_type = d3.symbol().type(function(d) {
 
 
   function zoomed(e) {
+        // g.attr("transform","translate("+ 
+        //     e.translate.join(",")+")scale("+e.scale+")");
+        // g.selectAll("circle")
+        //     .attr("d", path.projection(projection))
+        //     .attr("r", 5/zoom.scale());
+        // g.selectAll("path")  
+        //     .attr("d", path.projection(projection)); 
+
      map.attr('transform', e.transform);
-     world_map.attr('transform', e.transform);
+    //  world_map.attr('transform', e.transform);
+
      points_map_data.attr('transform', function(d) {
         return "translate(" + projection([
           d.longitude,
           d.latitude
         ]) + ")";
       }).attr("d", symbol_type);
-      
+      // .attr('transform', e.transform);
+  
+      // return d3.select(this).attr('r') * 1.1;
+
+
+    //   .attr('r', function(d) {
+    //     return weight_scale(d.properties.mass) / d3.event.transform.k
+    // })
+    // .attr("stroke-width", 1 / d3.event.transform.k);
 
     } 
 
  function clickEvent(e,d) {
     //console.log(e, d);
     updateInfoPanel(d.self_url);
-    var centroid = path.centroid(d),
-    translate = projection.translate();
+    // var centroid = path.centroid(d),
+    // translate = projection.translate();
 
-    projection.translate([
-    translate[0] - centroid[0] + width / 2,
-    translate[1] - centroid[1] + height / 2
-    ]);
+    // projection.translate([
+    // translate[0] - centroid[0] + width / 2,
+    // translate[1] - centroid[1] + height / 2
+    // ]);
 
     // zoom.translate(projection.translate());
 
-    map.selectAll("path").transition()
-    .duration(700)
-    .attr("d", path);
+    // map.selectAll("path").transition()
+    // .duration(700)
+    // .attr("d", path);
 }
 
 }
