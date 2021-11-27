@@ -16,9 +16,8 @@ function addDestinationClick() {
 
 // Supprime l'évènement sélectionné du trajet
 function removeDestinationClick() {
-    // Pour l'instant ça supprime un élément au hasard
     console.log('A destination has been removed')
-    currentroute.splice(currentroute.indexOf(selectedEvent), 1) // Change this
+    currentroute.splice(currentroute.indexOf(selectedEvent), 1)
     console.log('Current circuit: ' + currentroute)
     updateRoute()
 }
@@ -30,14 +29,14 @@ function updateRoute() {
 
     completelist.innerHTML = ""
     for (let i = 0; i < currentroute.length; i++) {
-        completelist.innerHTML += "<li>" + currentroute[i]["title"];
+        completelist.innerHTML += "<li><p onclick='selectRouteEvent(" + i + ")'>" + currentroute[i]["title"];
         if(i >= 1){
             completelist.innerHTML += " <button onclick = 'routeUp(" + i + ")'>Up</button>"
         }
         if(i < currentroute.length-1){
             completelist.innerHTML += "<button onclick = 'routeDown(" + i + ")'>Down</button>"
         }
-        completelist.innerHTML += "</li>"
+        completelist.innerHTML += "</p></li>"
     } 
 
     if (currentroute.length == 0){
@@ -81,4 +80,13 @@ function routeDown(i){
     currentroute[i+1] = tmp
 
     updateRoute()
+}
+
+function selectRouteEvent(index){
+    console.assert(index < currentroute.length && index >= 0, "Index exception")
+    currentEvent = currentroute[index]
+
+    updateInfoPanel(currentEvent["self_url"]);
+    selectedEvent = currentEvent;
+    updateCircuitButton();
 }
