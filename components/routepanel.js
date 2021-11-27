@@ -43,6 +43,9 @@ function updateRoute() {
         completelist.innerHTML = "<p>Create your own circuit !</p>"
     }
 
+    //map
+    drawCircuit()
+
     //infopanel
     updateCircuitButton()
 }
@@ -51,7 +54,6 @@ function updateRoute() {
 // Met à jour le bouton d'ajout/suppression de destination, dans l'infopanel
 function updateCircuitButton(){
     if (currentroute.includes(selectedEvent)) {
-    //if (Math.random() < 0.3){
       document.getElementById(`circuitbutton`).innerHTML=`<button onclick = "removeDestinationClick()">Remove from circuit</button>`; 
       }
     else{
@@ -89,4 +91,38 @@ function selectRouteEvent(index){
     updateInfoPanel(currentEvent["self_url"]);
     selectedEvent = currentEvent;
     updateCircuitButton();
+}
+
+// Draw the entire circuit on the world map
+function drawCircuit(){
+    if(currentroute.length > 1){
+        for (let i = 1; i < currentroute.length; i++){
+            drawLine(currentroute[i-1], currentroute[i])
+        }
+    }
+
+}
+
+// Draw a line between two destinations
+function drawLine(event1, event2)
+{
+    const canvas = document.querySelector('#canvas');
+
+    if (!canvas.getContext) {
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+
+    // set line stroke and line width
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 3;
+
+    // draw a red line
+    ctx.beginPath();
+    console.log(event1)
+    ctx.moveTo(event1["latitude"], event1["longitude"]);
+    ctx.lineTo(event2["latitude"], event2["longitude"]);
+    ctx.stroke();
+    
+    draw();
 }
