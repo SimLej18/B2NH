@@ -83,7 +83,7 @@ async function fetchAllData() {
     // Dispatch invents by type in allEventsDict
     for (var i = 0 ; i < allEventsList.length ; i++) {
         switch (allEventsList[i].type) {
-            case "irruption":
+            case "eruption":
                 allEventsDict["VolcanoEvents"].push(allEventsList[i]);
                 break;
             case "earthquake":
@@ -183,7 +183,7 @@ function selectVolcano(id) {
 }
 
 function selectEvent(type, id) {
-    console.assert(type == "irruption" || type == "earthquake" || type == "tsunami", "Invalid type.");
+    console.assert(type == "eruption" || type == "earthquake" || type == "tsunami", "Invalid type.");
 
     fetch("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
         .then((response) => {

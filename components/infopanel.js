@@ -202,7 +202,7 @@ function fetchEvent(url_of_event) {
     relations=[info.data.earthquakeEventId,0,info.data.volcanoEventId]
     }
 
-    if (info.data.type=="irruption") {
+    if (info.data.type=="eruption") {
     keys = [info.data.volcano.name,info.data.dateTime,info.data.country,info.data.volcano_explosivity_index,info.data.damageAmountOrder,info.data.deathsAmountOrder]
     labels = [`🌋Volcano : &nbsp ${info.data.volcano.name}🌋`,`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${info.data.dateTime}`)}&nbsp${/(?<=-)-?\d{4}/g.exec(`${info.data.dateTime}`)}`,
     `⚐ : &nbsp${info.data.volcano.country}`,`&nbsp Explosivity index`,`⚡ Damage (M$) ⚡`,`💀 Victims 💀`]

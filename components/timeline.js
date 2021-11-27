@@ -160,7 +160,7 @@ function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, 
 
 // Dummy example with d3.js
 data = [    {
-    "type": "Irruption",
+    "type": "Eruption",
     "value": "5"
 }, {
     "type": "Tsunamis",

@@ -54,8 +54,8 @@ function draw() {
   //   d3.geoOrthographic() // spherical
 
   const projection = d3.geoMercator()
-      .center([4.858293, 50.46651])
-      .scale(width / 2 / Math.PI)
+      .center([4.858293, 50.46651]) // center of the map == UNamur
+      .scale(width / 2 / Math.PI - 10)
       .translate([width / 2, height / 2]);
 
   // create path
@@ -79,22 +79,17 @@ function draw() {
 	if(d.type == 'tsunami') {
 		return colorScaleTsunami(d.measure_value);
 	}
-	else if(d.type == 'irruption') {
-		return colorScaleIrruption(d.measure_value);
+	else if(d.type == 'eruption') {
+		return colorScaleEruption(d.measure_value);
 	}
 	else return colorScaleEarthquake(d.measure_value);
     };
    
-//    d3.scaleOrdinal()
-//      .domain(["irruption", "earthquake", "tsunami" ])
-//      .range([ "red", "green", "blue"]);
-
-    // for earthquake ?
      var colorScaleEarthquake = d3.scaleLinear()
      .domain([5,10])
      .range(["#8ec77c", "#008101"]);
      
-     var colorScaleIrruption = d3.scaleLinear()
+     var colorScaleEruption = d3.scaleLinear()
      .domain([3.5, 8])
      .range(["#ffb6a0", '#ff0000']);
      
@@ -102,17 +97,12 @@ function draw() {
      .domain([3.5, 10])
      .range(["#3448f7", '#0000ff']);
 
- // Create a type scale
-    // var type = d3.scaleOrdinal()
-    // .domain(["irruption", "earthquake", "tsunami" ])
-    // .range([ "triangle", "rect", "circle"]);
- 
     // use this for generating symbols
 var symbol_type = d3.symbol().type(function(d) { 
 	if(d.type == 'tsunami') {
 		return d3.symbolWye;
 	}
-	else if(d.type == 'irruption') {
+	else if(d.type == 'eruption') {
 		return d3.symbolTriangle;
 	}
 	else return d3.symbolCircle;
