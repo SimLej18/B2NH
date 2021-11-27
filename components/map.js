@@ -1,3 +1,7 @@
+// TODO 
+// https://github.com/SimLej18/B2NH/issues/3
+//
+
 let map_data = [];
 
 // Method that will be used when we update the data
@@ -16,7 +20,7 @@ function addDestinationToMap() {
 // function to create map with d3.js
 function createMap() {
     console.log("createMap called!");
-    map_data = allEventsList;
+    map_data = filteredEvents; // allEventsList;
     draw();
 }
 
@@ -60,7 +64,6 @@ function draw() {
       .scale(width / 2 / Math.PI - 10)
       .translate([width / 2, height / 2]);
 
-
   // create path
   const path = d3
       .geoPath()
@@ -89,16 +92,16 @@ function draw() {
     };
    
      var colorScaleEarthquake = d3.scaleLinear()
-     .domain([5,10])
-     .range(["#8ec77c", "#008101"]);
+     .domain([0,10])
+     .range(["#fff", "#008101"]);
      
      var colorScaleEruption = d3.scaleLinear()
-     .domain([3.5, 8])
-     .range(["#ffb6a0", '#ff0000']);
+     .domain([0, 8])
+     .range(["#fff", '#ff0000']);
      
      var colorScaleTsunami = d3.scaleLinear()
-     .domain([3.5, 10])
-     .range(["#3448f7", '#0000ff']);
+     .domain([0, 10])
+     .range(["#fff", '#0000ff']);
 
     // use this for generating symbols
 var symbol_type = d3.symbol().type(function(d) { 
@@ -168,9 +171,18 @@ var symbol_type = d3.symbol().type(function(d) {
 });
 
 
-function zoomed(e) {
-    map.attr('transform', e.transform);
- } 
+  function zoomed(e) {
+     map.attr('transform', e.transform);
+     world_map.attr('transform', e.transform);
+     points_map_data.attr('transform', function(d) {
+        return "translate(" + projection([
+          d.longitude,
+          d.latitude
+        ]) + ")";
+      }).attr("d", symbol_type);
+      
+
+    } 
 
  function clickEvent(e,d) {
     //console.log(e, d);
@@ -183,7 +195,7 @@ function zoomed(e) {
     translate[1] - centroid[1] + height / 2
     ]);
 
-    zoom.translate(projection.translate());
+    // zoom.translate(projection.translate());
 
     map.selectAll("path").transition()
     .duration(700)
