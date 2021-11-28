@@ -255,10 +255,13 @@ li {
 
 .routepanelBody {
     min-width: 25vh;
-    display:block;
-    overflow-y: scroll;
 }
 
+#printedRoute {
+    display:block;
+    height: 250px;
+    overflow-y: scroll;
+}
 
 /* used by map.js */
 
