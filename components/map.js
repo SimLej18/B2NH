@@ -99,6 +99,13 @@ function draw() {
 	}
 	else return colorScaleEarthquake(d.measure_value);
     };
+
+    var dropPath = 'M 243.44676,222.01677 C 243.44676,288.9638 189.17548,343.23508 122.22845,343.23508 C 55.281426,343.23508 1.0101458,288.9638 1.0101458,222.01677 C 1.0101458,155.06975 40.150976,142.95572 122.22845,0.79337431 C 203.60619,141.74374 243.44676,155.06975 243.44676,222.01677 z';
+
+    //  <svg id="" class="drop" width="100%" height="100%">
+    //  <path d="M 243.44676,222.01677 C 243.44676,288.9638 189.17548,343.23508 122.22845,343.23508 C 55.281426,343.23508 1.0101458,288.9638 1.0101458,222.01677 C 1.0101458,155.06975 40.150976,142.95572 122.22845,0.79337431 C 203.60619,141.74374 243.44676,155.06975 243.44676,222.01677 z" fill="#fff"></path>
+    //  </svg>
+     
    
      var colorScaleEarthquake = d3.scaleLinear()
      .domain([0,10])
@@ -210,8 +217,10 @@ var symbol_type = d3.symbol().type(function(d) {
  function clickEvent(e,d) {
     //console.log(e, d);
     updateInfoPanel(d.self_url);
-    selectedEvent = d;
-    updateCircuitButton();
+
+    // selectedEvent = d;
+    // updateCircuitButton();
+
     // var centroid = path.centroid(d),
     // translate = projection.translate();
 
