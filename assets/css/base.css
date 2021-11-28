@@ -255,7 +255,8 @@ li {
 
 .routepanelBody {
     min-width: 25vh;
-    
+    display:block;
+    overflow-y: scroll;
 }
 
 
