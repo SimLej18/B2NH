@@ -62,7 +62,7 @@
                             infopanel
                         </div>
                     </div>
-                    <div class="panelBody infopanelBody">
+                    <div class="panelBody infopanelBody hiddenpanel">
                         <h1 id="infopanel"></h1>
                         <div id="infos">
                             <p id="element1"></p>
@@ -73,15 +73,15 @@
                             <p id="element6"></p>
                             <p id="element7"></p>
                         </div>
-                        <div id="commentary"></div>
-                        <div id="relations">
+                        <div id="commentary" class="hiddenpanel scrolltext"></div>
+                        <div id="relations" class="hiddenpanel">
                             <p id="relation0" onclick="GoToRelation(0)"></p>
                             <p id="relation1" onclick="GoToRelation(1)"></p>
                             <p id="relation2" onclick="GoToRelation(2)"></p>
                         </div>
                         <div id="infobuttons">
-                            <p id="togglerelations"  onclick="relationsClick()">Show related events</p>
-                            <p id="togglecommentary"  onclick="commentaryClick()">&nbsp &nbsp  description</p>
+                            <p id="togglerelations" class="panelbutton subinfopaneltoggle" >Show related events</p>
+                            <p id="togglecommentary" class="panelbutton subinfopaneltoggle" >Description</p>
                             <p id="circuitbutton"></p>
                         </div>                        
 
@@ -93,7 +93,7 @@
                     </div>
                     <div class="panelBody routepanelBody">
                         / here is the routepanel \
-                        <ul id="printedRoute">
+                        <ul id="printedRoute" class="scrolltext">
                             Create your own circuit !
                         </ul>
                 </div>

@@ -36,6 +36,9 @@ li {
     z-index: 0;
 }
 
+.scrolltext{display:block;height: 250px;overflow-y: scroll;}
+
+.hiddenpanel{display:none}
 
 /* --- Panel CSS --- */
 
@@ -76,12 +79,38 @@ li {
 }
 
 .panelAnchor {
+    
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
+}
+
+.panelAnchor:hover {
+    
+    background-color:rgb(196, 252, 251);
+    color:rgb(20, 30, 88);
 }
 
 .panelBody {
 
 }
 
+.panelbutton{
+    border: 3px solid rgb(196, 252, 251);
+    background-color: rgb(20, 30, 88);
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    width:120px;
+    text-align: center;    
+}
+
+.panelbutton:hover{
+    background-color:rgb(196, 252, 251);
+    color:rgb(20, 30, 88);
+}
 
 /* --- Timeline CSS --- */
 
@@ -99,18 +128,7 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    -o-transition:.5s;
-    -ms-transition:.5s;
-    -moz-transition:.5s;
-    -webkit-transition:.5s;
-    /* ...and now for the proper property */
-    transition:.5s;
     clip-path: polygon(100% 100%,95% 7%, 0% 7%, 0% 100%);
-}
-
-.timelineAnchor:hover{
-    background-color:rgb(196, 252, 251);
-    color:rgb(20, 30, 88);  
 }
 
 #timelineCanvas {
@@ -133,26 +151,12 @@ li {
     border-bottom: 3px solid rgb(196, 252, 251);
 }
 
-
 .infopanelAnchor {
     display: flex;
     flex-direction: column;
     justify-content: left;
     width: 10%;
-    /*test de clip*/
     clip-path: polygon(4% 75%, 4% 0%, 100% 0%, 100% 100%);
-
-    /*pour faire une jolie transition de couleur quand on passe dessus*/
-    -o-transition:.5s;
-    -ms-transition:.5s;
-    -moz-transition:.5s;
-    -webkit-transition:.5s;
-    transition:.5s;
-}
-
-.infopanelAnchor:hover{
-    background-color:rgb(196, 216, 252);
-    color:rgb(20, 30, 88);
 }
 
 .infopanelTitle {
@@ -160,57 +164,10 @@ li {
     margin-top: 60px;
 }
 
-
-#commentary{
-    display:block;
-    height: 250px;
-    overflow-y: scroll;
-}
 .infopanelBody {
     min-width: 25vh;
-}
-
-#togglecommentary{
-    border: 3px solid rgb(196, 252, 251);
-    background-color: rgb(20, 30, 88);
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    border-radius:10px;
-    width:120px;
-}
-
-#togglecommentary:hover{
-    background-color:rgb(196, 252, 251);
-    color:rgb(20, 30, 88);
-}
-
-#togglerelations{
-    border: 3px solid rgb(196, 252, 251);
-    background-color: rgb(20, 30, 88);
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    border-radius:10px;
-    width:120px;
-}
-
-#togglerelations:hover{
-    background-color:rgb(196, 252, 251);
-    color:rgb(20, 30, 88);
-}
-
-
-#addDestination {
-    border: 3px solid rgb(196, 252, 251);
-    background-color: rgb(20, 30, 88);
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    border-radius:10px;
-    width:120px;
-}
-
-#addDestination:hover{
-    background-color:rgb(196, 252, 251);
-    color:rgb(20, 30, 88);
+    max-width: 28vh;
+    text-align: left;
 }
 
 /* --- Routepanel CSS --- */
@@ -233,19 +190,7 @@ li {
     flex-direction: column;
     justify-content: end;
     width: 10%;
-    -o-transition:.5s;
-    -ms-transition:.5s;
-    -moz-transition:.5s;
-    -webkit-transition:.5s;
-    /* ...and now for the proper property */
-    transition:.5s;
     clip-path: polygon(4% 25%,4% 100%, 100% 100%, 100% 0%);
-}
-
-.routepanelAnchor:hover{
-    background-color:rgb(196, 252, 251);
-    color:rgb(20, 30, 88);
-    
 }
 
 .routepanelTitle {
@@ -255,12 +200,6 @@ li {
 
 .routepanelBody {
     min-width: 25vh;
-}
-
-#printedRoute {
-    display:block;
-    height: 250px;
-    overflow-y: scroll;
 }
 
 /* used by map.js */

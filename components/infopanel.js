@@ -1,56 +1,84 @@
-$('#commentary').toggle();
-$('#relations').toggle();
-//sert pour les volcans pour leur indice d'explosivité
+//--------------------------------------------------------Panels toggle and navigation-------------------------------------------------
 
+//sert pour les volcans pour leur indice d'explosivité
 let index=["Effusive","Gentle","Explosive","Catastrophic","Cataclysmic","Paroxysmic","Colossal","Super-colossal","Mega-colossal"]
 
-function infopanelAnchorClick() {
 
-  $('.infopanelBody').toggle();
-  
-}
+//functions to display or not Infopanel
+function infopanelAnchorClick() {$('.infopanelBody').toggle();}
 
+//toggle for related events and commentary
+$(".subinfopaneltoggle").click(function(){
+
+if ($(this).is('#togglerelations')){
+if ($("#relations").is(":visible")){
+    $(this).html('Show related events')
+    $('#relations,#infos,#togglecommentary').toggle();}
+    else{
+    $(this).html('Close')
+    $('#infos,#togglecommentary,#relations').toggle();
+}}
+if($(this).is('#togglecommentary')){
+if ($('#commentary').is(":visible")){
+    $(this).html('Description')
+    $(".infopanelBody").css({"max-width":"28vh"})
+    $('#commentary, #infos, #togglerelations').toggle();}  
+    else{
+    $(this).html('Close')
+    $(".infopanelBody").css({"max-width":"50vh"})
+    $('#infos, #togglerelations, #commentary').toggle();
+    
+}}})
+
+//go to the chosen related event
 function GoToRelation(i) {
   type=`${/tsunami|earthquake|volcano/g.exec(`${$(`#relation${i}`).text()}`)}`
   id=`${/\d+/g.exec(`${$(`#relation${i}`).text()}`)}`
   updateInfoPanel("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
 }
 
-function relationsClick() {
-  if ($("#relations").is(":visible")){
+
+// This function is called when the user clicks on the button of an event
+function updateInfoPanel(url_of_event) {
+  if($('.infopanelBody').is(":hidden")){
+    $('.infopanelBody').toggle()
+  }
+  if ($("#commentary").is(":visible")){
+    $(".infopanelBody").css({"max-width":"28vh"})
+    $('#commentary').toggle()
+    $('#togglecommentary').html('Description')
+    selectedEvent = url_of_event; fetchEvent(selectedEvent);
+    $(`#infos`).fadeToggle();
+    $('#togglerelations').toggle();
+  
+  }
+  else if ($('#relations').is(':visible')){
+    $('#relations').toggle()
     $('#togglerelations').html('Show related events')
-    $('#relations').toggle();
-    $('#infos').toggle();
-    $('#togglecommentary').toggle()
-    }
-    else{
-    $('#togglerelations').html('&nbsp &nbsp close')
-    $('#infos').toggle();
-    $('#togglecommentary').toggle()
-    $('#relations').toggle();
-    }
-
-}
-
-function commentaryClick(){
-if ($("#commentary").is(":visible")){
-$('#togglecommentary').html('&nbsp &nbsp  description')
-$('#commentary').toggle();
-$('#infos').toggle();
-$('#togglerelations').toggle()
-}
-else{
-$('#togglecommentary').html('&nbsp &nbsp close')
-$('#infos').toggle();
-$('#togglerelations').toggle()
-$('#commentary').toggle();
-}
+    selectedEvent = url_of_event; fetchEvent(selectedEvent);
+    $(`#infos`).fadeToggle();
+    $(`#togglecommentary`).toggle();
   
-  
-  
+  }
+  else {
+    $('#infos').fadeToggle(50);
+    $('#togglecommentary').fadeToggle(50);
+    $('#addDestination').fadeToggle(50);
+    $('#togglerelations').fadeToggle(50);
+    fetchEvent(url_of_event); console.log(url_of_event);
+    $('#infos').fadeToggle();
+    $('#togglecommentary').fadeToggle();
+    $('#addDestination').fadeToggle();
+    $('#togglerelations').fadeToggle();
+  }
 }
 
-function display(keys,labels,svgitems,comments,relations){
+//----------------------------------------------------------------Info writing---------------------------------------------------------
+
+  
+  
+  function display(keys,labels,svgitems,comments,relations){
+  //write infos
   for(i=0;i<7;i++){
     $(`#element${i}`).html(``)
   }
@@ -70,12 +98,17 @@ function display(keys,labels,svgitems,comments,relations){
     j++
     }
   }
+
+  //write commentary
   $('#commentary').html(comments)
-  relationType=["earthquake : ","tsunami : ","volcano : "]
+
+  //write related events
+  relationType=[" caused by earthquake ","caused tsunami ","volcano "]
   for (i=0;i<3;i++){
     $(`#relation${i}`).html("")
     if(relations[i]!=0){
-  $(`#relation${i}`).html(relationType[i]+relations[i])
+  $(`#relation${i}`).html(relationType[i]+'('+relations[i]+')')
+                    .append($('<input type="button value="Add To Destination"/>'))
     }
   }
 }
@@ -83,7 +116,7 @@ function display(keys,labels,svgitems,comments,relations){
 // function used to draw the coloured svg bar
 function drawbar(svgitems,j,keys){
 
-var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("height","42px")
+var svg = d3.select(`#element${j}`).append("svg").attr("width", "400px").attr("height","42px")
     var size=svgitems[4]
     var data = Array.from({length: svgitems[2]}, (_, i) => i + 1)
     var myColor = d3.scaleLinear().domain([1,svgitems[2]]).range([svgitems[0],svgitems[1]])
@@ -99,7 +132,7 @@ var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("he
 
 //function to draw death svg bar
 function drawdeath(svgitems,j,keys){
-  var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("height","46px")
+  var svg = d3.select(`#element${j}`).append("svg").attr("width", "400px").attr("height","46px")
   var size = 40
   if (keys==0){cursorx=15}else {cursorx=keys*size-5}
   var data = [1,2,3,4]
@@ -117,7 +150,7 @@ function drawdeath(svgitems,j,keys){
 
 //function to draw damage svg bar
 function drawdamage(svgitems,j,keys){
-  var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("height","46px")
+  var svg = d3.select(`#element${j}`).append("svg").attr("width", "400px").attr("height","46px")
   var size = 40
   if (keys==0){cursorx=15}else {cursorx=keys*size-5}
   var data = [1,2,3,4]
@@ -133,41 +166,6 @@ function drawdamage(svgitems,j,keys){
   svg.append('text').text(svgitems[6]).attr("x",cursorx).attr("y",42).style('fill', 'rgb(196, 252, 251)').style("font-size", "12px")
 }
 
-// This function is called when the user clicks on the button of an event
-function updateInfoPanel(url_of_event) {
-  if ($("#commentary").is(":visible")){
-    $('#commentary').toggle()
-    $('#togglecommentary').html('&nbsp &nbsp  description')
-    selectedEvent = url_of_event;
-    fetchEvent(selectedEvent);
-  $(`#infos`).fadeToggle();
-  $('#togglerelations').toggle();
-  
-  }
-  else if ($('#relations').is(':visible')){
-  $('#relations').toggle()
-  $('#togglerelations').html('Show related events')
-  selectedEvent = url_of_event;
-  fetchEvent(selectedEvent);
-  $(`#infos`).fadeToggle();
-  $(`#togglecommentary`).toggle();
-  
-  }
-  else {
-  $(`#infos`).fadeToggle(50);
-  $('#togglecommentary').fadeToggle(50)
-  $('#togglerelations').fadeToggle(50);
-  $('#addDestination').fadeToggle(50)
-  fetchEvent(url_of_event);
-  console.log(url_of_event);
-  
-  $(`#infos`).fadeToggle();
-  $('#togglecommentary').fadeToggle()
-  $('#addDestination').fadeToggle()  
-  $('#togglerelations').fadeToggle();
-  }
-  updateCircuitButton()
-}
 
 
 

@@ -4,6 +4,15 @@
 
 let map_data = [];
 
+//function used when selecting an event
+function replaceClass(id, oldClass, newClass) {
+  var elem = $(`#${id}`);
+  if (elem.hasClass(oldClass)) {
+      elem.removeClass(oldClass);
+  }
+  elem.addClass(newClass);
+}
+
 // Method that will be used when we update the data
 function updateMap() {
    // update map data
@@ -102,19 +111,6 @@ function draw() {
      var colorScaleTsunami = d3.scaleLinear()
      .domain([0, 10])
      .range(["#fff", '#0000ff']);
-
-     // Alternative color scale
-// var colorScaleEarthquake = d3.scaleLinear()
-// .domain([0,8,10])
-// .range(["white", "#008101", 'black']);
-
-// var colorScaleEruption = d3.scaleLinear()
-// .domain([0,2,7, 8])
-// .range(["#fff", 'yellow', '#ff0000', 'black']);
-
-// var colorScaleTsunami = d3.scaleLinear()
-// .domain([0, 8,10])
-// .range(["#fff", '#0000ff', 'black']);
 
     // use this for generating symbols
 var symbol_type = d3.symbol().type(function(d) { 
