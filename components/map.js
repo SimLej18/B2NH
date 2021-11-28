@@ -103,6 +103,19 @@ function draw() {
      .domain([0, 10])
      .range(["#fff", '#0000ff']);
 
+     // Alternative color scale
+// var colorScaleEarthquake = d3.scaleLinear()
+// .domain([0,8,10])
+// .range(["white", "#008101", 'black']);
+
+// var colorScaleEruption = d3.scaleLinear()
+// .domain([0,2,7, 8])
+// .range(["#fff", 'yellow', '#ff0000', 'black']);
+
+// var colorScaleTsunami = d3.scaleLinear()
+// .domain([0, 8,10])
+// .range(["#fff", '#0000ff', 'black']);
+
     // use this for generating symbols
 var symbol_type = d3.symbol().type(function(d) { 
 	if(d.type == 'tsunami') {
