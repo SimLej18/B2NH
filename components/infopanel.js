@@ -106,12 +106,12 @@ function updateInfoPanel(url_of_event) {
   relationType=[" caused by earthquake ","caused tsunami ","volcano "]
   for (i=0;i<3;i++){
     $(`#relation${i}`).html("")
+    $(`#relation${i}`).css({"display":"none"})
     if(relations[i]!=0){
-  $(`#relation${i}`).html(relationType[i]+'('+relations[i]+')')
-                    .append($('<input type="button value="Add To Destination"/>'))
+  $(`#relation${i}`).html(relationType[i]+'('+relations[i]+')').toggle()}
     }
   }
-}
+
 
 // function used to draw the coloured svg bar
 function drawbar(svgitems,j,keys){
@@ -126,7 +126,7 @@ var svg = d3.select(`#element${j}`).append("svg").attr("width", "400px").attr("h
     svg.append('rect').attr("x",15+keys*size).attr("y",10).attr("width",2).attr("height",16).attr("fill", 'rgb(196, 252, 251)')
     svg.append('text').text("0").attr("x",0).attr("y",17).attr("dy", ".35em").style('fill', 'rgb(196, 252, 251)')
     svg.append('text').text(String(svgitems[2])).attr("x",size*(svgitems[2])+20).attr("y",17).attr("dy", ".35em").style('fill', 'rgb(196, 252, 251)')
-    svg.append('text').text(String(svgitems[5])).attr("x",keys*size).attr("y",40).style('fill', 'rgb(196, 252, 251)').style("font-size", "14px")
+    svg.append('text').text(String(svgitems[5])).attr("x",keys*size).attr("y",40).style('fill', 'rgb(196, 252, 251)').style("font-size", "12px")
     d3
 }
 
