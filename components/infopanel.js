@@ -211,6 +211,9 @@ function fetchEvent(url_of_event) {
     } 
 
     comments=info.data.comments
+
+    selectedEvent = info.data
+    updateCircuitButton()
     
     display(keys,labels,svgitems,comments,relations);
     })

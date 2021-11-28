@@ -214,8 +214,10 @@ var symbol_type = d3.symbol().type(function(d) {
  function clickEvent(e,d) {
     //console.log(e, d);
     updateInfoPanel(d.self_url);
-    selectedEvent = d;
-    updateCircuitButton();
+
+    // selectedEvent = d;
+    // updateCircuitButton();
+
     // var centroid = path.centroid(d),
     // translate = projection.translate();
 

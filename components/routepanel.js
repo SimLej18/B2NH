@@ -29,25 +29,35 @@ function updateRoute() {
 
     completelist.innerHTML = ""
     for (let i = 0; i < currentroute.length; i++) {
-        completelist.innerHTML += "<li><p onclick='selectRouteEvent(" + i + ")'>" + currentroute[i]["title"];
+        destinationLine = ""
+
+        destinationLine += "<li><p onclick='selectRouteEvent(" + i + ")'>" + currentroute[i]["type"] + " - ";
+        if (currentroute[i]["type"] == "eruption"){
+            destinationLine += currentroute[i]["volcano"]["country"]
+        }
+        else{
+            destinationLine += currentroute[i]["country"]
+        }
         if(i >= 1){
-            completelist.innerHTML += " <button onclick = 'routeUp(" + i + ")'>Up</button>"
+            destinationLine += "<button onclick = 'routeUp(" + i + ")'>Up</button>"
         }
         if(i < currentroute.length-1){
-            completelist.innerHTML += "<button onclick = 'routeDown(" + i + ")'>Down</button>"
+            destinationLine += "<button onclick = 'routeDown(" + i + ")'> Down</button>"
         }
-        completelist.innerHTML += "</p></li>"
+        destinationLine += "</p></li>"
+
+        completelist.innerHTML += destinationLine
     } 
 
     if (currentroute.length == 0){
         completelist.innerHTML = "<p>Create your own circuit !</p>"
     }
 
-    //map
-    drawCircuit()
-
     //infopanel
     updateCircuitButton()
+
+    //map
+    drawCircuit()
 }
 
 
