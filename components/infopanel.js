@@ -102,7 +102,7 @@ function updateInfoPanel(url_of_event) {
     if(keys[i]!=(null||"unknown")){
     $(`#element${j}`).html(labels[i])
     if(i==3){
-        drawbar(svgitems,j,keys[i])
+        drawbar(svgitems,keys[i],`#element${j}`)
       }
     if(i==4){
       drawdamage(svgitems,j,keys[i])
@@ -126,11 +126,15 @@ function updateInfoPanel(url_of_event) {
   $(`#relation${i}`).html(relationType[i]+'('+relations[i]+')').toggle()}
     }
   if(volcano!=null){
-  $(`#relation3`).toggle()
-    console.log(volcano.data.events_count)
+  $(`.volcanoheading`).toggle()
+  $(`#relation4`).html(`🌋Volcano : ${volcano.data.name}🌋`)
+  $(`#relations`).append($(`<p id=relation5 class="othereruption"></p>`))
+  drawbar(svgitems,keys[3],`#relation5`)
+  console.log(volcano.data.events_count)
   for(i=0;i<volcano.data.events_count;i++){
-  $(`#relations`).append($(`<p id=element${i+4} class="panelbutton othereruption"></p>`)
-  .html(`${volcano.data.volcano_events[i].dateTime}&nbsp(${volcano.data.volcano_events[i].dateTimeDiffForHumans})`))
+  $(`#relations`).append($(`<p id=relation${(i)*3+6} class="panelbutton othereruption"></p>`)
+  .html(`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}
+  &nbsp${/(?<=-)-?\d{4}/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}`))
   }
   }
   }
@@ -138,9 +142,9 @@ function updateInfoPanel(url_of_event) {
 
 
 // function used to draw the coloured svg bar
-function drawbar(svgitems,j,keys){
+function drawbar(svgitems,keys,place){
 
-var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("height","42px")
+var svg = d3.select(place).append("svg").attr("width", "100%").attr("height","42px")
     var size=svgitems[4]
     var data = Array.from({length: svgitems[2]}, (_, i) => i + 1)
     var myColor = d3.scaleLinear().domain([1,svgitems[2]]).range([svgitems[0],svgitems[1]])
