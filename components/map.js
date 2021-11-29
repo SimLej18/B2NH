@@ -78,8 +78,18 @@ function draw() {
       .geoPath()
       .projection(projection);
 
+  // define zoom seetings
+  var zoomSettings = {
+    "zoom": 5,
+    "translate": [0, 0],
+    "scaleExtent": [1, 15],
+    "duration": 1000,
+    "ease": d3.easeCubic
+    };
+
+
   const zoom = d3.zoom()
-      .scaleExtent([1, 15])
+      .scaleExtent(zoomSettings.scaleExtent)
       .on('zoom', zoomed);
   
    var g = map.call(zoom);
@@ -204,11 +214,25 @@ var symbol_type = d3.symbol().type(function(d) {
 
 
   function zoomed(e) {
+     
+    // Ajust zooming and panning speed
+
+    // var scale = e.transform.k;
+    // var scale_factor = scale / zoom_scale;
+    // zoom_scale = scale;
+    // var translate = e.transform.x;
+    // var translate_factor = translate / zoom_translate;
+    // zoom_translate = translate;
+
+
+    // infopanelAnchorClick();
+
      map.attr('transform', e.transform, "scale(" + e.transform.k + ")", "translate(" + e.transform.x + "," + e.transform.y + ")");
 
+     world_map.attr("scale(" + 1 / e.transform.k + ")");
      points_map_data
      .attr('transform', function(d) {
-      console.log('zoomin points', e.transform.k);
+      // console.log('zoomin points', e.transform.k);
       return "translate(" + projection([
           d.longitude,
           d.latitude
@@ -218,7 +242,25 @@ var symbol_type = d3.symbol().type(function(d) {
 
  function clickEvent(e,d) {
     //console.log(e, d);
-    updateInfoPanel(d.self_url);
+
+    // update centre of map
+    var centre = projection([d.longitude, d.latitude]);
+
+  
+    // update map
+    map.transition()
+    .duration(750)
+    .call(zoom.transform, d3.zoomIdentity
+      .translate(centre[0] - width / 2, centre[1] - height / 2)
+      .scale(20))
+      .on("end", function() {
+        // open info panel
+        infopanelAnchorClick();
+        // update info panel
+        updateInfoPanel(d.self_url);
+      });
+  
+    
 
     // selectedEvent = d;
     // updateCircuitButton();
