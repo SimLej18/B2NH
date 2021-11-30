@@ -3,22 +3,6 @@
 //sert pour les volcans pour leur indice d'explosivité
 let index=["Effusive","Gentle","Explosive","Catastrophic","Cataclysmic","Paroxysmic","Colossal","Super-colossal","Mega-colossal"]
 
-
-    // Fetch volcanoes copy for Infopanel
-function fetchvolcano(id){
-fetch(`https://b2nh-api.tintamarre.be/api/v1/volcanoes/${id}`)
-.then((response) => {
-  if (response.ok) {
-    return response.json();
-}
-  else {
-    throw new Error("Pas de réponse de l'API");
-}
-}).then(info => {
-  volcanoes = info.data;
-}).catch((error) => console.error("erreur du fetch:", error));
-}
-  
 //functions to display or not Infopanel
 function infopanelAnchorClick() {$('.infopanelBody').toggle();}
 
@@ -105,10 +89,10 @@ function updateInfoPanel(url_of_event) {
         drawbar(svgitems,keys[i],`#element${j}`)
       }
     if(i==4){
-      drawdamage(svgitems,j,keys[i])
+      drawdamage(svgitems,keys[i],`#element${j}`)
     }
     if(i==5){
-        drawdeath(svgitems,j,keys[i])
+        drawdeath(svgitems,keys[i],`#element${j}`)
     }
     j++
     }
@@ -130,11 +114,16 @@ function updateInfoPanel(url_of_event) {
   $(`#relation4`).html(`🌋Volcano : ${volcano.data.name}🌋`)
   $(`#relations`).append($(`<p id=relation5 class="othereruption"></p>`))
   drawbar(svgitems,keys[3],`#relation5`)
-  console.log(volcano.data.events_count)
   for(i=0;i<volcano.data.events_count;i++){
-  $(`#relations`).append($(`<p id=relation${(i)*3+6} class="panelbutton othereruption"></p>`)
+  $(`#relations`).append($(`<p id=relatedEruption${(i)*3} class="panelbutton othereruption"></p>`)
   .html(`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}
   &nbsp${/(?<=-)-?\d{4}/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}`))
+  svgitems = ['','','',"",'','',`${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
+  `${redeaths=/null|Few|Some|Many|Very Many/g.exec(`${volcano.data.volcano_events[i].deathsAmountOrderLabel}`)}`]
+  $(`#relations`).append($(`<p id=relatedEruption${(i)*3+1} class="othereruption">⚡(M$)</p>`))
+  drawdamage(svgitems,volcano.data.volcano_events[i].damageAmountOrder,`#relatedEruption${(i)*3+1}`)
+  $(`#relations`).append($(`<p id=relatedEruption${(i)*3+2} class="othereruption">💀</p>`))
+  drawdeath(svgitems,volcano.data.volcano_events[i].deathsAmountOrder,`#relatedEruption${(i)*3+2}`)
   }
   }
   }
@@ -159,8 +148,8 @@ var svg = d3.select(place).append("svg").attr("width", "100%").attr("height","42
 }
 
 //function to draw death svg bar
-function drawdeath(svgitems,j,keys){
-  var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("height","46px")
+function drawdeath(svgitems,keys,place){
+  var svg = d3.select(place).append("svg").attr("width", "100%").attr("height","46px")
   var size = 40
   if (keys==0){cursorx=15}else {cursorx=keys*size-5}
   var data = [1,2,3,4]
@@ -177,8 +166,8 @@ function drawdeath(svgitems,j,keys){
 }
 
 //function to draw damage svg bar
-function drawdamage(svgitems,j,keys){
-  var svg = d3.select(`#element${j}`).append("svg").attr("width", "100%").attr("height","41px")
+function drawdamage(svgitems,keys,place){
+  var svg = d3.select(place).append("svg").attr("width", "100%").attr("height","41px")
   var size = 40
   if (keys==0){cursorx=15}else {cursorx=keys*size-5}
   var data = [1,2,3,4]
