@@ -59,7 +59,7 @@ function draw() {
   //   d3.geoOrthographic() // spherical
   //  d3.geoNaturalEarth1() // globe
   const projection = d3.geoMercator()
-      .center([4.858293, 50.46651]) // center of the map == UNamur
+      .center([0,0]) // center of the map == UNamur
       .scale(width / 2 / Math.PI) // scale to fit the map to the screen
       .translate([width / 2, height / 2]);
 
@@ -77,22 +77,14 @@ function draw() {
       .geoPath()
       .projection(projection);
 
-  // define zoom seetings
-  var zoomSettings = {
-    "zoom": 5,
-    "translate": [0, 0],
-    "scaleExtent": [1, 15],
-    "duration": 1000,
-    "ease": d3.easeCubic
-    };
-
 
   const zoom = d3.zoom()
-      .scaleExtent(zoomSettings.scaleExtent)
+      .scaleExtent([1, 15])
       .on('zoom', zoomed)
       .on('end', zoomedEnded);
   
-   var g = map.call(zoom);
+  // call zoom
+  map.call(zoom);
   
   // Add a scale for bubble size
   var size = d3.scaleLinear()
@@ -223,19 +215,46 @@ var symbol_type = d3.symbol().type(function(d) {
 
 
   function zoomed(e) {
-    // working
-    // world_map.attr("transform", "translate(" + e.transform.x + "," + e.transform.y + ")scale(" + e.transform.k + ")");
+    // map.attr("transform", "translate(" + e.transform.x + "," + e.transform.y + ")scale(" + e.transform.k + ")");
 
-    //  points_map_data.attr('transform', function(d) {
-    //   return "translate(" + projection([
-    //       d.longitude,
-    //       d.latitude
-    //     ]) + ")" + "scale(" + 1 / e.transform.k + ")";
+    console.log("e.transform.x: " + e.transform.x);
+    console.log("e.transform.y: " + e.transform.y);
+    console.log("e.transform.k: " + e.transform.k);
+
+    // working
+    world_map.attr("transform", "translate(" + e.transform.x + "," + e.transform.y + ")scale(" + e.transform.k + ")");
+
+
+
+    // panning working
+    points_map_data.attr("transform",function(d) {
+
+      var position = projection([d.longitude, d.latitude]);
+      var x = position[0] + e.transform.x;
+      var y = position[1] + e.transform.y;
+
+        return "translate(" + x + "," + y + ")scale(" + e.transform.k + ")";
+      });
+      
+      
+      // 'transform', "translate(" + e.transform.x + "," + e.transform.y + ")scale(" + e.transform.k + ")");
+
+    
+    // d3.selectAll(".point")
+    // .attr("transform", "translate(" + projection([0, 0 ]) + ")scale(" + e.transform.k + ")");
+
+    // points_map_data.attr('transform', "translate(" + projection.translate() + ")");
+
+    }
+      
+      
+    //   + e.transform.x + "," + e.transform.y + ") scale(" + 1 / e.transform.k + ")";
     //   });
-    } 
+    // } 
 
 function zoomedEnded(e) {
-  // console.log('zoomedEnded');
+
+  console.log('zoomedEnded');
 }
 
  function clickEvent(e,d) {
@@ -244,7 +263,7 @@ function zoomedEnded(e) {
        infopanelAnchorClick();
        // update info panel
        updateInfoPanel(d.self_url);
-       
+
     // var centroid = projection([d.longitude, d.latitude]);
 
     // // update centre of map
