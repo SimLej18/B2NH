@@ -2,39 +2,100 @@
 // https://github.com/SimLej18/B2NH/issues/3
 //
 
+
+let labels_data = [
+    {
+        "name" : "Mer de surf",
+        "description" : "description", // Alaska
+        "longitude": -140,
+        "latitude": 55,
+        "angle": 65
+    },
+    { 
+        "name" : "Massif du Completo", // Chili
+        "description" : "description",
+        "longitude": -93,
+        "latitude": 0,
+        "angle": 71
+    },
+    {   
+      "name" : "Contrée du riz soufflé", // Asie
+      "description" : "description",
+      "longitude": 90,
+      "latitude": -10,
+      "angle": 10
+  },
+  {   
+      "name" : "Tundra maléfique", // 
+      "description" : "description",
+      "longitude": 90,
+      "latitude": 45,
+      "angle": 0
+  },
+  {   
+      "name" : "Vallé du piment", // Mexique
+      "description" : "description",
+      "longitude": -125,
+      "latitude": 16,
+       "angle": 40
+
+  },
+  {   
+      "name" : "Île piquante", // Islande
+      "description" : "description",
+      "longitude": -32,
+      "latitude": 60,
+      "angle": 0
+
+  },
+  {   
+      "name" : "Terre du milieu", // Europe
+      "description" : "description",
+      "longitude": 4,
+      "latitude": 50,
+      "angle": 0
+
+  },
+
+];
+
 let map_data = [];
 
-// Toggle class : why is it here ?
-function toggleClass(id, Class) {
-  d3.select(id)
-  .classed(Class, !d3.select(id).classed(Class))
-}
+// // Toggle class : why is it here ?
+// function toggleClass(id, Class) {
+//   d3.select(id)
+//   .classed(Class, !d3.select(id).classed(Class))
+// }
 
 // Method that will be used when we update the data
 function updateMap() {
    // update map data
-   console.log("updateMap called!");
    map_data = filteredEvents;
-   removeMap();
-   draw();
+   updateEvents(map_data);
 }
 
 function addDestinationToMap() {
-    toggleClass
+    // toggleClass
     console.log("addDestinationToMap called!");
 }
 
 // function to create map with d3.js
 function createMap() {
-    console.log("createMap called!");
     map_data = filteredEvents; // allEventsList;
     draw();
 }
 
-function removeMap() {
+function updateEvents(map_data) {
+
   d3.select('#map')
-  .selectAll('svg')
-  .remove();
+  .selectAll('.point')
+  .style("visibility", "hidden");
+
+  map_data.forEach(point => {
+    d3.select('#' + point.type + "_" + point.id)
+    .style("visibility", "visible");
+  });
+
 }
 
 function draw() {
@@ -44,12 +105,11 @@ function draw() {
   
   // variables for catching min and max zoom factors
   var minZoom;
-  var maxZoom;;
+  var maxZoom;
 
     // create tooltip
   const tooltip = d3.select('#tooltip')
   .append('div');
-
 
   // create projection
   //   Alternative
@@ -59,7 +119,7 @@ function draw() {
   //   d3.geoOrthographic() // spherical
   //  d3.geoNaturalEarth1() // globe
   const projection = d3.geoMercator()
-      .center([0,0]) // center of the map == UNamur
+      .center([4,50]) // center of the map == UNamur
       .scale(width / 2 / Math.PI) // scale to fit the map to the screen
       .translate([width / 2, height / 2]);
 
@@ -77,9 +137,8 @@ function draw() {
       .geoPath()
       .projection(projection);
 
-
   const zoom = d3.zoom()
-      .scaleExtent([1, 15])
+      .scaleExtent([1, 20])
       .on('zoom', zoomed)
       .on('end', zoomedEnded);
   
@@ -142,9 +201,7 @@ var adapt_to_per10 = function(d) {
 }
 
 var symbol_size = function(d) {
-  
-
-  return Math.pow(adapt_to_per10(d), 2.3)
+  return Math.pow(adapt_to_per10(d), 2.4)
 }
 
    // use this for generating symbols
@@ -160,7 +217,7 @@ var symbol_type = d3.symbol().type(function(d) {
     return size(symbol_size(d));
 });
 
-       // insert map data
+      //  insert map data
   var world_map = map.selectAll('path')
   .data(world_data.features)
   .enter()
@@ -168,11 +225,14 @@ var symbol_type = d3.symbol().type(function(d) {
   .attr('d', path)
   .attr('class', 'countries');
 
+
+
   // insert map data from geojson data
   var points_map_data = map.selectAll('path')
   .data(map_data, ({type,id}) => type + '_' + id)
   .enter()
   .append('path')
+  .attr('id', ({type,id}) => type + '_' + id)
   .attr('class', function (d) { return 'point ' + d.type })
   .attr('d', symbol_type)
   // .attr("d", symbol_path)
@@ -193,11 +253,11 @@ var symbol_type = d3.symbol().type(function(d) {
         .transition()
         .duration(200)
         .style('opacity', 1);
-    tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans);
+
+    tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans + '<br/><br/>' + "long:" + d.longitude + " lat:" +  d.latitude);
     d3.select(this)
     .attr('fill', 'yellow')
     .attr('fill-opacity', 1); 
-  
 })
 .on('mouseout', function(e, d) {
     tooltip.transition()
@@ -213,72 +273,76 @@ var symbol_type = d3.symbol().type(function(d) {
     .attr('fill-opacity', 1);
 });
 
+       // insert map data
+       var labels = map.selectAll('text')
+       .data(labels_data)
+       .enter()
+       .append('text')
+       .attr("transform", function(d) {
+      return "translate(" + projection([
+            d.longitude,
+            d.latitude
+         ]) + ")rotate(" + d.angle +")";
+       })
+       .text(function(d) { return d.name; })
+       .style("fill", "#ccc")
+       .style("font-size", "40px")
+       .attr("vector-effect", "non-scaling-stroke")
+       .attr('class', 'labels_region')
+       .attr("stroke", "#666")
+       .attr("stroke-width", ".4px")
+ 
+  ;
+
 
   function zoomed(e) {
-    // map.attr("transform", "translate(" + e.transform.x + "," + e.transform.y + ")scale(" + e.transform.k + ")");
-
-    console.log("e.transform.x: " + e.transform.x);
-    console.log("e.transform.y: " + e.transform.y);
-    console.log("e.transform.k: " + e.transform.k);
+ 
+    // console.log("e.transform.x: " + e.transform.x);
+    // console.log("e.transform.y: " + e.transform.y);
+    // console.log("e.transform.k: " + e.transform.k);
 
     // working
     world_map.attr("transform", "translate(" + e.transform.x + "," + e.transform.y + ")scale(" + e.transform.k + ")");
 
 
 
+
     // panning working
     points_map_data.attr("transform",function(d) {
-
+      // var rand = Math.random() + 10;
       var position = projection([d.longitude, d.latitude]);
-      var x = (position[0] * e.transform.k) + e.transform.x;
+      var x = (position[0] * e.transform.k) + e.transform.x;  
       var y = (position[1] * e.transform.k) + e.transform.y;
 
-        return "translate(" + x + "," + y + ")scale(" + e.transform.k + ")";
+        return "translate(" + x + "," + y + ")scale(" + Math.sqrt(e.transform.k) + ")";
       });
+
+      // panning working
+    labels.attr("transform",function(d) {
+      // var rand = Math.random() + 10;
+      var position = projection([d.longitude, d.latitude]);
+      var x = (position[0] * e.transform.k) + e.transform.x;  
+      var y = (position[1] * e.transform.k) + e.transform.y;
+
+        return "translate(" + x + "," + y + ")scale(" + Math.sqrt(e.transform.k) + ") rotate("+ d.angle +")";
+      });
+
+
       
     }
       
 
 function zoomedEnded(e) {
-
-  // points_map_data.attr("transform",function(d) {
-
-  //   var position = projection([d.longitude, d.latitude]);
-  //   var x = position[0];
-  //   var y = position[1];
-
-  //     return "translate(" + x + "," + y + ")scale(" + e.transform.k + ")";
-  //   });
-
-  console.log('zoomedEnded');
+  // console.log('zoomedEnded');
 }
 
- function clickEvent(e,d) {
-    
+ function clickEvent(e,d) {   
        // open info panel
        infopanelAnchorClick();
        // update info panel
        updateInfoPanel(d.self_url);
-
-    // var centroid = projection([d.longitude, d.latitude]);
-
-    // // update centre of map
-    // console.log('Centroid', centroid);
-  
-    // // update map
-    // world_map.transition()
-    // .duration(1000)
-    // .attr('transform', "translate(" + centroid[0] + "," + centroid[1] + ")scale(" + 20 + ")")
-    // .on("end", function() {
-    //       // open info panel
-    //       infopanelAnchorClick();
-    //       // update info panel
-    //       updateInfoPanel(d.self_url);
-    //     });
-
     // selectedEvent = d;
     // updateCircuitButton();
-
 }
 
 }
