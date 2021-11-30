@@ -61,7 +61,7 @@ let labels_data = [
 
 let map_data = [];
 
-// // Toggle class : why is it here ?
+// Toggle class : why is it here ?
 // function toggleClass(id, Class) {
 //   d3.select(id)
 //   .classed(Class, !d3.select(id).classed(Class))
@@ -96,7 +96,6 @@ function updateEvents() {
     .style("visibility", "visible");
   });
 
-
   // updateCounts();
   
 }
@@ -124,11 +123,6 @@ function updateCounts() {
   const count_tooltip = d3.select('#counts_tooltip')
   .append('div');
 
-  // count_tooltip.attr('id', 'counts_tooltip')
-  // .transition()
-  // .duration(2000)
-  // .style('opacity', 1);
-
   count_tooltip.html("V:" + count_eruption + " T:" + count_tsunami + " E:" + count_earthquake);
   
 }
@@ -138,11 +132,7 @@ function draw() {
   const width = 3000;
   const height = 1500
   
-  // variables for catching min and max zoom factors
-  var minZoom;
-  var maxZoom;
-
-    // create tooltip
+  // create tooltip
   const tooltip = d3.select('#info_tooltip')
   .append('div');
 
@@ -180,7 +170,7 @@ function draw() {
   // call zoom
   map.call(zoom);
   
-  // Add a scale for bubble size
+  // Add a scale for items
   var size = d3.scaleLinear()
    .domain([1,10])  // What's in the data
    .range([70, 150]);  // Size in pixel
@@ -196,14 +186,7 @@ function draw() {
 	else return colorScaleEarthquake(adapt_to_per10(d));
     };
 
-    // var dropPath = 'M 243.44676,222.01677 C 243.44676,288.9638 189.17548,343.23508 122.22845,343.23508 C 55.281426,343.23508 1.0101458,288.9638 1.0101458,222.01677 C 1.0101458,155.06975 40.150976,142.95572 122.22845,0.79337431 C 203.60619,141.74374 243.44676,155.06975 243.44676,222.01677 z';
-    
-    // // source = https://svgsilh.com/image/306989.html
-    // var wavePath = "M5445 11153 c-120 -8 -321 -34 -444 -58 -744 -145 -1243 -515 -1471-1089 -59 -150 -74 -234 -74 -411 -1 -185 11 -243 74 -372 57 -116 155 -199260 -219 l35 -7 -23 19 c-28 23 -54 121 -45 168 22 121 151 210 399 277 11330 125 31 244 26 455 -22 856 -291 1165 -782 70 -111 188 -352 248 -505 107-274 183 -583 234 -950 25 -176 25 -700 0 -920 -110 -983 -466 -1887 -1089-2762 -640 -901 -1581 -1762 -2673 -2445 -725 -453 -1349 -762 -2225 -1102l-55 -21 1465 5 c4858 18 6793 25 8670 30 1158 3 2205 8 2327 11 l222 6 15 68c23 101 53 296 73 470 21 193 24 791 5 1005 -80 878 -243 1639 -551 2565 -8912677 -2589 5186 -4256 6288 -666 441 -1252 646 -2005 702 -125 9 -407 11 -5253z"
-
-    // var squarePath = "M0,0 L0,100 L100,100 L100,0 L0,0 z";
-    // var roundPath = "M0,0 A50,50 0 0,1 100,0 A50,50 0 0,1 0,0 z";
-   
+     
      var colorScaleEarthquake = d3.scaleLinear()
      .domain([0, 10])
      .range(["#fff", "#008101"]);
@@ -216,15 +199,6 @@ function draw() {
      .domain([0, 10])
      .range(["#fff", '#0000ff']);
 
-// var symbol_path = function(d) {
-//   if(d.type == 'tsunami') {
-//     return wavePath;
-//   }
-//   else if(d.type == 'eruption') {
-//     return dropPath;
-//   }
-//   else return roundPath;
-// }
 
 var adapt_to_per10 = function(d) {
   if(d.type == 'eruption') {
@@ -236,10 +210,10 @@ var adapt_to_per10 = function(d) {
 }
 
 var symbol_size = function(d) {
-  return Math.pow(adapt_to_per10(d), 2.4)
+  return Math.pow(adapt_to_per10(d), 2.4) // magic number
 }
 
-   // use this for generating symbols
+// use this for generating symbols
 var symbol_type = d3.symbol().type(function(d) { 
 	if(d.type == 'tsunami') {
 		return d3.symbolWye;
@@ -252,7 +226,7 @@ var symbol_type = d3.symbol().type(function(d) {
     return size(symbol_size(d));
 });
 
-      //  insert map data
+  //  insert world map data
   var world_map = map.selectAll('path')
   .data(world_data.features)
   .enter()
@@ -260,9 +234,7 @@ var symbol_type = d3.symbol().type(function(d) {
   .attr('d', path)
   .attr('class', 'countries');
 
-
-
-  // insert map data from geojson data
+  // insert points to map
   var points_map_data = map.selectAll('path')
   .data(map_data, ({type,id}) => type + '_' + id)
   .enter()
@@ -270,9 +242,6 @@ var symbol_type = d3.symbol().type(function(d) {
   .attr('id', ({type,id}) => type + '_' + id)
   .attr('class', function (d) { return 'point ' + d.type })
   .attr('d', symbol_type)
-  // .attr("d", symbol_path)
-  // .attr("size", symbol_size)
-  //  .append("circle")
   .attr("transform", function(d) {
       return "translate(" + projection([
         d.longitude,
@@ -308,7 +277,7 @@ var symbol_type = d3.symbol().type(function(d) {
     .attr('fill-opacity', 1);
 });
 
-       // insert map data
+       // insert labels to map data
        var labels = map.selectAll('text')
        .data(labels_data)
        .enter()
@@ -325,26 +294,13 @@ var symbol_type = d3.symbol().type(function(d) {
        .attr("vector-effect", "non-scaling-stroke")
        .attr('class', 'labels_region')
        .attr("stroke", "#666")
-       .attr("stroke-width", ".4px")
- 
-  ;
-
+       .attr("stroke-width", ".4px");
 
   function zoomed(e) {
- 
-    // console.log("e.transform.x: " + e.transform.x);
-    // console.log("e.transform.y: " + e.transform.y);
-    // console.log("e.transform.k: " + e.transform.k);
 
-    // working
     world_map.attr("transform", "translate(" + e.transform.x + "," + e.transform.y + ")scale(" + e.transform.k + ")");
 
-
-
-
-    // panning working
     points_map_data.attr("transform",function(d) {
-      // var rand = Math.random() + 10;
       var position = projection([d.longitude, d.latitude]);
       var x = (position[0] * e.transform.k) + e.transform.x;  
       var y = (position[1] * e.transform.k) + e.transform.y;
@@ -352,9 +308,7 @@ var symbol_type = d3.symbol().type(function(d) {
         return "translate(" + x + "," + y + ")scale(" + Math.sqrt(e.transform.k) + ")";
       });
 
-      // panning working
     labels.attr("transform",function(d) {
-      // var rand = Math.random() + 10;
       var position = projection([d.longitude, d.latitude]);
       var x = (position[0] * e.transform.k) + e.transform.x;  
       var y = (position[1] * e.transform.k) + e.transform.y;
@@ -376,9 +330,19 @@ function zoomedEnded(e) {
        infopanelAnchorClick();
        // update info panel
        updateInfoPanel(d.self_url);
-    // selectedEvent = d;
-    // updateCircuitButton();
+      
+       // selectedEvent = d;
+      // updateCircuitButton();
 }
 
 }
 
+
+// Bin
+// var dropPath = 'M 243.44676,222.01677 C 243.44676,288.9638 189.17548,343.23508 122.22845,343.23508 C 55.281426,343.23508 1.0101458,288.9638 1.0101458,222.01677 C 1.0101458,155.06975 40.150976,142.95572 122.22845,0.79337431 C 203.60619,141.74374 243.44676,155.06975 243.44676,222.01677 z';
+    
+    // // source = https://svgsilh.com/image/306989.html
+    // var wavePath = "M5445 11153 c-120 -8 -321 -34 -444 -58 -744 -145 -1243 -515 -1471-1089 -59 -150 -74 -234 -74 -411 -1 -185 11 -243 74 -372 57 -116 155 -199260 -219 l35 -7 -23 19 c-28 23 -54 121 -45 168 22 121 151 210 399 277 11330 125 31 244 26 455 -22 856 -291 1165 -782 70 -111 188 -352 248 -505 107-274 183 -583 234 -950 25 -176 25 -700 0 -920 -110 -983 -466 -1887 -1089-2762 -640 -901 -1581 -1762 -2673 -2445 -725 -453 -1349 -762 -2225 -1102l-55 -21 1465 5 c4858 18 6793 25 8670 30 1158 3 2205 8 2327 11 l222 6 15 68c23 101 53 296 73 470 21 193 24 791 5 1005 -80 878 -243 1639 -551 2565 -8912677 -2589 5186 -4256 6288 -666 441 -1252 646 -2005 702 -125 9 -407 11 -5253z"
+
+    // var squarePath = "M0,0 L0,100 L100,100 L100,0 L0,0 z";
+    // var roundPath = "M0,0 A50,50 0 0,1 100,0 A50,50 0 0,1 0,0 z";
