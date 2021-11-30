@@ -230,29 +230,25 @@ var symbol_type = d3.symbol().type(function(d) {
     points_map_data.attr("transform",function(d) {
 
       var position = projection([d.longitude, d.latitude]);
-      var x = position[0] + e.transform.x;
-      var y = position[1] + e.transform.y;
+      var x = (position[0] * e.transform.k) + e.transform.x;
+      var y = (position[1] * e.transform.k) + e.transform.y;
 
         return "translate(" + x + "," + y + ")scale(" + e.transform.k + ")";
       });
       
-      
-      // 'transform', "translate(" + e.transform.x + "," + e.transform.y + ")scale(" + e.transform.k + ")");
-
-    
-    // d3.selectAll(".point")
-    // .attr("transform", "translate(" + projection([0, 0 ]) + ")scale(" + e.transform.k + ")");
-
-    // points_map_data.attr('transform', "translate(" + projection.translate() + ")");
-
     }
       
-      
-    //   + e.transform.x + "," + e.transform.y + ") scale(" + 1 / e.transform.k + ")";
-    //   });
-    // } 
 
 function zoomedEnded(e) {
+
+  // points_map_data.attr("transform",function(d) {
+
+  //   var position = projection([d.longitude, d.latitude]);
+  //   var x = position[0];
+  //   var y = position[1];
+
+  //     return "translate(" + x + "," + y + ")scale(" + e.transform.k + ")";
+  //   });
 
   console.log('zoomedEnded');
 }
