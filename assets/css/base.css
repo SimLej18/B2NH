@@ -199,7 +199,8 @@ li {
 }
 
 .routepanelBody {
-    min-width: 25vh;
+    min-width: 28vh;
+    max-width: 28vh;
 }
 
 /* used by map.js */

@@ -36,6 +36,11 @@ function GoToRelation(i) {
   updateInfoPanel("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
 }
 
+//go to the chosen related eruption
+function GoToRelatedEruption(i){
+  id=`${/(?<=[id(])\d+/g.exec(`${$(`#relatedEruption${i}`).text()}`)}`
+  updateInfoPanel("https://b2nh-api.tintamarre.be/api/v1/events/eruption/"+id)
+}
 
 // This function is called when the user clicks on the button of an event
 function updateInfoPanel(url_of_event) {
@@ -115,9 +120,9 @@ function updateInfoPanel(url_of_event) {
   $(`#relations`).append($(`<p id=relation5 class="othereruption"></p>`))
   drawbar(svgitems,keys[3],`#relation5`)
   for(i=0;i<volcano.data.events_count;i++){
-  $(`#relations`).append($(`<p id=relatedEruption${(i)*3} class="panelbutton othereruption"></p>`)
+  $(`#relations`).append($(`<p id=relatedEruption${(i)*3} class="panelbutton othereruption" onclick=GoToRelatedEruption(${i*3})></p>`)
   .html(`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}
-  &nbsp${/(?<=-)-?\d{4}/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}`))
+  &nbsp${/(?<=-)-?\d{4}/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp id(${volcano.data.volcano_events[i].id})`))
   svgitems = ['','','',"",'','',`${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
   `${redeaths=/null|Few|Some|Many|Very Many/g.exec(`${volcano.data.volcano_events[i].deathsAmountOrderLabel}`)}`]
   $(`#relations`).append($(`<p id=relatedEruption${(i)*3+1} class="othereruption">⚡(M$)</p>`))
