@@ -85,7 +85,7 @@ function createMap() {
     draw();
 }
 
-function updateEvents(map_data) {
+function updateEvents() {
 
   d3.select('#map')
   .selectAll('.point')
@@ -96,6 +96,41 @@ function updateEvents(map_data) {
     .style("visibility", "visible");
   });
 
+
+  // updateCounts();
+  
+}
+
+
+function updateCounts() {
+  // count events by type
+  let count_eruption = 0;
+  let count_earthquake = 0;
+  let count_tsunami = 0;
+
+  map_data.forEach(point => {
+    if (point.type == "eruption") {
+      count_eruption++;
+    }
+    if (point.type == "earthquake") {
+      count_earthquake++;
+    }
+    if (point.type == "tsunami") {
+      count_tsunami++;
+    }
+
+  });
+  
+  const count_tooltip = d3.select('#counts_tooltip')
+  .append('div');
+
+  // count_tooltip.attr('id', 'counts_tooltip')
+  // .transition()
+  // .duration(2000)
+  // .style('opacity', 1);
+
+  count_tooltip.html("V:" + count_eruption + " T:" + count_tsunami + " E:" + count_earthquake);
+  
 }
 
 function draw() {
@@ -108,7 +143,7 @@ function draw() {
   var maxZoom;
 
     // create tooltip
-  const tooltip = d3.select('#tooltip')
+  const tooltip = d3.select('#info_tooltip')
   .append('div');
 
   // create projection

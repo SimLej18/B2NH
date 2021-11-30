@@ -12,8 +12,8 @@ var selectedVolcano = null;
 var selectedEvent = null;
 var world_data = null;
 
-
 initApp();
+
 
 async function initApp() {
     createTimeline();
@@ -31,6 +31,11 @@ function resetVars() {
     filteredEvents = [];
     selectedVolcano = null;
     selectedEvent = null;
+
+    // forces checkboxes to be checked at start
+    document.getElementById("checkbox_volcanoes").checked = true;
+    document.getElementById("checkbox_tsunamis").checked = true;
+    document.getElementById("checkbox_earthquakes").checked = true;
 }
 
 async function fetchAllData() {
