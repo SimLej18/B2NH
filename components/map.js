@@ -95,42 +95,14 @@ function updateEvents() {
       .style('visibility', 'visible');
   });
 
-  // updateCounts();
-
 }
 
-
-function updateCounts() {
-  // count events by type
-  let count_eruption = 0;
-  let count_earthquake = 0;
-  let count_tsunami = 0;
-
-  map_data.forEach(point => {
-    if (point.type == 'eruption') {
-      count_eruption++;
-    }
-    if (point.type == 'earthquake') {
-      count_earthquake++;
-    }
-    if (point.type == 'tsunami') {
-      count_tsunami++;
-    }
-
-  });
-
-  const count_tooltip = d3.select('#counts_tooltip')
-    .append('div');
-
-  count_tooltip.html('V:' + count_eruption + ' T:' + count_tsunami + ' E:' + count_earthquake);
-
-}
 
 function draw() {
 
   const width = 3000;
-  const height = 1500
-
+  const height = 1500;
+  var currentZoom = 1; 
   // create tooltip
   const tooltip = d3.select('#info_tooltip')
     .append('div');
@@ -323,6 +295,8 @@ function draw() {
 
   function zoomed(e) {
 
+    currentZoom = e.transform.k;
+
     world_map.attr('transform', 'translate(' + e.transform.x + ',' + e.transform.y + ')scale(' + e.transform.k + ')');
 
     points_map_data.attr('transform', function (d) {
@@ -357,17 +331,20 @@ function draw() {
     routepanelAnchorClick();
 
     position = projection([d.longitude, d.latitude]);
+    if(currentZoom >= 13) {
+      scale = 15;
+    } else {
+      scale = currentZoom + 3;
+    }
 
-    var scale = 6;
     var x = (width / 2) - (position[0] * scale);
     var y = (height / 2) - (position[1] * scale);
 
-    // var init = d3.zoomIdentity.scale(1);
     var newTransform = d3.zoomIdentity.translate(x, y).scale(scale);
 
     map
       .transition()
-      .duration(3000)
+      .duration(1500)
       .ease(d3.easeCubic)
       .call(zoom.transform, newTransform)
       .on('end', function () {
@@ -378,15 +355,7 @@ function draw() {
       });
 
 
-    // var position = projection([d.longitude, d.latitude]);
-
-    // world_map.selectAll('.path').attr('transform', function (d) {
-    //   return 'scale(4)';
-    // });
-
-    // console.log(position);
-
-  }
+     }
 }
 
 function highlightEventOnMap(d) {
