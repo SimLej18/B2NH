@@ -291,10 +291,12 @@ var symbol_type = d3.symbol().type(function(d) {
        .text(function(d) { return d.name; })
        .style("fill", "#ccc")
        .style("font-size", "40px")
+       .style("font-family", "Arial")
        .attr("vector-effect", "non-scaling-stroke")
        .attr('class', 'labels_region')
        .attr("stroke", "#666")
-       .attr("stroke-width", ".4px");
+       .attr("stroke-width", ".4px")
+       .style("visibility", "hidden");
 
   function zoomed(e) {
 
