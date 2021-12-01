@@ -175,8 +175,6 @@ function updateTimeline() {
 
 function getXFromYear(year) {
     return Math.pow(1.002, year+5000-3820);
-    //return Math.pow(1.001, year+5000-621)-0.5;
-    //return Math.pow(1.0009117, year+5000)-1;
 }
 
 function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, barLineLength=600, timeRange=[-5000, 2021]) {
