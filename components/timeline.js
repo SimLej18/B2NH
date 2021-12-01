@@ -16,21 +16,21 @@ function cancelAnchorClick(e) {
 
 function volcanoToggle() {
     checkboxes[0] = (checkboxes[0] + 1) % 2; // Invert checkbox state
-    filterEvents(checkboxes, timeRange);
+    filterEvents(checkboxes, timeFilter);
     updateMap();
     updateTimeline();
 }
 
 function tsunamiToggle() {
     checkboxes[1] = (checkboxes[1] + 1) % 2; // Invert checkbox state
-    filterEvents(checkboxes, timeRange);
+    filterEvents(checkboxes, timeFilter);
     updateMap();
     updateTimeline();
 }
 
 function earthquakeToggle() {
     checkboxes[2] = (checkboxes[2] + 1) % 2; // Invert checkbox state
-    filterEvents(checkboxes, timeRange);
+    filterEvents(checkboxes, timeFilter);
     updateMap();
     updateTimeline();
 }
