@@ -7,7 +7,6 @@ var allEventsList = [];
 var currentTypeFilter = [1, 1, 1];  // All events shown by default
 var currentTimeFilter = [-5000, 2021];  // All events shown by default
 var filteredEvents = [];
-var filteredEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents": []};
 var selectedVolcano = null;
 var selectedEvent = null;
 var world_data = null;
@@ -110,67 +109,48 @@ function filterEvents(typeFilter = currentTypeFilter, timeFilter = currentTimeFi
     console.assert(timeFilter.length == 2 && timeFilter[0] <= timeFilter[1] && timeFilter[0] >= -5000 && timeFilter[1] <= 2021, "Invalid time filter: "+timeFilter);
 
     // Updates current filters
-    var previousTimeFilter = [...currentTimeFilter];
     currentTypeFilter = [...typeFilter];
     currentTimeFilter = [...timeFilter];
 
     filteredEvents = [];
 
-
     // Filter from type
 
-    filteredEventsDict["VolcanoEvents"] = filterFromTime(filteredEventsDict["VolcanoEvents"], allEventsDict["VolcanoEvents"], currentTimeFilter, previousTimeFilter);
     if (typeFilter[0] == 1) {  // Add volcanoes
+        filteredEventsDict["VolcanoEvents"] = filterFromTime(allEventsDict["VolcanoEvents"], timeFilter);
         filteredEvents = filteredEvents.concat(filteredEventsDict["VolcanoEvents"]);
     }
-
-    filteredEventsDict["TsunamiEvents"] = filterFromTime(filteredEventsDict["TsunamiEvents"], allEventsDict["TsunamiEvents"], currentTimeFilter, previousTimeFilter);
-    if (typeFilter[1] == 1) {  // Add tsunamis
-        filteredEvents = filteredEvents.concat(filteredEventsDict["TsunamiEvents"]);
+    else {
+        filteredEventsDict["VolcanoEvents"] = [];
     }
 
-    filteredEventsDict["EarthquakeEvents"] = filterFromTime(filteredEventsDict["EarthquakeEvents"], allEventsDict["EarthquakeEvents"], currentTimeFilter, previousTimeFilter);
+    if (typeFilter[1] == 1) {  // Add tsunamis
+        filteredEventsDict["TsunamiEvents"] = filterFromTime(allEventsDict["TsunamiEvents"], timeFilter);
+        filteredEvents = filteredEvents.concat(filteredEventsDict["TsunamiEvents"]);
+    }
+    else {
+        filteredEventsDict["TsunamiEvents"] = [];
+    }
+
     if (typeFilter[2] == 1) {  // Add earthquakes
+        filteredEventsDict["EarthquakeEvents"] = filterFromTime(allEventsDict["EarthquakeEvents"], timeFilter);
         filteredEvents = filteredEvents.concat(filteredEventsDict["EarthquakeEvents"]);
+    }
+    else {
+        filteredEventsDict["EarthquakeEvents"] = [];
     }
 }
 
-function filterFromTime(list, fullList, newTimeFilter, previousTimeFilter) {
-    // Given a sorted list and a time filter, filter the list efficiently
-    if (newTimeFilter[0] > previousTimeFilter[0]) {
-        while (list.length > 0 && list[0]["year"] < newTimeFilter[0]) {
-            list.shift();  // Removes first element
+function filterFromTime(listToFilter, timeFilter) {
+    var filtered = [];
+
+    for (var elem of listToFilter) {
+        if (timeFilter[0] <= elem.year && elem.year <= timeFilter[1]) {
+            filtered.push(elem);
         }
-    }
-    if (newTimeFilter[0] < previousTimeFilter[0]) {
-        var i = 0;
-        var retrievedEvents = [];
-        while (i < fullList.length && fullList[i]["year"] < previousTimeFilter[0]) {
-            if (fullList[i]["year"] >= newTimeFilter[0]) {
-                retrievedEvents.push(fullList[i])
-            }
-            i++;
-        }
-        list = retrievedEvents.concat(list);
-    }
-    if (newTimeFilter[1] < previousTimeFilter[1] && list.length > 0) {
-        while (list.length > 0 && list[list.length - 1].year > newTimeFilter[1]) {
-            list.pop();  // Removes last element
-        }
-    }
-    if (newTimeFilter[1] > previousTimeFilter[1]) {
-        var i = fullList.length-1;
-        var retrievedEvents = [];
-        while (i >= 0 && fullList[i]["year"] > previousTimeFilter[1]) {
-            if (fullList[i]["year"] <= newTimeFilter[1]) {
-                retrievedEvents.unshift(fullList[i])
-            }
-            i--;
-        }
-        list = list.concat(retrievedEvents);
     }
 
-    return list;
+    return filtered;
 }
 
 function selectVolcano(id) {

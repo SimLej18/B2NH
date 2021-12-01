@@ -1,5 +1,7 @@
-checkboxes = [1, 1, 1];  // Checkboxes are checked by default
-timeRange = [-5000, 2021];
+var checkboxes = [1, 1, 1];  // Checkboxes are checked by default
+var timeRange = [-5000, 2021];
+var layer0 = undefined;
+var layer1 = undefined;
 
 function timelineAnchorClick() {
     $('.timelineBody').toggle();
@@ -16,18 +18,21 @@ function volcanoToggle() {
     checkboxes[0] = (checkboxes[0] + 1) % 2; // Invert checkbox state
     filterEvents(checkboxes, timeRange);
     updateMap();
+    updateTimeline();
 }
 
 function tsunamiToggle() {
     checkboxes[1] = (checkboxes[1] + 1) % 2; // Invert checkbox state
     filterEvents(checkboxes, timeRange);
     updateMap();
+    updateTimeline();
 }
 
 function earthquakeToggle() {
     checkboxes[2] = (checkboxes[2] + 1) % 2; // Invert checkbox state
     filterEvents(checkboxes, timeRange);
     updateMap();
+    updateTimeline();
 }
 
 
@@ -43,23 +48,15 @@ async function createTimeline() {
         var tool = new Tool();
 
         // Create the line bar and cursors
-        var lineBar = new Path.Rectangle(new Point(50, 65), new Size(600, 5));
-        lineBar.fillColor = new Color(196/255, 252/255, 251/255);
+        var lineBar = new Path.Rectangle(new Point(50, 65), new Size(600, 3));
 
         var leftCursor = new Path.Rectangle(new Point(30, 55), new Size(20, 25));
         leftCursor.data.clicked = false;
         leftCursor.data.year = timeRange[0];
-        leftCursor.fillColor = "black";
-        leftCursor.strokeColor = new Color(196/255, 252/255, 251/255);
-        leftCursor.strokeWidth = 4;
 
         var rightCursor = new Path.Rectangle(new Point(650, 55), new Size(20, 25));
         rightCursor.data.clicked = false;
         rightCursor.data.year = timeRange[1];
-        rightCursor.fillColor = "black";
-        rightCursor.strokeColor = new Color(196/255, 252/255, 251/255);
-        rightCursor.strokeWidth = 4;
-
 
         // Create the cursor drag functions
         tool.onMouseDown = function(e) {
@@ -90,13 +87,66 @@ async function createTimeline() {
             }
         }
 
+        layer0 = new Layer([]);
+        layer0.addChildren([
+            new Layer([]),  // Volcano layer
+            new Layer([]),  // Tsunami layer
+            new Layer([])   // Earthquake layer
+        ]);
+        layer1 = new Layer({
+            children: [lineBar, leftCursor, rightCursor],
+            fillColor: 'black',
+            strokeColor: new Color(196/255, 252/255, 251/255),
+            strokeWidth: 4
+        });
+
+        project.layers = [layer0, layer1];
+        project.layers.shift();
+
     	// Draw the view now:
     	view.draw();
     }
 }
 
-function updateTimeline() {
+function drawEvents() {
+    with (paper) {
+        // Volcano events
+        project.layers[0].children[0].children = [];
+        project.layers[0].children[0].activate();  // Activates volcano layer
+        for (var volcano of filteredEventsDict["VolcanoEvents"]) {
+            var xFromYear = (volcano.year+5000)/7021*600;
+            var height = parseFloat(volcano.measure_value)/10*50;
+            var volcanoRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
+            volcanoRect.fillColor = new Color(200/255, 0, 0);
+        }
 
+        // Tsunami events
+        project.layers[0].children[1].children = [];
+        project.layers[0].children[1].activate();  // Activates volcano layer
+        for (var tsunami of filteredEventsDict["TsunamiEvents"]) {
+            var xFromYear = (tsunami.year+5000)/7021*600;
+            var height = parseFloat(tsunami.measure_value)/10*50;
+            var tsunamiRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
+            tsunamiRect.fillColor = new Color(0, 0, 200/255);
+        }
+
+        // Earthquake events
+        project.layers[0].children[2].children = [];
+        project.layers[0].children[2].activate();  // Activates volcano layer
+        for (var earthquake of filteredEventsDict["EarthquakeEvents"]) {
+            var xFromYear = (earthquake.year+5000)/7021*600;
+            var height = parseFloat(earthquake.measure_value)/10*50;
+            var earthquakeRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
+            earthquakeRect.fillColor = new Color(0, 200/255, 0);
+        }
+
+        // Draw the view now:
+    	view.update();
+    }
+}
+
+function updateTimeline() {
+    drawEvents();
 }
 
 /*
