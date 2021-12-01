@@ -265,18 +265,31 @@ function draw() {
         .style('opacity', 1);
 
       tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans + '<br/><br/>' + 'long:' + d.longitude + ' lat:' + d.latitude);
+
+      // var matrix = this.transform.baseVal.consolidate().matrix;
+      // var x = matrix.e
+      // var y = matrix.f
+      // .attr('transform', 'translate(' + x + ',' + y + ')scale(2)')
+
       d3.select(this)
-        .attr('fill', 'yellow')
-        .attr('fill-opacity', 1);
+        .attr('stroke', 'red')
+        .attr('stroke-width', 4)
+        .attr('opacity', 1);
+
     })
     .on('mouseout', function (e, d) {
       tooltip.transition()
         .duration(1000)
         .style('opacity', 0);
+
       d3.select(this)
         .attr('fill', function (d) {
           return color(d)
-        });
+        })
+        .attr('d', symbol_type)
+        .attr('stroke', function (d) {
+          return color(d)
+        }).attr('stroke-width', 1);
     })
     .on('click', function (e, d) {
       clickEvent(e, d);
@@ -338,16 +351,53 @@ function draw() {
   }
 
   function clickEvent(e, d) {
-    // open info panel
-    infopanelAnchorClick();
-    // update info panel
-    updateInfoPanel(d.self_url);
 
-    // selectedEvent = d;
-    // updateCircuitButton();
+    // close panels
+    infopanelAnchorClick();
+    routepanelAnchorClick();
+
+    position = projection([d.longitude, d.latitude]);
+
+    var scale = 6;
+    var x = (width / 2) - (position[0] * scale);
+    var y = (height / 2) - (position[1] * scale);
+
+    // var init = d3.zoomIdentity.scale(1);
+    var newTransform = d3.zoomIdentity.translate(x, y).scale(scale);
+
+    map
+      .transition()
+      .duration(3000)
+      .ease(d3.easeCubic)
+      .call(zoom.transform, newTransform)
+      .on('end', function () {
+        // open info panel
+        infopanelAnchorClick();
+        // update info panel
+        updateInfoPanel(d.self_url);
+      });
+
+
+    // var position = projection([d.longitude, d.latitude]);
+
+    // world_map.selectAll('.path').attr('transform', function (d) {
+    //   return 'scale(4)';
+    // });
+
+    // console.log(position);
+
   }
+}
+
+function highlightEventOnMap(d) {
+  console.log('hightlightEvent');
+  console.log(d);
+  console.log(d.type);
+  console.log(d.id);
+  d3.select('#' + d.type + '_' + d.id).attr('fill', 'yellow').size("1000");
 
 }
+
 
 
 // Bin
