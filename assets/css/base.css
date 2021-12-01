@@ -17,6 +17,22 @@ body {
     height: 100%;
     overflow: hidden
 }
+/*Sexy Glowing effect ( ͡° ͜ʖ ͡°) */
+
+.glow {
+    -webkit-animation: glow 2s ease-in-out alternate;
+    -moz-animation: glow 2s ease-in-out alternate;
+    animation: glow 2s ease-in-out alternate;
+  }
+  
+  @-webkit-keyframes glow {
+    from {
+      text-shadow: 0 0 10px rgb(196, 252, 251), 0 0 20px rgb(196, 252, 251), 0 0 30px #0400e6, 0 0 40px #0400e6, 0 0 50px #0400e6, 0 0 60px #0400e6, 0 0 70px #0400e6;
+    }
+    to {
+      text-shadow: 0 0 20px rgb(196, 252, 251), 0 0 30px #684dff, 0 0 40px #684dff, 0 0 50px #684dff, 0 0 60px #684dff, 0 0 70px #684dff, 0 0 80px #684dff;
+    }
+  }
 
 /* remove bullet */
 li {
