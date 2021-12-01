@@ -18,6 +18,7 @@ async function initApp() {
     createTimeline();
     await fetchAllData();
     updateTimeline();
+    updateCounts();
     createMap();
 }
 
@@ -139,6 +140,7 @@ function filterEvents(typeFilter = currentTypeFilter, timeFilter = currentTimeFi
     else {
         filteredEventsDict["EarthquakeEvents"] = [];
     }
+    updateCounts();
 }
 
 function filterFromTime(listToFilter, timeFilter) {
@@ -149,8 +151,10 @@ function filterFromTime(listToFilter, timeFilter) {
             filtered.push(elem);
         }
     }
-
+    updateCounts();
+    
     return filtered;
+
 }
 
 function selectVolcano(id) {
@@ -181,4 +185,11 @@ function selectEvent(type, id) {
         }).then(info => {
             selectedEvent = info;
         }).catch((error) => console.error("erreur du fetch:", error));
+}
+
+
+function updateCounts() {
+    document.getElementById("volcanos_count").innerHTML = filteredEventsDict["VolcanoEvents"].length;
+    document.getElementById("earthquakes_count").innerHTML = filteredEventsDict["EarthquakeEvents"].length;
+    document.getElementById("tsunamis_count").innerHTML = filteredEventsDict["TsunamiEvents"].length;
 }

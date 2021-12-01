@@ -3,17 +3,21 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
     <title>Back 2 Natural Hazards</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        defer></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.0.js"></script> -->
     <script src="https://d3js.org/d3.v7.min.js" defer></script>
     <script src="./assets/js/paper.js" defer></script>
 
     <!-- Components -->
     <script src="./components/map.js" defer></script>
-    <script src="./components/timeline.js" canvas="timelineCanvas" defer></script>
+    <script src="./components/timeline.js" canvas="timelineCanvas"
+        defer></script>
     <script src="./components/infopanel.js" defer></script>
     <script src="./components/routepanel.js" defer></script>
 
@@ -32,34 +36,55 @@
 
         <div class="map" id="map">
             <div id="info_tooltip"></div>
-            <div id="counts_tooltip"></div>
 
-            <!-- <canvas id="canvas" height="1920" width="1080"></canvas> -->
+
         </div>
 
         <div class="panelsContainer">
             <div class="leftPanelsContainer">
                 <div class="panel timeline">
-                    <div class="panelAnchor timelineAnchor" onclick="timelineAnchorClick()">
+                    <div class="panelAnchor timelineAnchor"
+                        onclick="timelineAnchorClick()">
                         timeline
-                        <div class="eventTypeSelector" onclick="cancelAnchorClick()">
-                            <input type="checkbox" id="checkbox_volcanoes" onclick="volcanoToggle()" checked/>
+                        <div class="eventTypeSelector"
+                            onclick="cancelAnchorClick()">
+                            <input type="checkbox"
+                                id="checkbox_volcanoes"
+                                onclick="volcanoToggle()" checked />
                             <label>V</label>
-                            <input type="checkbox" id="checkbox_tsunamis" onclick="tsunamiToggle()" checked/>
+                            <input type="checkbox"
+                                id="checkbox_tsunamis"
+                                onclick="tsunamiToggle()" checked />
                             <label>T</label>
-                            <input type="checkbox" id="checkbox_earthquakes" onclick="earthquakeToggle()" checked/>
+                            <input type="checkbox"
+                                id="checkbox_earthquakes"
+                                onclick="earthquakeToggle()"
+                                checked />
                             <label>E</label>
                         </div>
                     </div>
                     <div class="panelBody timelineBody" id="timeline">
                         <canvas id="timelineCanvas"></canvas>
+
+
+                        <!-- To move somewhere -->
+                        <div id="events_counts">
+                            <span id="volcanos_count"></span>
+                            <span id="earthquakes_count"></span>
+                            <span id="tsunamis_count"></span>
+                        </div>
+
                     </div>
+
+
+
                 </div>
             </div>
 
             <div class="rightPanelsContainer">
                 <div class="panel infopanel">
-                    <div class="panelAnchor infopanelAnchor" onclick="infopanelAnchorClick()">
+                    <div class="panelAnchor infopanelAnchor"
+                        onclick="infopanelAnchorClick()">
                         <div class="infopanelTitle">
                             infopanel
                         </div>
@@ -75,33 +100,45 @@
                             <p id="element6"></p>
                             <p id="element7"></p>
                         </div>
-                        <div id="commentary" class="hiddenpanel scrolltext"></div>
-                        <div id="relations" class="hiddenpanel scrolltext">
-                            <p id="heading_of_relations" >Related Events :</p>
-                            <p id="relation3" class="hiddenpanel relation volcanoheading">All the eruptions of :</p>
-                            <p id="relation4" class="hiddenpanel relation volcanoheading"></p>
+                        <div id="commentary"
+                            class="hiddenpanel scrolltext"></div>
+                        <div id="relations"
+                            class="hiddenpanel scrolltext">
+                            <p id="heading_of_relations">Related
+                                Events :</p>
+                            <p id="relation3"
+                                class="hiddenpanel relation volcanoheading">
+                                All the eruptions of :</p>
+                            <p id="relation4"
+                                class="hiddenpanel relation volcanoheading">
+                            </p>
                         </div>
                         <div id="infobuttons">
-                            <p id="togglerelations" class="panelbutton subinfopaneltoggle" >Show related events</p>
-                            <p id="togglecommentary" class="panelbutton subinfopaneltoggle" >Description</p>
+                            <p id="togglerelations"
+                                class="panelbutton subinfopaneltoggle">
+                                Show related events</p>
+                            <p id="togglecommentary"
+                                class="panelbutton subinfopaneltoggle">
+                                Description</p>
                             <p id="circuitbutton"></p>
-                        </div>                        
+                        </div>
 
                     </div>
                 </div>
 
                 <div class="panel routepanel">
-                    <div class="panelAnchor routepanelAnchor" onclick="routepanelAnchorClick()">
+                    <div class="panelAnchor routepanelAnchor"
+                        onclick="routepanelAnchorClick()">
                     </div>
                     <div class="panelBody routepanelBody">
                         / here is the routepanel \
                         <ul id="printedRoute" class="scrolltext">
                             Create your own circuit !
                         </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 </body>
 
