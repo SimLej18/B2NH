@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
-    <title>Back 2 Natural Hazards</title>
+        <title>Back 2 Natural Hazards</title>
+
 
     <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         defer></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.5.0.js"></script> -->
     <script src="https://d3js.org/d3.v7.min.js" defer></script>
     <script src="./assets/js/paper.js" defer></script>
 
@@ -25,9 +25,10 @@
 
     <!--- Stylesheets -->
     <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="icon" href="./favicon.ico">
 
     <!--- Fonts -->
-    <!--link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"-->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"> -->
 
 </head>
 
@@ -36,8 +37,6 @@
 
         <div class="map" id="map">
             <div id="info_tooltip"></div>
-
-
         </div>
 
         <div class="panelsContainer">
@@ -69,9 +68,9 @@
 
                         <!-- To move somewhere -->
                         <div id="events_counts">
-                            <span id="volcanos_count"></span>
-                            <span id="earthquakes_count"></span>
-                            <span id="tsunamis_count"></span>
+                            V: <span id="volcanos_count" class="count"></span>
+                            E: <span id="earthquakes_count" class="count"></span>
+                            T: <span id="tsunamis_count" class="count"></span>
                         </div>
 
                     </div>
