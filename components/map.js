@@ -265,7 +265,7 @@ function draw() {
         .style('opacity', 1);
 
       tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans + '<br/><br/>' + 'long:' + d.longitude + ' lat:' + d.latitude);
-      
+
       // var matrix = this.transform.baseVal.consolidate().matrix;
       // var x = matrix.e
       // var y = matrix.f
@@ -275,13 +275,13 @@ function draw() {
         .attr('stroke', 'red')
         .attr('stroke-width', 4)
         .attr('opacity', 1);
-        
+
     })
     .on('mouseout', function (e, d) {
       tooltip.transition()
         .duration(1000)
         .style('opacity', 0);
-  
+
       d3.select(this)
         .attr('fill', function (d) {
           return color(d)
@@ -351,29 +351,40 @@ function draw() {
   }
 
   function clickEvent(e, d) {
-    // open info panel
-    infopanelAnchorClick();
-    // update info panel
-    updateInfoPanel(d.self_url);
 
-    // zoom to point
-    var centered;
-    var x = 0, y = 0;
+    console.log(e, d);
 
-// If the click was on the centered state or the background, re-center.
-// Otherwise, center the clicked-on state.
-if (!d || centered === d) {
-  centered = null;
-} else {
-  var centroid = path.centroid(d);
-  x = width / 2 - centroid[0];
-  y = height / 2 - centroid[1];
-  centered = d;
-}
-  console.log(centroid);
+    position = projection([d.longitude, d.latitude]);
+
+    var scale = 4;
+    var x = (width / 2) - (position[0] * scale);
+    var y = (height / 2) - (position[1] * scale);
+
+    // var init = d3.zoomIdentity.scale(1);
+    var newTransform = d3.zoomIdentity.translate(x, y).scale(scale);
+
+    map
+      .transition()
+      .duration(3000)
+      .ease(d3.easeCubic)
+      .call(zoom.transform, newTransform)
+      .on('end', function () {
+        // open info panel
+        infopanelAnchorClick();
+        // update info panel
+        updateInfoPanel(d.self_url);
+      });
+
+
+    // var position = projection([d.longitude, d.latitude]);
+
+    // world_map.selectAll('.path').attr('transform', function (d) {
+    //   return 'scale(4)';
+    // });
+
+    // console.log(position);
+
   }
-
-
 }
 
 function highlightEventOnMap(d) {
