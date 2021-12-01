@@ -352,11 +352,13 @@ function draw() {
 
   function clickEvent(e, d) {
 
-    console.log(e, d);
+    // close panels
+    infopanelAnchorClick();
+    routepanelAnchorClick();
 
     position = projection([d.longitude, d.latitude]);
 
-    var scale = 4;
+    var scale = 6;
     var x = (width / 2) - (position[0] * scale);
     var y = (height / 2) - (position[1] * scale);
 
