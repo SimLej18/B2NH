@@ -30,15 +30,12 @@ if ($('#commentary').is(":visible")){
 }}})
 
 //go to the chosen related event
-function GoToRelation(i) {
-  type=`${/tsunami|earthquake|eruption/g.exec(`${$(`#relation${i}`).text()}`)}`
-  id=`${/\d+/g.exec(`${$(`#relation${i}`).text()}`)}`
+function GoToRelation(type,id){
   updateInfoPanel("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
 }
 
 //go to the chosen related eruption
-function GoToRelatedEruption(i){
-  id=`${/(?<=[id(])\d+/g.exec(`${$(`#relatedEruption${i}`).text()}`)}`
+function GoToRelatedEruption(id){
   updateInfoPanel("https://b2nh-api.tintamarre.be/api/v1/events/eruption/"+id)
 }
 
@@ -112,23 +109,23 @@ function updateInfoPanel(url_of_event) {
   $('.othereruption').remove()
   for (i=0;i<3;i++){
     if(relations[i]!=0){
-  $(`#relation${i}`).html(relationType[i]+'('+relations[i]+')').toggle()}
+      $(`#relations`).append($(`<p class="panelbutton othereruption" onclick=GoToRelation(${relationType[i]},${relations[i]})></p>`)).html(relationType[i]+'('+relations[i]+')'
+    )}
     }
   if(volcano!=null){
-  $(`.volcanoheading`).toggle()
-  $(`#relation4`).html(`🌋Volcano : ${volcano.data.name}🌋`)
-  $(`#relations`).append($(`<p id=relation5 class="othereruption"></p>`))
-  drawbar(svgitems,keys[3],`#relation5`)
-  for(i=0;i<volcano.data.events_count;i++){
-  $(`#relations`).append($(`<p id=relatedEruption${(i)*3} class="panelbutton othereruption" onclick=GoToRelatedEruption(${i*3})></p>`)
-  .html(`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}
-  &nbsp${/(?<=-)-?\d{4}/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp id(${volcano.data.volcano_events[i].id})`))
-  svgitems = ['','','',"",'','',`${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
-  `${redeaths=/null|Few|Some|Many|Very Many/g.exec(`${volcano.data.volcano_events[i].deathsAmountOrderLabel}`)}`]
-  $(`#relations`).append($(`<p id=relatedEruption${(i)*3+1} class="othereruption">⚡(M$)</p>`))
-  drawdamage(svgitems,volcano.data.volcano_events[i].damageAmountOrder,`#relatedEruption${(i)*3+1}`)
-  $(`#relations`).append($(`<p id=relatedEruption${(i)*3+2} class="othereruption">💀</p>`))
-  drawdeath(svgitems,volcano.data.volcano_events[i].deathsAmountOrder,`#relatedEruption${(i)*3+2}`)
+    $(`#relations`).append($(`<p class="othereruption"></p>`)).html("List of all eruptions of :")
+    $(`#relations`).append($(`<p id=volcanoVEI class="othereruption"></p>`).html(`🌋Volcano : ${volcano.data.name}🌋`))
+    drawbar(svgitems,keys[3],`#volcanoVEI`)
+    for(i=0;i<volcano.data.events_count;i++){
+    $(`#relations`).append($(`<p id=relatedEruption${(i)*3} class="panelbutton othereruption" onclick=GoToRelatedEruption(${volcano.data.volcano_events[i].id})></p>`)
+    .html(`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}
+    &nbsp${/(?<=-)-?\d{4}/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp id(${volcano.data.volcano_events[i].id})`))
+    svgitems = ['','','',"",'','',`${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
+    `${redeaths=/null|Few|Some|Many|Very Many/g.exec(`${volcano.data.volcano_events[i].deathsAmountOrderLabel}`)}`]
+    $(`#relations`).append($(`<p id=relatedEruption${(i)*3+1} class="othereruption">⚡(M$)</p>`))
+    drawdamage(svgitems,volcano.data.volcano_events[i].damageAmountOrder,`#relatedEruption${(i)*3+1}`)
+    $(`#relations`).append($(`<p id=relatedEruption${(i)*3+2} class="othereruption">💀</p>`))
+    drawdeath(svgitems,volcano.data.volcano_events[i].deathsAmountOrder,`#relatedEruption${(i)*3+2}`)
   }
   }
   }
