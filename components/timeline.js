@@ -1,5 +1,5 @@
 var checkboxes = [1, 1, 1];  // Checkboxes are checked by default
-var timeRange = [-5000, 2021];
+var timeFilter = [-5000, 2021];
 var layer0 = undefined;
 var layer1 = undefined;
 
@@ -52,11 +52,11 @@ async function createTimeline() {
 
         var leftCursor = new Path.Rectangle(new Point(30, 55), new Size(20, 25));
         leftCursor.data.clicked = false;
-        leftCursor.data.year = timeRange[0];
+        leftCursor.data.year = timeFilter[0];
 
         var rightCursor = new Path.Rectangle(new Point(650, 55), new Size(20, 25));
         rightCursor.data.clicked = false;
-        rightCursor.data.year = timeRange[1];
+        rightCursor.data.year = timeFilter[1];
 
         // Create the cursor drag functions
         tool.onMouseDown = function(e) {
@@ -71,9 +71,10 @@ async function createTimeline() {
         tool.onMouseUp = function(e) {
             leftCursor.data.clicked = false;
             rightCursor.data.clicked = false;
-            timeRange = [leftCursor.data.year, rightCursor.data.year];
-            filterEvents(checkboxes, timeRange);
+            timeFilter = [leftCursor.data.year, rightCursor.data.year];
+            filterEvents(checkboxes, timeFilter);
             updateMap();
+            updateTimeline();
         }
 
         tool.onMouseDrag = function(e) {
@@ -113,31 +114,48 @@ function drawEvents() {
         // Volcano events
         project.layers[0].children[0].children = [];
         project.layers[0].children[0].activate();  // Activates volcano layer
-        for (var volcano of filteredEventsDict["VolcanoEvents"]) {
+        for (var volcano of allEventsDict["VolcanoEvents"]) {
             var xFromYear = (volcano.year+5000)/7021*600;
             var height = parseFloat(volcano.measure_value)/10*50;
             var volcanoRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
-            volcanoRect.fillColor = new Color(200/255, 0, 0);
+            if (timeFilter[0] <= volcano.year && volcano.year <= timeFilter[1]) {
+                volcanoRect.fillColor = new Color(200/255, 0, 0, 1);
+            }
+            else {
+                volcanoRect.fillColor = new Color(200/255, 0, 0, 0.25);
+            }
         }
 
         // Tsunami events
         project.layers[0].children[1].children = [];
         project.layers[0].children[1].activate();  // Activates volcano layer
-        for (var tsunami of filteredEventsDict["TsunamiEvents"]) {
+        for (var tsunami of allEventsDict["TsunamiEvents"]) {
             var xFromYear = (tsunami.year+5000)/7021*600;
             var height = parseFloat(tsunami.measure_value)/10*50;
             var tsunamiRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
             tsunamiRect.fillColor = new Color(0, 0, 200/255);
+            if (timeFilter[0] <= tsunami.year && tsunami.year <= timeFilter[1]) {
+                tsunamiRect.fillColor = new Color(0, 0, 200/255, 1);
+            }
+            else {
+                tsunamiRect.fillColor = new Color(0, 0, 200/255, 0.25);
+            }
         }
 
         // Earthquake events
         project.layers[0].children[2].children = [];
         project.layers[0].children[2].activate();  // Activates volcano layer
-        for (var earthquake of filteredEventsDict["EarthquakeEvents"]) {
+        for (var earthquake of allEventsDict["EarthquakeEvents"]) {
             var xFromYear = (earthquake.year+5000)/7021*600;
             var height = parseFloat(earthquake.measure_value)/10*50;
             var earthquakeRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
             earthquakeRect.fillColor = new Color(0, 200/255, 0);
+            if (timeFilter[0] <= earthquake.year && earthquake.year <= timeFilter[1]) {
+                earthquakeRect.fillColor = new Color(0, 200/255, 0, 1);
+            }
+            else {
+                earthquakeRect.fillColor = new Color(0, 200/255, 0, 0.25);
+            }
         }
 
         // Draw the view now:
@@ -146,47 +164,9 @@ function drawEvents() {
 }
 
 function updateTimeline() {
+    console.log(filteredEventsDict);
     drawEvents();
 }
-
-/*
-function updateTimeline() {
-    with (paper) {
-        var tool = new Tool();
-        for (var event of filteredEvents) {
-
-        }
-
-
-        // Create the cursor drag functions
-        tool.onMouseDown = function(e) {
-            if (leftCursor.contains(e.point)) {
-                leftCursor.data.clicked = true;
-            }
-            else if (rightCursor.contains(e.point)) {
-                rightCursor.data.clicked = true;
-            }
-        }
-
-        tool.onMouseUp = function(e) {
-            leftCursor.data.clicked = false;
-            rightCursor.data.clicked = false;
-        }
-
-        tool.onMouseDrag = function(e) {
-            if (leftCursor.data.clicked) {
-                leftCursor.position = new Point(Math.max(Math.min((e.point.x-5), rightCursor.position.x-20), 60), 67.5);
-            }
-            if (rightCursor.data.clicked) {
-                rightCursor.position = new Point(Math.max(Math.min((e.point.x-5), 640), leftCursor.position.x+20), 67.5);
-            }
-        }
-
-    	// Draw the view now:
-    	view.draw();
-    }
-}
-*/
 
 function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, barLineLength=600, timeRange=[-5000, 2021]) {
     console.assert(cursorSide == "left" || cursorSide == "right", "Invalid cursorSide");
@@ -203,46 +183,3 @@ function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, 
 
     return Math.ceil(year);
 }
-
-/* LEGACY CODE
-
-// Idea for a range slider https://rasmusfonseca.github.io/d3RangeSlider/
-
-// Dummy example with d3.js
-data = [    {
-    "type": "Eruption",
-    "value": "5"
-}, {
-    "type": "Tsunamis",
-    "value": "2"
-}, {
-    "type": "Earthquakes",
-    "value": "4"
-}];
-
-d3.select("#timeline").selectAll("div")
-    .data(data)
-    .enter()
-    .append("div")
-    .attr("class", "event")
-    .style("width", function(d) {
-        return d.value * 10 + "px";
-    }
-    )
-    .style("height", function(d) {
-        return 15 + "px";
-    }
-    )
-    .style("background-color", function(d) {
-        return "rgb(100,0," + d.value * 10 + ")";
-    }
-    )
-    .style("color", function(d) {
-        return "rgb(0,0," + d.value * 10 + ")";
-    }
-    )
-    .text(function(d) {
-        return d.type;
-    }
-    );
-*/
