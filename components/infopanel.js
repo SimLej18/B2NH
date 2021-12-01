@@ -30,8 +30,12 @@ if ($('#commentary').is(":visible")){
 }}})
 
 //go to the chosen related event
-function GoToRelation(type,id){
-  updateInfoPanel("https://b2nh-api.tintamarre.be/api/v1/events/"+type+"/"+id)
+function GoToRelatedEarthquake(id){
+  updateInfoPanel("https://b2nh-api.tintamarre.be/api/v1/events/earthquake/"+id)
+}
+//go to the chosen related event
+function GoToRelatedTsunami(id){
+  updateInfoPanel("https://b2nh-api.tintamarre.be/api/v1/events/tsunami/"+id)
 }
 
 //go to the chosen related eruption
@@ -78,7 +82,7 @@ function updateInfoPanel(url_of_event) {
 
   
   
-  function display(keys,labels,svgitems,comments,relations,volcano){
+  function display(info,keys,labels,svgitems,comments,relations,volcano){
   //write infos
   for(i=0;i<7;i++){
     $(`#element${i}`).html(``)
@@ -104,27 +108,28 @@ function updateInfoPanel(url_of_event) {
   $('#commentary').html(comments)
 
   //write related events
-  relationType=["earthquake ","tsunami ","eruption "]
-  $('.relation').css({"display":"none"})
-  $('.othereruption').remove()
+  relationType=["Earthquake","Tsunami","Eruption"]
+  $('.relation').remove()
   for (i=0;i<3;i++){
-    if(relations[i]!=0){
-      $(`#relations`).append($(`<p class="panelbutton othereruption" onclick=GoToRelation(${relationType[i]},${relations[i]})></p>`)).html(relationType[i]+'('+relations[i]+')'
-    )}
-    }
+
+    if(relations[i]!=0){    
+     $(`#relations`).append($(`<p class="panelbutton relation" onclick=GoToRelated${relationType[i]}(${relations[i]})></p>`)
+     .html(`${relationType[i]}`)
+     )
+    }}
   if(volcano!=null){
-    $(`#relations`).append($(`<p class="othereruption"></p>`)).html("List of all eruptions of :")
-    $(`#relations`).append($(`<p id=volcanoVEI class="othereruption"></p>`).html(`🌋Volcano : ${volcano.data.name}🌋`))
+    $(`#relations`).append($(`<p class="relation"></p>`).html("List of all eruptions of :"))
+    $(`#relations`).append($(`<p id=volcanoVEI class="relation"></p>`).html(`🌋Volcano : ${volcano.data.name}🌋`))
     drawbar(svgitems,keys[3],`#volcanoVEI`)
     for(i=0;i<volcano.data.events_count;i++){
-    $(`#relations`).append($(`<p id=relatedEruption${(i)*3} class="panelbutton othereruption" onclick=GoToRelatedEruption(${volcano.data.volcano_events[i].id})></p>`)
+    $(`#relations`).append($(`<p id=relatedEruption${(i)*3} class="panelbutton relation" onclick=GoToRelatedEruption(${volcano.data.volcano_events[i].id})></p>`)
     .html(`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}
-    &nbsp${/(?<=-)-?\d{4}/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp id(${volcano.data.volcano_events[i].id})`))
+    &nbsp${/(?<=-)-?\d{4}/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}`))
     svgitems = ['','','',"",'','',`${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
     `${redeaths=/null|Few|Some|Many|Very Many/g.exec(`${volcano.data.volcano_events[i].deathsAmountOrderLabel}`)}`]
-    $(`#relations`).append($(`<p id=relatedEruption${(i)*3+1} class="othereruption">⚡(M$)</p>`))
+    $(`#relations`).append($(`<p id=relatedEruption${(i)*3+1} class="relation">⚡(M$)</p>`))
     drawdamage(svgitems,volcano.data.volcano_events[i].damageAmountOrder,`#relatedEruption${(i)*3+1}`)
-    $(`#relations`).append($(`<p id=relatedEruption${(i)*3+2} class="othereruption">💀</p>`))
+    $(`#relations`).append($(`<p id=relatedEruption${(i)*3+2} class="relation">💀</p>`))
     drawdeath(svgitems,volcano.data.volcano_events[i].deathsAmountOrder,`#relatedEruption${(i)*3+2}`)
   }
   }
@@ -242,14 +247,14 @@ function fetchEvent(url_of_event) {
     }
     }).then(volcano => {
       console.log(volcano),
-      display(keys,labels,svgitems,comments,relations,volcano)})
+      display(info,keys,labels,svgitems,comments,relations,volcano)})
     
     
     }
     else {
     if((info.data.type=="tsunami"|info.data.type=="earthquake")){
     volcano=null
-    display(keys,labels,svgitems,comments,relations,volcano)}
+    display(info,keys,labels,svgitems,comments,relations,volcano)}
     }
     })
     
