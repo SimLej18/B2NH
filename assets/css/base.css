@@ -20,9 +20,6 @@ body {
 /*Sexy Glowing effect ( ͡° ͜ʖ ͡°) */
 
 .glow {
-    -webkit-animation: glow 2s ease-in-out alternate;
-    -moz-animation: glow 2s ease-in-out alternate;
-    animation: glow 2s ease-in-out alternate;
   }
   
   @-webkit-keyframes glow {
