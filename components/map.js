@@ -327,8 +327,8 @@ function draw() {
   function clickEvent(e, d) {
 
     // close panels
-    infopanelAnchorClick();
-    routepanelAnchorClick();
+    //infopanelAnchorClick();
+    //routepanelAnchorClick();
 
     position = projection([d.longitude, d.latitude]);
     if(currentZoom >= 13) {
