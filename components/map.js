@@ -5,55 +5,55 @@
 
 let labels_data = [
     {
-        "name" : "Mer de surf",
-        "description" : "description", // Alaska
-        "longitude": -140,
-        "latitude": 55,
-        "angle": 65
+        'name' : 'Mer de surf',
+        'description' : 'description', // Alaska
+        'longitude': -140,
+        'latitude': 55,
+        'angle': 65
     },
     { 
-        "name" : "Massif du Completo", // Chili
-        "description" : "description",
-        "longitude": -93,
-        "latitude": 0,
-        "angle": 71
+        'name' : 'Massif du Completo', // Chili
+        'description' : 'description',
+        'longitude': -93,
+        'latitude': 0,
+        'angle': 71
     },
     {   
-      "name" : "Contrée du riz soufflé", // Asie
-      "description" : "description",
-      "longitude": 90,
-      "latitude": -10,
-      "angle": 10
+      'name' : 'Contrée du riz soufflé', // Asie
+      'description' : 'description',
+      'longitude': 90,
+      'latitude': -10,
+      'angle': 10
   },
   {   
-      "name" : "Tundra maléfique", // 
-      "description" : "description",
-      "longitude": 90,
-      "latitude": 45,
-      "angle": 0
+      'name' : 'Tundra maléfique', // 
+      'description' : 'description',
+      'longitude': 90,
+      'latitude': 45,
+      'angle': 0
   },
   {   
-      "name" : "Vallé du piment", // Mexique
-      "description" : "description",
-      "longitude": -125,
-      "latitude": 16,
-       "angle": 40
+      'name' : 'Vallé du piment', // Mexique
+      'description' : 'description',
+      'longitude': -125,
+      'latitude': 16,
+       'angle': 40
 
   },
   {   
-      "name" : "Île piquante", // Islande
-      "description" : "description",
-      "longitude": -32,
-      "latitude": 60,
-      "angle": 0
+      'name' : 'Île piquante', // Islande
+      'description' : 'description',
+      'longitude': -32,
+      'latitude': 60,
+      'angle': 0
 
   },
   {   
-      "name" : "Terre du milieu", // Europe
-      "description" : "description",
-      "longitude": 4,
-      "latitude": 50,
-      "angle": 0
+      'name' : 'Terre du milieu', // Europe
+      'description' : 'description',
+      'longitude': 4,
+      'latitude': 50,
+      'angle': 0
 
   },
 
@@ -76,7 +76,7 @@ function updateMap() {
 
 function addDestinationToMap() {
     // toggleClass
-    console.log("addDestinationToMap called!");
+    console.log('addDestinationToMap called!');
 }
 
 // function to create map with d3.js
@@ -89,11 +89,11 @@ function updateEvents() {
 
   d3.select('#map')
   .selectAll('.point')
-  .style("visibility", "hidden");
+  .style('visibility', 'hidden');
 
   map_data.forEach(point => {
-    d3.select('#' + point.type + "_" + point.id)
-    .style("visibility", "visible");
+    d3.select('#' + point.type + '_' + point.id)
+    .style('visibility', 'visible');
   });
 
   // updateCounts();
@@ -108,13 +108,13 @@ function updateCounts() {
   let count_tsunami = 0;
 
   map_data.forEach(point => {
-    if (point.type == "eruption") {
+    if (point.type == 'eruption') {
       count_eruption++;
     }
-    if (point.type == "earthquake") {
+    if (point.type == 'earthquake') {
       count_earthquake++;
     }
-    if (point.type == "tsunami") {
+    if (point.type == 'tsunami') {
       count_tsunami++;
     }
 
@@ -123,7 +123,7 @@ function updateCounts() {
   const count_tooltip = d3.select('#counts_tooltip')
   .append('div');
 
-  count_tooltip.html("V:" + count_eruption + " T:" + count_tsunami + " E:" + count_earthquake);
+  count_tooltip.html('V:' + count_eruption + ' T:' + count_tsunami + ' E:' + count_earthquake);
   
 }
 
@@ -178,39 +178,39 @@ function draw() {
    // Create a color scale
    var color = function(d) { 
 	if(d.type == 'tsunami') {
-		return colorScaleTsunami(adapt_to_per10(d));
+		return colorScaleTsunami(toBase10(d));
 	}
 	else if(d.type == 'eruption') {
-		return colorScaleEruption(adapt_to_per10(d));
+		return colorScaleEruption(toBase10(d));
 	}
-	else return colorScaleEarthquake(adapt_to_per10(d));
+	else return colorScaleEarthquake(toBase10(d));
     };
 
      
      var colorScaleEarthquake = d3.scaleLinear()
      .domain([0, 10])
-     .range(["#fff", "#008101"]);
+     .range(['#fff', '#008101']);
      
      var colorScaleEruption = d3.scaleLinear()
      .domain([0, 10])
-     .range(["#fff", '#ff0000']);
+     .range(['#fff', '#ff0000']);
      
      var colorScaleTsunami = d3.scaleLinear()
      .domain([0, 10])
-     .range(["#fff", '#0000ff']);
+     .range(['#fff', '#0000ff']);
 
 
-var adapt_to_per10 = function(d) {
+var toBase10 = function(d) {
   if(d.type == 'eruption') {
-    per10 = d.measure_value / 8 * 10;
+    measureBase10 = d.measure_value / 8 * 10;
   }
-  else per10 = d.measure_value;
+  else measureBase10 = d.measure_value;
 
-  return per10;
+  return measureBase10;
 }
 
 var symbol_size = function(d) {
-  return Math.pow(adapt_to_per10(d), 2.4) // magic number
+  return Math.pow(toBase10(d), 2.4) // magic number
 }
 
 // use this for generating symbols
@@ -242,11 +242,11 @@ var symbol_type = d3.symbol().type(function(d) {
   .attr('id', ({type,id}) => type + '_' + id)
   .attr('class', function (d) { return 'point ' + d.type })
   .attr('d', symbol_type)
-  .attr("transform", function(d) {
-      return "translate(" + projection([
+  .attr('transform', function(d) {
+      return 'translate(' + projection([
         d.longitude,
         d.latitude
-      ]) + ")";
+      ]) + ')';
     })
   .attr('stroke', function(d){ return color(d) })
   .attr('stroke-width', 1)
@@ -258,7 +258,7 @@ var symbol_type = d3.symbol().type(function(d) {
         .duration(200)
         .style('opacity', 1);
 
-    tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans + '<br/><br/>' + "long:" + d.longitude + " lat:" +  d.latitude);
+    tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans + '<br/><br/>' + 'long:' + d.longitude + ' lat:' +  d.latitude);
     d3.select(this)
     .attr('fill', 'yellow')
     .attr('fill-opacity', 1); 
@@ -282,40 +282,40 @@ var symbol_type = d3.symbol().type(function(d) {
        .data(labels_data)
        .enter()
        .append('text')
-       .attr("transform", function(d) {
-      return "translate(" + projection([
+       .attr('transform', function(d) {
+      return 'translate(' + projection([
             d.longitude,
             d.latitude
-         ]) + ")rotate(" + d.angle +")";
+         ]) + ')rotate(' + d.angle +')';
        })
        .text(function(d) { return d.name; })
-       .style("fill", "#ccc")
-       .style("font-size", "40px")
-       .style("font-family", "Arial")
-       .attr("vector-effect", "non-scaling-stroke")
+       .style('fill', '#ccc')
+       .style('font-size', '40px')
+       .style('font-family', 'Arial')
+       .attr('vector-effect', 'non-scaling-stroke')
        .attr('class', 'labels_region')
-       .attr("stroke", "#666")
-       .attr("stroke-width", ".4px")
-       .style("visibility", "hidden");
+       .attr('stroke', '#666')
+       .attr('stroke-width', '.4px')
+       .style('visibility', 'hidden');
 
   function zoomed(e) {
 
-    world_map.attr("transform", "translate(" + e.transform.x + "," + e.transform.y + ")scale(" + e.transform.k + ")");
+    world_map.attr('transform', 'translate(' + e.transform.x + ',' + e.transform.y + ')scale(' + e.transform.k + ')');
 
-    points_map_data.attr("transform",function(d) {
+    points_map_data.attr('transform',function(d) {
       var position = projection([d.longitude, d.latitude]);
       var x = (position[0] * e.transform.k) + e.transform.x;  
       var y = (position[1] * e.transform.k) + e.transform.y;
 
-        return "translate(" + x + "," + y + ")scale(" + Math.sqrt(e.transform.k) + ")";
+        return 'translate(' + x + ',' + y + ')scale(' + Math.cbrt(e.transform.k) + ')';
       });
 
-    labels.attr("transform",function(d) {
+    labels.attr('transform',function(d) {
       var position = projection([d.longitude, d.latitude]);
       var x = (position[0] * e.transform.k) + e.transform.x;  
       var y = (position[1] * e.transform.k) + e.transform.y;
 
-        return "translate(" + x + "," + y + ")scale(" + Math.sqrt(e.transform.k) + ") rotate("+ d.angle +")";
+        return 'translate(' + x + ',' + y + ')scale(' + Math.sqrt(e.transform.k) + ') rotate('+ d.angle +')';
       });
 
 
@@ -344,7 +344,7 @@ function zoomedEnded(e) {
 // var dropPath = 'M 243.44676,222.01677 C 243.44676,288.9638 189.17548,343.23508 122.22845,343.23508 C 55.281426,343.23508 1.0101458,288.9638 1.0101458,222.01677 C 1.0101458,155.06975 40.150976,142.95572 122.22845,0.79337431 C 203.60619,141.74374 243.44676,155.06975 243.44676,222.01677 z';
     
     // // source = https://svgsilh.com/image/306989.html
-    // var wavePath = "M5445 11153 c-120 -8 -321 -34 -444 -58 -744 -145 -1243 -515 -1471-1089 -59 -150 -74 -234 -74 -411 -1 -185 11 -243 74 -372 57 -116 155 -199260 -219 l35 -7 -23 19 c-28 23 -54 121 -45 168 22 121 151 210 399 277 11330 125 31 244 26 455 -22 856 -291 1165 -782 70 -111 188 -352 248 -505 107-274 183 -583 234 -950 25 -176 25 -700 0 -920 -110 -983 -466 -1887 -1089-2762 -640 -901 -1581 -1762 -2673 -2445 -725 -453 -1349 -762 -2225 -1102l-55 -21 1465 5 c4858 18 6793 25 8670 30 1158 3 2205 8 2327 11 l222 6 15 68c23 101 53 296 73 470 21 193 24 791 5 1005 -80 878 -243 1639 -551 2565 -8912677 -2589 5186 -4256 6288 -666 441 -1252 646 -2005 702 -125 9 -407 11 -5253z"
+    // var wavePath = 'M5445 11153 c-120 -8 -321 -34 -444 -58 -744 -145 -1243 -515 -1471-1089 -59 -150 -74 -234 -74 -411 -1 -185 11 -243 74 -372 57 -116 155 -199260 -219 l35 -7 -23 19 c-28 23 -54 121 -45 168 22 121 151 210 399 277 11330 125 31 244 26 455 -22 856 -291 1165 -782 70 -111 188 -352 248 -505 107-274 183 -583 234 -950 25 -176 25 -700 0 -920 -110 -983 -466 -1887 -1089-2762 -640 -901 -1581 -1762 -2673 -2445 -725 -453 -1349 -762 -2225 -1102l-55 -21 1465 5 c4858 18 6793 25 8670 30 1158 3 2205 8 2327 11 l222 6 15 68c23 101 53 296 73 470 21 193 24 791 5 1005 -80 878 -243 1639 -551 2565 -8912677 -2589 5186 -4256 6288 -666 441 -1252 646 -2005 702 -125 9 -407 11 -5253z'
 
-    // var squarePath = "M0,0 L0,100 L100,100 L100,0 L0,0 z";
-    // var roundPath = "M0,0 A50,50 0 0,1 100,0 A50,50 0 0,1 0,0 z";
+    // var squarePath = 'M0,0 L0,100 L100,100 L100,0 L0,0 z';
+    // var roundPath = 'M0,0 A50,50 0 0,1 100,0 A50,50 0 0,1 0,0 z';
