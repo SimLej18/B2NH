@@ -1,6 +1,6 @@
 // Définition variables
 currentroute = []
-maxlimit = 5 // Nombre maximum d'évènements dans le trajet
+maxlimit = 8 // Nombre maximum d'évènements dans le trajet
 
 function routepanelAnchorClick() {
     $('.routepanelBody').toggle();
@@ -31,7 +31,16 @@ function updateRoute() {
     for (let i = 0; i < currentroute.length; i++) {
         destinationLine = ""
 
-        destinationLine += "<li><p onclick='selectRouteEvent(" + i + ")'>" + currentroute[i]["type"] + " - ";
+        destinationLine += "<p onclick='selectRouteEvent(" + i + ")'>" ;
+        if (currentroute[i]["type"] == 'eruption'){
+            destinationLine += "🌋 "
+        }
+        if (currentroute[i]["type"] == 'tsunami'){
+            destinationLine += "🌊 "
+        }
+        if (currentroute[i]["type"] == 'earthquake'){
+            destinationLine += "🌏 "
+        }
         if (currentroute[i]["type"] == "eruption"){
             destinationLine += currentroute[i]["volcano"]["country"]
         }
@@ -39,12 +48,12 @@ function updateRoute() {
             destinationLine += currentroute[i]["country"]
         }
         if(i >= 1){
-            destinationLine += "<button onclick = 'routeUp(" + i + ")'>Up</button>"
+            destinationLine += "<p class='panelbutton' onclick = 'routeUp(" + i + ")'>Up</p>"
         }
         if(i < currentroute.length-1){
-            destinationLine += "<button onclick = 'routeDown(" + i + ")'> Down</button>"
+            destinationLine += "<p class='panelbutton' onclick = 'routeDown(" + i + ")'> Down</p>"
         }
-        destinationLine += "</p></li>"
+        destinationLine += "</p>"
 
         completelist.innerHTML += destinationLine
     } 
@@ -57,21 +66,21 @@ function updateRoute() {
     updateCircuitButton()
 
     //map
-    drawCircuit()
+    //drawCircuit()
 }
 
 
 // Met à jour le bouton d'ajout/suppression de destination, dans l'infopanel
 function updateCircuitButton(){
     if (currentroute.includes(selectedEvent)) {
-      document.getElementById(`circuitbutton`).innerHTML=`<button onclick = "removeDestinationClick()">Remove from circuit</button>`; 
+      document.getElementById(`circuitbutton`).innerHTML=`<p onclick = "removeDestinationClick()">Remove from circuit</p>`; 
       }
     else{
         if (currentroute.length >= maxlimit){
             document.getElementById(`circuitbutton`).innerHTML=`<div>You circuit is full !</div>`;
         }
         else{
-            document.getElementById(`circuitbutton`).innerHTML=`<button onclick = "addDestinationClick()">Add to circuit</button>`;
+            document.getElementById(`circuitbutton`).innerHTML=`<p onclick = "addDestinationClick()">Add to circuit</p>`;
         }
     }
   }
@@ -98,6 +107,7 @@ function selectRouteEvent(index){
     console.assert(index < currentroute.length && index >= 0, "Index exception")
     currentEvent = currentroute[index]
 
+    // clickEvent(e, currentEvent.data)
     updateInfoPanel(currentEvent["self_url"]);
     selectedEvent = currentEvent;
     updateCircuitButton();
