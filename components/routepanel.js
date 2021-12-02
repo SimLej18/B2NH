@@ -32,13 +32,29 @@ function updateRoute() {
         destinationLine = ""
 
         destinationLine += "<p onclick='selectRouteEvent(" + i + ")'>" ;
+
+        // add the emoji
         destinationLine += currentroute[i]["emoji"] + " ";
+
+        // add the country
         if (currentroute[i]["type"] == "eruption"){
             destinationLine += currentroute[i]["volcano"]["country"]
         }
         else{
             destinationLine += currentroute[i]["country"]
         }
+
+        // add the date
+        currentdate = currentroute[i]['dateTime'];
+        index = currentdate.indexOf(',')+2
+        currentdate = currentdate.slice(index, index+11)
+        var finaldate = currentdate.replace("-", " ")
+        finaldate = finaldate.replace("-", " ")
+
+        destinationLine += " - " + finaldate
+
+        // add the buttons
+        
         if(i >= 1){
             destinationLine += "<p class='panelbutton' onclick = 'routeUp(" + i + ")'>Up</p>"
         }
