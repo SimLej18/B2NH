@@ -11,7 +11,7 @@
 body {
     margin: 0;
     background-image: url("../images/sci-fi-bg.png");
-    font-family: 'Aero';
+    font-family: 'Open Sans', sans-serif;
     font-size: 0.8em;
     color: rgb(196, 252, 251);
     height: 100%;
@@ -95,7 +95,11 @@ li {
 }
 
 .panelAnchor {
+<<<<<<< HEAD
 
+=======
+    font-family: 'Aero';
+>>>>>>> 7eb4819f8a517eb2a8451a03193882eb03c0d90d
     -o-transition:.5s;
     -ms-transition:.5s;
     -moz-transition:.5s;

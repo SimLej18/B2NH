@@ -3,7 +3,7 @@
 set -e
 
 # if you are deploying to a custom domain
-echo 'b2nh.world' > CNAME
+echo 'b2nh.world' > A
 
 git init
 git add -A

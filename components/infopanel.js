@@ -120,17 +120,22 @@ function updateInfoPanel(url_of_event) {
   if(volcano!=null){
     $(`#relations`).append($(`<p class="relation"></p>`).html("List of all eruptions of :"))
     $(`#relations`).append($(`<p id=volcanoVEI class="relation"></p>`).html(`🌋Volcano : ${volcano.data.name}🌋`))
-    drawbar(svgitems,keys[3],`#volcanoVEI`)
+    
     for(i=0;i<volcano.data.events_count;i++){
-    $(`#relations`).append($(`<p id=relatedEruption${(i)*3} class="panelbutton relation" onclick=GoToRelatedEruption(${volcano.data.volcano_events[i].id})></p>`)
+    $(`#relations`).append($(`<p id=relatedEruption${(i)*4} class="panelbutton relation" onclick=GoToRelatedEruption(${volcano.data.volcano_events[i].id})></p>`)
     .html(`🕐 : &nbsp${/\d{2}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}&nbsp${/\D{3}(?=-)/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}
     &nbsp${/(?<=-)-?\d{4}/g.exec(`${volcano.data.volcano_events[i].dateTime}`)}`))
-    svgitems = ['','','',"",'','',`${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
+    
+    svgitems2 = ['LightYellow','Red',8,"blue",20,index[volcano.data.volcano_events[i].volcano_explosivity_index],
+    `${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
     `${redeaths=/null|Few|Some|Many|Very Many/g.exec(`${volcano.data.volcano_events[i].deathsAmountOrderLabel}`)}`]
-    $(`#relations`).append($(`<p id=relatedEruption${(i)*3+1} class="relation">⚡(M$)</p>`))
-    drawdamage(svgitems,volcano.data.volcano_events[i].damageAmountOrder,`#relatedEruption${(i)*3+1}`)
-    $(`#relations`).append($(`<p id=relatedEruption${(i)*3+2} class="relation">💀</p>`))
-    drawdeath(svgitems,volcano.data.volcano_events[i].deathsAmountOrder,`#relatedEruption${(i)*3+2}`)
+    
+    $(`#relations`).append($(`<p id=relatedEruption${i*4+1} class="relation"></p>`))
+    drawbar(svgitems2,keys[3],`#relatedEruption${i*4+1}`)
+    $(`#relations`).append($(`<p id=relatedEruption${(i)*4+2} class="relation">⚡(M$)</p>`))
+    drawdamage(svgitems2,volcano.data.volcano_events[i].damageAmountOrder,`#relatedEruption${(i)*4+2}`)
+    $(`#relations`).append($(`<p id=relatedEruption${(i)*4+3} class="relation">💀</p>`))
+    drawdeath(svgitems2,volcano.data.volcano_events[i].deathsAmountOrder,`#relatedEruption${(i)*4+3}`)
   }
   }
   }
@@ -238,7 +243,7 @@ function fetchEvent(url_of_event) {
     selectedEvent = info.data 
     updateCircuitButton() 
        if(info.data.type=="eruption") {
-      fetch(`http://b2nh-api.tintamarre.be/api/v1/volcanoes/${info.data.volcano.id}`)
+      fetch(`https://b2nh-api.tintamarre.be/api/v1/volcanoes/${info.data.volcano.id}`)
     .then((response) => {
     if (response.ok) {
       return response.json();
