@@ -1,5 +1,5 @@
 // need to be fetched
-let world_data_url = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
+let world_data_url = "https://raw.githubusercontent.com/andybarefoot/andybarefoot-www/master/maps/mapdata/custom50.json";
 
 var volcanoes = [];
 var allEventsDict = {"VolcanoEvents": [], "TsunamiEvents": [], "EarthquakeEvents": []}
@@ -152,7 +152,7 @@ function filterFromTime(listToFilter, timeFilter) {
         }
     }
     updateCounts();
-    
+
     return filtered;
 
 }

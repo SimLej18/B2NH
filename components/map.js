@@ -229,6 +229,7 @@ function draw() {
     .attr('fill', function (d) {
       return color(d)
     })
+    .text(function (d) { return d.measure_value; })
     .attr('fill-opacity', 0.5)
     .on('mouseover', function (e, d) {
       tooltip.attr('id', 'info-item-tooltip')
@@ -236,23 +237,37 @@ function draw() {
         .duration(200)
         .style('opacity', 1);
 
-      tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans + '<br/><br/>' + 'long:' + d.longitude + ' lat:' + d.latitude);
-
-      // var matrix = this.transform.baseVal.consolidate().matrix;
-      // var x = matrix.e
-      // var y = matrix.f
-      // .attr('transform', 'translate(' + x + ',' + y + ')scale(2)')
-
+      tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans + '<br/><br/>' + 'long:' + d.longitude + ' lat:' + d.latitude)
+      .style("left", (e.pageX) + "px")		
+      .style("top", (e.pageY - 200) + "px");	;
+ 
+      // map.append("text")
+      // .append("textPath") //append a textPath to the text element
+      // .transition()
+      // .duration(500)
+      // .delay(100)
+      // .attr("xlink:href", "#" + d.type + '_' + d.id) //place the ID of the path here
+      // .style("fill", "white")
+      // .style('font-size', '40px')
+      // .style('font-family', 'Arial')
+      // .attr('vector-effect', 'non-scaling-stroke')
+      // .attr('stroke', '#666')
+      // .attr('stroke-width', '1px')
+      // .style("text-anchor","end")
+      // .attr("startOffset", "80%")
+      // .text(d.measure_value);
+     
       d3.select(this)
         .attr('stroke', 'red')
-        .attr('stroke-width', 4)
-        .attr('opacity', 1);
+        .attr('stroke-width', 4);
 
     })
     .on('mouseout', function (e, d) {
       tooltip.transition()
         .duration(1000)
         .style('opacity', 0);
+
+      map.selectAll('textPath').remove();
 
       d3.select(this)
         .attr('fill', function (d) {
@@ -266,8 +281,7 @@ function draw() {
     .on('click', function (e, d) {
       clickEvent(e, d);
       d3.select(this)
-        .attr('fill', 'yellow')
-        .attr('fill-opacity', 1);
+        .attr('fill', 'yellow');
     });
 
   // insert labels to map data
@@ -353,8 +367,6 @@ function draw() {
         // update info panel
         updateInfoPanel(d.self_url);
       });
-
-
      }
 }
 
