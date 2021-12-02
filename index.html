@@ -49,11 +49,13 @@
                             onclick="cancelAnchorClick()">
                             <input type="checkbox"
                                 id="checkbox_volcanoes"
-                                onclick="volcanoToggle()" checked />
+                                onclick="volcanoToggle()"
+                                checked />
                             <label>V</label>
                             <input type="checkbox"
                                 id="checkbox_tsunamis"
-                                onclick="tsunamiToggle()" checked />
+                                onclick="tsunamiToggle()"
+                                checked />
                             <label>T</label>
                             <input type="checkbox"
                                 id="checkbox_earthquakes"
@@ -67,12 +69,15 @@
 
 
                         <!-- To move somewhere -->
-                        <div id="events_counts">
-                            V: <span id="volcanos_count" class="count"></span>
-                            T: <span id="tsunamis_count" class="count"></span>
-                            E: <span id="earthquakes_count" class="count"></span>
+                        <div class="timelineSubCanvas">
+                            <input class="yearInput" id="leftYearInput" value="-5000" onfocusout="treatNewLeftInput()"></input>
+                            <div id="events_counts">
+                                V: <span id="volcanos_count" class="count"></span>
+                                T: <span id="tsunamis_count" class="count"></span>
+                                E: <span id="earthquakes_count" class="count"></span>
+                            </div>
+                            <input class="yearInput" id="rightYearInput" value="2021" onfocusout="treatNewRightInput()"></input>
                         </div>
-
                     </div>
 
 

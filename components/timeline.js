@@ -1,5 +1,6 @@
 var checkboxes = [1, 1, 1];  // Checkboxes are checked by default
 var timeFilter = [-5000, 2021];
+var inputValues = [-5000, 2021];
 var layer0 = undefined;
 var layer1 = undefined;
 
@@ -35,9 +36,72 @@ function earthquakeToggle() {
     updateTimeline();
 }
 
+function treatNewLeftInput() {
+    try {
+        var firstYear = parseInt($('#leftYearInput').val());
+        var lastYear = parseInt($('#rightYearInput').val());
+        console.assert(lastYear == inputValues[1]);
+        firstYear = Number.isNaN(firstYear) ? inputValues[0] : firstYear;
+        firstYear = Math.max(-5000, firstYear);
+        firstYear = Math.min(firstYear, lastYear);
+        $('#leftYearInput').val(firstYear);
+        inputValues[0] = firstYear;
+        timeFilter = [...inputValues];
+        updateCursorPos(timeFilter);
+        filterEvents(checkboxes, timeFilter);
+        updateMap();
+        updateTimeline();
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+function treatNewRightInput() {
+    try {
+        var firstYear = parseInt($('#leftYearInput').val());
+        var lastYear = parseInt($('#rightYearInput').val());
+        console.assert(firstYear == inputValues[0]);
+        lastYear = Number.isNaN(lastYear) ? inputValues[1] : lastYear;
+        lastYear = Math.min(lastYear, 2021);
+        lastYear = Math.max(firstYear, lastYear);
+        $('#rightYearInput').val(lastYear);
+        inputValues[1] = lastYear;
+        timeFilter = [...inputValues];
+        updateCursorPos(timeFilter);
+        filterEvents(checkboxes, timeFilter);
+        updateMap();
+        updateTimeline();
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+function updateCursorPos(years) {
+    with (paper) {
+        project.layers[1].children[1].position = new Point(50+getXFromYear(years[0])-10, 67.5);
+        project.layers[1].children[2].position = new Point(50+getXFromYear(years[1])+10, 67.5);
+        view.update();
+    }
+}
 
 async function createTimeline() {
     // Data variables are available in main.js
+
+    // Setup events handler for inputs
+    $("#leftYearInput").keypress(event => {
+        console.log("here1");
+        if(event.which != 13) return;
+        $("#leftYearInput").blur()
+        event.preventDefault();
+    })
+    $("#rightYearInput").keypress(event => {
+        console.log("here2");
+        if(event.which != 13) return;
+        $("#rightYearInput").blur();
+        event.preventDefault();
+    })
 
     // Get a reference to the canvas object
 	var canvas = document.getElementById('timelineCanvas');
@@ -81,10 +145,14 @@ async function createTimeline() {
             if (leftCursor.data.clicked) {
                 leftCursor.position = new Point(Math.max(Math.min((e.point.x-5), rightCursor.position.x-20), 40), 67.5);
                 leftCursor.data.year = getCursorYear(leftCursor.position.x, "left");
+                $('#leftYearInput').val(leftCursor.data.year);
+                inputValues[0] = leftCursor.data.year;
             }
             if (rightCursor.data.clicked) {
                 rightCursor.position = new Point(Math.max(Math.min((e.point.x-5), 660), leftCursor.position.x+20), 67.5);
                 rightCursor.data.year = getCursorYear(rightCursor.position.x, "right");
+                $('#rightYearInput').val(rightCursor.data.year);
+                inputValues[1] = rightCursor.data.year;
             }
         }
 
