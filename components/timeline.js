@@ -3,6 +3,7 @@ var timeFilter = [-5000, 2021];
 var layer0 = undefined;
 var layer1 = undefined;
 
+
 function timelineAnchorClick() {
     $('.timelineBody').toggle();
 }
@@ -170,6 +171,10 @@ function drawEvents() {
 }
 
 function updateTimeline() {
+    
+    // Update currentTimeFilter
+    currentTimeFilter = timeFilter;
+
     drawEvents();
 }
 
@@ -192,3 +197,4 @@ function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, 
 
     return year;
 }
+

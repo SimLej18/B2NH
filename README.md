@@ -10,6 +10,12 @@ Live at https://b2nh.world
 - @tintamarre
 - @Ushien
 
+# Development
+
+- `yarn serve`
+
+Then open your browser to `http://localhost:8080`
+
 # Deployment with Docker
 
 ## Build the image
@@ -18,4 +24,4 @@ Live at https://b2nh.world
 ## Run the image
 `docker run -it --rm -d -p 86:80 --name web webserver`
 
-Then open your browser at `http://localhost:86`
+Then open your browser to `http://localhost:86`
