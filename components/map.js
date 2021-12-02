@@ -237,7 +237,14 @@ function draw() {
         .duration(200)
         .style('opacity', 1);
 
-      tooltip.html(d.type + '<br/><br/>' + d.title + '<br/>' + d.measure_type + ': ' + d.measure_value + '<br/>' + d.dateTimeForHumans + '<br/><br/>' + 'long:' + d.longitude + ' lat:' + d.latitude)
+      var emoji = '';
+      if (d.type == 'tsunami') {
+        emoji = '🌊';
+      } else if (d.type == 'eruption') {
+        emoji = '🌋';
+      } else emoji = '🌏';
+      
+      tooltip.html('<code>' + d.longitude + '  ' + d.latitude + '</code><br/><br/>' + emoji + ' <strong>' + d.title + '</strong><br/><br/><strong>' + d.measure_type + '</strong>: <span style="color:white;">' + d.measure_value + '</span>' + '<br/><br/><em>' +  d.dateTimeForHumans + '</em>')
       .style("left", (e.pageX) + "px")		
       .style("top", (e.pageY - 200) + "px");	;
  
