@@ -69,7 +69,6 @@ function updateRoute() {
     //drawCircuit()
 }
 
-
 // Met à jour le bouton d'ajout/suppression de destination, dans l'infopanel
 function updateCircuitButton(){
     if (currentroute.includes(selectedEvent)) {

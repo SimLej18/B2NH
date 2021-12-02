@@ -84,6 +84,10 @@ function createMap() {
   draw();
 }
 
+function removeMap() {
+  d3.select('#map').selectAll('*').remove();
+}
+
 function updateEvents() {
 
   d3.select('#map')
