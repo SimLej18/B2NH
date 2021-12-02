@@ -92,13 +92,11 @@ async function createTimeline() {
 
     // Setup events handler for inputs
     $("#leftYearInput").keypress(event => {
-        console.log("here1");
         if(event.which != 13) return;
         $("#leftYearInput").blur()
         event.preventDefault();
     })
     $("#rightYearInput").keypress(event => {
-        console.log("here2");
         if(event.which != 13) return;
         $("#rightYearInput").blur();
         event.preventDefault();
@@ -239,7 +237,7 @@ function drawEvents() {
 }
 
 function updateTimeline() {
-    
+
     // Update currentTimeFilter
     currentTimeFilter = timeFilter;
 
@@ -265,4 +263,3 @@ function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, 
 
     return year;
 }
-
