@@ -243,7 +243,7 @@ function fetchEvent(url_of_event) {
     selectedEvent = info.data 
     updateCircuitButton() 
        if(info.data.type=="eruption") {
-      fetch(`http://b2nh-api.tintamarre.be/api/v1/volcanoes/${info.data.volcano.id}`)
+      fetch(`https://b2nh-api.tintamarre.be/api/v1/volcanoes/${info.data.volcano.id}`)
     .then((response) => {
     if (response.ok) {
       return response.json();
