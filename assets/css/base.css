@@ -248,6 +248,7 @@ li {
     border-radius:10px;
     width:30px;
     text-align: center;
+    display: inline-block;
 }
 
 .movebutton:hover{
@@ -256,6 +257,8 @@ li {
 }
 
 #destinationline{
+    display: flex;
+    width: 100%;
     white-space: nowrap;
     overflow-x: auto;
 }

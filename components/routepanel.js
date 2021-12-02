@@ -10,7 +10,7 @@ function routepanelAnchorClick() {
 function addDestinationClick() {
     console.log('A new destination is added')
     currentroute.push(selectedEvent)
-    console.log('Current circuit: ' + currentroute)
+    console.log('Current circuit length: ' + currentroute.length)
     updateRoute()
 }
 
@@ -26,12 +26,17 @@ function removeDestinationClick() {
 function updateRoute() {
     // routepanel
     var completelist= document.getElementById('printedRoute')
+    $('#printedRoute').empty();
 
-    completelist.innerHTML = ""
     for (let i = 0; i < currentroute.length; i++) {
-        destinationLine = ""
 
-        destinationLine += "<p class = 'destinationline' onclick='selectRouteEvent(" + i + ")'>" ;
+        var line = document.createElement("P");
+        completelist.appendChild(line);
+        line.id = "destination" + i;
+        line.setAttribute("onclick","selectRouteEvent(" + i + ")");
+        line.className = "destinationline";
+
+        destinationLine = ""
 
         // add the emoji
         destinationLine += currentroute[i]["emoji"] + " ";
@@ -65,7 +70,7 @@ function updateRoute() {
 
         console.log(destinationLine)
 
-        completelist.innerHTML += destinationLine
+        line.innerHTML += destinationLine
     } 
 
     if (currentroute.length == 0){
