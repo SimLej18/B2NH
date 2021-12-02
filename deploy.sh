@@ -8,6 +8,6 @@ echo 'b2nh.world' > CNAME
 git init
 git add -A
 git commit -m 'deploy'
-git push -f git@github.com:mesydel/slidedeck.git master:gh-pages
+git push -f git@github.com:SimLej18/B2NH.git master:gh-pages
 cd -
 echo "Visit https://b2nh.world"
