@@ -32,15 +32,7 @@ function updateRoute() {
         destinationLine = ""
 
         destinationLine += "<p onclick='selectRouteEvent(" + i + ")'>" ;
-        if (currentroute[i]["type"] == 'eruption'){
-            destinationLine += "🌋 "
-        }
-        if (currentroute[i]["type"] == 'tsunami'){
-            destinationLine += "🌊 "
-        }
-        if (currentroute[i]["type"] == 'earthquake'){
-            destinationLine += "🌏 "
-        }
+        destinationLine += currentroute[i]["emoji"] + " ";
         if (currentroute[i]["type"] == "eruption"){
             destinationLine += currentroute[i]["volcano"]["country"]
         }
@@ -72,14 +64,14 @@ function updateRoute() {
 // Met à jour le bouton d'ajout/suppression de destination, dans l'infopanel
 function updateCircuitButton(){
     if (currentroute.includes(selectedEvent)) {
-      document.getElementById(`circuitbutton`).innerHTML=`<p onclick = "removeDestinationClick()">Remove from circuit</p>`; 
+      document.getElementById(`circuitbutton`).innerHTML=`<p class ='panelbutton' onclick = "removeDestinationClick()">Remove from circuit</p>`; 
       }
     else{
         if (currentroute.length >= maxlimit){
             document.getElementById(`circuitbutton`).innerHTML=`<div>You circuit is full !</div>`;
         }
         else{
-            document.getElementById(`circuitbutton`).innerHTML=`<p onclick = "addDestinationClick()">Add to circuit</p>`;
+            document.getElementById(`circuitbutton`).innerHTML=`<p class ='panelbutton' onclick = "addDestinationClick()">Add to circuit</p>`;
         }
     }
   }
