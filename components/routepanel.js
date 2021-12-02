@@ -31,7 +31,7 @@ function updateRoute() {
     for (let i = 0; i < currentroute.length; i++) {
         destinationLine = ""
 
-        destinationLine += "<p onclick='selectRouteEvent(" + i + ")'>" ;
+        destinationLine += "<p class = 'destinationline' onclick='selectRouteEvent(" + i + ")'>" ;
 
         // add the emoji
         destinationLine += currentroute[i]["emoji"] + " ";
@@ -56,12 +56,14 @@ function updateRoute() {
         // add the buttons
         
         if(i >= 1){
-            destinationLine += "<p class='panelbutton' onclick = 'routeUp(" + i + ")'>Up</p>"
+            destinationLine += "<div class='movebutton' onclick = 'routeUp(" + i + ")'>↑</div>"
         }
         if(i < currentroute.length-1){
-            destinationLine += "<p class='panelbutton' onclick = 'routeDown(" + i + ")'> Down</p>"
+            destinationLine += "<div class='movebutton' onclick = 'routeDown(" + i + ")'>↓</div>"
         }
         destinationLine += "</p>"
+
+        console.log(destinationLine)
 
         completelist.innerHTML += destinationLine
     } 

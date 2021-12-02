@@ -240,6 +240,26 @@ li {
     max-width: 28vh;
 }
 
+.movebutton{
+    border: 3px solid rgb(196, 252, 251);
+    background-color: rgb(20, 30, 88);
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    width:30px;
+    text-align: center;
+}
+
+.movebutton:hover{
+    background-color:rgb(196, 252, 251);
+    color:rgb(20, 30, 88);
+}
+
+#destinationline{
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
 /* used by map.js */
 
 /* --- Tooltip --- */
