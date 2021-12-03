@@ -82,7 +82,7 @@ function updateInfoPanel(url_of_event) {
     $('#addDestination').fadeToggle(50);
     $('#togglerelations').fadeToggle(50);
     fetchEvent(url_of_event);
-    console.log(url_of_event);
+    // console.log(url_of_event);
     $('#infos').fadeToggle();
     $('#togglecommentary').fadeToggle();
     $('#addDestination').fadeToggle();
@@ -244,7 +244,7 @@ function fetchEvent(url_of_event) {
       }
     })
     .then(info => {
-      console.log(info);
+      // console.log(info);
       redamage = /null|Limited|Moderate|Severe|Extreme/g;
       redeaths = /null|Few|Some|Many|Very Many/g;
 
@@ -289,7 +289,7 @@ function fetchEvent(url_of_event) {
               throw new Error("Pas de réponse de l'API");
             }
           }).then(volcano => {
-            console.log(volcano),
+            // console.log(volcano),
               display(info, keys, labels, svgitems, comments, relations, volcano)
           })
 
