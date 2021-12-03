@@ -122,7 +122,8 @@ function selectRouteEvent(index){
     currentEvent = currentroute[index]
 
     // clickEvent(e, currentEvent.data)
-    updateInfoPanel(currentEvent["self_url"]);
+    // console.log(currentEvent);
+    updateInfoPanel(currentEvent.links.self);
     selectedEvent = currentEvent;
     updateCircuitButton();
 }
