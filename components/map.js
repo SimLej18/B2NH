@@ -246,7 +246,7 @@ function draw() {
         .transition()
         .duration(200)
         .style('opacity', 1);
-
+      
       var emoji = '';
       if (d.type == 'tsunami') {
         emoji = '🌊';
@@ -415,12 +415,35 @@ function draw() {
 }
 
 
-function highlightEventOnMap(d) {
+function highlightEventOnMap(e, d) {
 
-  console.log('hightlightEvent');
-  console.log(d);
-  console.log(d.type);
-  console.log(d.id);
-  d3.select('#' + d.type + '_' + d.id).attr('fill', 'yellow').size("1000");
+  var point_event = d3.select('#' + d.type + '_' + d.id);
+  var coordinates = point_event.attr('transform');
+
+  var cx = coordinates.split('(')[1].split(',')[0];
+  var cy = coordinates.split('(')[1].split(',')[1].split(')')[0];
+
+  var map = d3.select('#map').select('svg');
+
+  map
+  .append('circle')
+  .attr('cx', cx)
+  .attr('cy', cy)
+  .attr('r', '800')
+  .attr('stroke', 'red')
+  .attr('stroke-width', '5px')
+  .attr('fill', 'none')
+  .transition()
+  .duration(500)
+  .attr('r', '20')
+  .attr('stroke-width', '4px')
+  .on('end', function () {
+    d3.select(this)
+      .transition()
+      .duration(500)
+      .attr('r', '2000')
+      .attr('stroke-width', '12px')
+      .remove();
+  });
 
 }

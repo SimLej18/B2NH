@@ -34,6 +34,8 @@ function updateRoute() {
         completelist.appendChild(line);
         line.id = "destination" + i;
         line.setAttribute("onclick","selectRouteEvent(" + i + ")");
+        // line.setAttribute("onmousover","highlightEventOnMap(null ," + selectedEvent + ")");
+
         line.className = "destinationline";
 
         destinationLine = ""
