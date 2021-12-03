@@ -136,7 +136,7 @@ function display(info, keys, labels, svgitems, comments, relations, volcano) {
 
     for (i = 0; i < volcano.data.events_count; i++) {
       $('#relations').append($(`<button id=relatedEruption${(i)*4} class="panelbutton relation" onclick=GoToRelatedEruption(${volcano.data.volcano_events[i].id})></button>`)
-        .html(`🕐 : &nbsp${volcano.data.volcano_events[i].dateTimeForInfoPanel}`))
+        .html(`🕐 : ${volcano.data.volcano_events[i].dateTimeForInfoPanel}`))
 
       svgitems2 = ['LightYellow', 'Red', 8, "blue", 20, index[volcano.data.volcano_events[i].volcano_explosivity_index],
         `${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
@@ -251,7 +251,7 @@ function fetchEvent(url_of_event) {
       if (info.data.type == "earthquake") {
         keys = ["name", info.data.dateTime, info.data.country, info.data.eqMagnitude, info.data.damageAmountOrder, info.data.deathsAmountOrder]
         labels = ["🌏Earthquake🌏", `🕐 : ${info.data.dateTimeForInfoPanel}`,
-          `⚐ : ${info.data.country}`, `&nbsp Earthquake Magnitude `, `⚡ Damage (M$) ⚡ `, `💀 Victims 💀 `
+          `⚐ : ${info.data.country}`, ` Earthquake Magnitude `, `⚡ Damage (M$) ⚡ `, `💀 Victims 💀 `
         ]
         svgitems = ['LightYellow', 'green', 10, "red", 16, info.data.eqMagnitude, `${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`, `${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
         relations = [0, info.data.tsunamiEventId, info.data.volcanoEventId]
@@ -260,7 +260,7 @@ function fetchEvent(url_of_event) {
       if (info.data.type == "tsunami") {
         keys = ["name", info.data.dateTime, info.data.country, info.data.tis, info.data.damageAmountOrder, info.data.deathsAmountOrder]
         labels = ["🌊Tsunami🌊", `🕐 : ${info.data.dateTimeForInfoPanel}`,
-          `⚐ : ${info.data.country}`, `&nbsp &nbsp Tsunami intensity`, `⚡ Damage (M$) ⚡`, `💀 Victims 💀`
+          `⚐ : ${info.data.country}`, `  Tsunami intensity`, `⚡ Damage (M$) ⚡`, `💀 Victims 💀`
         ]
         svgitems = ['LightBlue', 'Blue', 10, "red", 16, info.data.tis, `${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`, `${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
         relations = [info.data.earthquakeEventId, 0, info.data.volcanoEventId]
@@ -269,8 +269,8 @@ function fetchEvent(url_of_event) {
       if (info.data.type == "eruption") {
 
         keys = [info.data.volcano.name, info.data.dateTime, info.data.country, info.data.volcano_explosivity_index, info.data.damageAmountOrder, info.data.deathsAmountOrder]
-        labels = [`🌋Volcano : &nbsp ${info.data.volcano.name}🌋`, `🕐 : ${info.data.dateTimeForInfoPanel}`,
-          `⚐ : ${info.data.volcano.country}`, `&nbsp Volcano Explosivity index`, `⚡ Damage (M$) ⚡`, `💀 Victims 💀`
+        labels = [`🌋Volcano :  ${info.data.volcano.name}🌋`, `🕐 : ${info.data.dateTimeForInfoPanel}`,
+          `⚐ : ${info.data.volcano.country}`, ` Volcano Explosivity index`, `⚡ Damage (M$) ⚡`, `💀 Victims 💀`
         ]
         svgitems = ['LightYellow', 'Red', 8, "blue", 20, index[info.data.volcano_explosivity_index], `${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`, `${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
         relations = [info.data.earthquakeEventId, info.data.tsunamiEventId, 0]
