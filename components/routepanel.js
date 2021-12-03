@@ -87,14 +87,14 @@ function updateRoute() {
 // Met à jour le bouton d'ajout/suppression de destination, dans l'infopanel
 function updateCircuitButton(){
     if (currentroute.includes(selectedEvent)) {
-      document.getElementById(`circuitbutton`).innerHTML=`<p class ='panelbutton' onclick = "removeDestinationClick()">Remove from circuit</p>`; 
+      document.getElementById(`circuitbutton`).innerHTML=`<button class ='panelbutton' onclick = "removeDestinationClick()">Remove from circuit</button>`; 
       }
     else{
         if (currentroute.length >= maxlimit){
             document.getElementById(`circuitbutton`).innerHTML=`<div>You circuit is full !</div>`;
         }
         else{
-            document.getElementById(`circuitbutton`).innerHTML=`<p class ='panelbutton' onclick = "addDestinationClick()">Add to circuit</p>`;
+            document.getElementById(`circuitbutton`).innerHTML=`<button class ='panelbutton' onclick = "addDestinationClick()">Add to circuit</button>`;
         }
     }
   }

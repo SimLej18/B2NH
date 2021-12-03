@@ -119,7 +119,8 @@ li {
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
     border-radius:10px;
-    width:120px;
+    color: #fff;
+    /* width:120px; */
     text-align: center;
 }
 
