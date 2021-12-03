@@ -317,7 +317,6 @@ li {
    /* Style the tab */
 .tab {
     overflow: hidden;
-    background-color: rgb(20, 30, 88);
   }
   
   /* Style the buttons that are used to open the tab content */
