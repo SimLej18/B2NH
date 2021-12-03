@@ -16,21 +16,24 @@ function cancelAnchorClick(e) {
     if (e.stopPropagation) e.stopPropagation();
 }
 
-function volcanoToggle() {
+function volcanoToggle(e) {
+    e.stopPropagation();
     checkboxes[0] = (checkboxes[0] + 1) % 2; // Invert checkbox state
     filterEvents(checkboxes, timeFilter);
     updateMap();
     updateTimeline();
 }
 
-function tsunamiToggle() {
+function tsunamiToggle(e) {
+    e.stopPropagation();
     checkboxes[1] = (checkboxes[1] + 1) % 2; // Invert checkbox state
     filterEvents(checkboxes, timeFilter);
     updateMap();
     updateTimeline();
 }
 
-function earthquakeToggle() {
+function earthquakeToggle(e) {
+    e.stopPropagation();
     checkboxes[2] = (checkboxes[2] + 1) % 2; // Invert checkbox state
     filterEvents(checkboxes, timeFilter);
     updateMap();
@@ -181,10 +184,30 @@ async function createTimeline() {
 
 function drawEvents() {
     with (paper) {
-        // Volcano events
+
+        // Earthquake events
         project.layers[0].children[0].children = [];
-        if (checkboxes[0]) {
+        if (checkboxes[2]) {
             project.layers[0].children[0].activate();  // Activates volcano layer
+            for (var earthquake of allEventsDict["EarthquakeEvents"]) {
+                var xFromYear = getXFromYear(earthquake.year);
+                var height = parseFloat(earthquake.measure_value)/10*50;
+                var earthquakeRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
+                earthquakeRect.metadata = earthquake;
+                earthquakeRect.fillColor = new Color(0, 200/255, 0);
+                if (timeFilter[0] <= earthquake.year && earthquake.year <= timeFilter[1]) {
+                    earthquakeRect.fillColor = new Color(0, 200/255, 0, 1);
+                }
+                else {
+                    earthquakeRect.fillColor = new Color(0, 200/255, 0, 0.25);
+                }
+            }
+        }
+
+        // Volcano events
+        project.layers[0].children[2].children = [];
+        if (checkboxes[0]) {
+            project.layers[0].children[2].activate();  // Activates volcano layer
             for (var volcano of allEventsDict["VolcanoEvents"]) {
                 var xFromYear = getXFromYear(volcano.year);
                 var height = parseFloat(volcano.measure_value)/10*50;
@@ -214,25 +237,6 @@ function drawEvents() {
                 }
                 else {
                     tsunamiRect.fillColor = new Color(0, 0, 200/255, 0.25);
-                }
-            }
-        }
-
-        // Earthquake events
-        project.layers[0].children[2].children = [];
-        if (checkboxes[2]) {
-            project.layers[0].children[2].activate();  // Activates volcano layer
-            for (var earthquake of allEventsDict["EarthquakeEvents"]) {
-                var xFromYear = getXFromYear(earthquake.year);
-                var height = parseFloat(earthquake.measure_value)/10*50;
-                var earthquakeRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
-                earthquakeRect.metadata = earthquake;
-                earthquakeRect.fillColor = new Color(0, 200/255, 0);
-                if (timeFilter[0] <= earthquake.year && earthquake.year <= timeFilter[1]) {
-                    earthquakeRect.fillColor = new Color(0, 200/255, 0, 1);
-                }
-                else {
-                    earthquakeRect.fillColor = new Color(0, 200/255, 0, 0.25);
                 }
             }
         }
