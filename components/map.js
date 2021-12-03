@@ -1,4 +1,4 @@
-// TODO 
+// TODO
 // https://github.com/SimLej18/B2NH/issues/3
 //
 
@@ -25,7 +25,7 @@ let labels_data = [{
     'angle': 10
   },
   {
-    'name': 'Tundra maléfique', // 
+    'name': 'Tundra maléfique', //
     'description': 'description',
     'longitude': 90,
     'latitude': 45,
@@ -59,6 +59,8 @@ let labels_data = [{
 ];
 
 let map_data = [];
+
+let handler = new Object();
 
 // Toggle class : why is it here ?
 // function toggleClass(id, Class) {
@@ -103,10 +105,11 @@ function updateEvents() {
 
 
 function draw() {
+  handler.clickEvent = clickEvent;
 
   const width = 3000;
   const height = 1500;
-  var currentZoom = 1; 
+  var currentZoom = 1;
   // create tooltip
   const tooltip = d3.select('#info_tooltip')
     .append('div');
@@ -250,11 +253,11 @@ function draw() {
       } else if (d.type == 'eruption') {
         emoji = '🌋';
       } else emoji = '🌏';
-      
+
       tooltip.html(emoji + ' <strong>' + d.title + '</strong><br/><br/><strong>' + d.measure_type + '</strong>: <span style="color:white;">' + d.measure_value + '</span>' + '<br/><br/><em>' +  d.dateTimeForHumans + '</em>')
-      .style("left", (e.pageX) + "px")		
+      .style("left", (e.pageX) + "px")
       .style("top", (e.pageY - 200) + "px");	;
- 
+
       showCoordinates(e, d);
 
       // map.append("text")
@@ -272,7 +275,7 @@ function draw() {
       // .style("text-anchor","end")
       // .attr("startOffset", "80%")
       // .text(d.measure_value);
-     
+
       d3.select(this)
         .attr('stroke', 'red')
         .attr('stroke-width', 4);
@@ -282,7 +285,7 @@ function draw() {
       tooltip.transition()
         .duration(1000)
         .style('opacity', 0);
-        
+
         d3.select("#lat_long_info")
         .transition()
         .duration(1000)
@@ -339,7 +342,7 @@ function draw() {
       .attr('id', 'lat_long_info')
       .html('<code>Latitude ' + d.latitude + ' Longitude: ' + d.longitude + '</code>');
      }
-     
+
 
   function zoomed(e) {
 
@@ -408,7 +411,7 @@ function draw() {
      }
 
 
- 
+
 }
 
 

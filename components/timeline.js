@@ -129,6 +129,9 @@ async function createTimeline() {
             else if (rightCursor.contains(e.point)) {
                 rightCursor.data.clicked = true;
             }
+            else {
+                checkEventClick(e);
+            }
         }
 
         tool.onMouseUp = function(e) {
@@ -186,6 +189,7 @@ function drawEvents() {
                 var xFromYear = getXFromYear(volcano.year);
                 var height = parseFloat(volcano.measure_value)/10*50;
                 var volcanoRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
+                volcanoRect.metadata = volcano;
                 if (timeFilter[0] <= volcano.year && volcano.year <= timeFilter[1]) {
                     volcanoRect.fillColor = new Color(200/255, 0, 0, 1);
                 }
@@ -203,6 +207,7 @@ function drawEvents() {
                 var xFromYear = getXFromYear(tsunami.year);
                 var height = parseFloat(tsunami.measure_value)/10*50;
                 var tsunamiRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
+                tsunamiRect.metadata = tsunami;
                 tsunamiRect.fillColor = new Color(0, 0, 200/255);
                 if (timeFilter[0] <= tsunami.year && tsunami.year <= timeFilter[1]) {
                     tsunamiRect.fillColor = new Color(0, 0, 200/255, 1);
@@ -221,6 +226,7 @@ function drawEvents() {
                 var xFromYear = getXFromYear(earthquake.year);
                 var height = parseFloat(earthquake.measure_value)/10*50;
                 var earthquakeRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
+                earthquakeRect.metadata = earthquake;
                 earthquakeRect.fillColor = new Color(0, 200/255, 0);
                 if (timeFilter[0] <= earthquake.year && earthquake.year <= timeFilter[1]) {
                     earthquakeRect.fillColor = new Color(0, 200/255, 0, 1);
@@ -233,6 +239,18 @@ function drawEvents() {
 
         // Draw the view now:
     	view.update();
+    }
+}
+
+function checkEventClick(e) {
+    with (paper) {
+        for (eventType of project.layers[0].children) {
+            for (event of eventType.children) {
+                if (event.contains(e.point)) {
+                    handler.clickEvent(e, event.metadata);
+                }
+            }
+        }
     }
 }
 
