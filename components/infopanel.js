@@ -125,17 +125,17 @@ function display(info, keys, labels, svgitems, comments, relations, volcano) {
   for (i = 0; i < 3; i++) {
 
     if (relations[i] != 0) {
-      $(`#relations`).append($(`<button class="panelbutton relation" onclick=GoToRelated${relationType[i]}(${relations[i]})></button>`)
+      $('#relations').append($(`<button class="panelbutton relation" onclick=GoToRelated${relationType[i]}(${relations[i]})></button>`)
         .html(`${relationType[i]}`)
       )
     }
   }
   if (volcano != null) {
-    $(`#relations`).append($(`<p class="relation"></p>`).html("List of all eruptions of :"))
-    $(`#relations`).append($(`<p id=volcanoVEI class="relation"></p>`).html(`🌋Volcano : ${volcano.data.name}🌋`))
+    $('#relations').append($(`<p class="relation"></p>`).html("List of all eruptions of :"))
+    $('#relations').append($(`<p id=volcanoVEI class="relation"></p>`).html(`🌋Volcano : ${volcano.data.name}🌋`))
 
     for (i = 0; i < volcano.data.events_count; i++) {
-      $(`#relations`).append($(`<p id=relatedEruption${(i)*4} class="panelbutton relation" onclick=GoToRelatedEruption(${volcano.data.volcano_events[i].id})></p>`)
+      $('#relations').append($(`<button id=relatedEruption${(i)*4} class="panelbutton relation" onclick=GoToRelatedEruption(${volcano.data.volcano_events[i].id})></button>`)
         .html(`🕐 : &nbsp${volcano.data.volcano_events[i].dateTimeForInfoPanel}`))
 
       svgitems2 = ['LightYellow', 'Red', 8, "blue", 20, index[volcano.data.volcano_events[i].volcano_explosivity_index],
@@ -143,11 +143,11 @@ function display(info, keys, labels, svgitems, comments, relations, volcano) {
         `${redeaths=/null|Few|Some|Many|Very Many/g.exec(`${volcano.data.volcano_events[i].deathsAmountOrderLabel}`)}`
       ]
 
-      $(`#relations`).append($(`<p id=relatedEruption${i*4+1} class="relation"></p>`))
+      $('#relations').append($(`<p id=relatedEruption${i*4+1} class="relation"></p>`))
       drawbar(svgitems2, keys[3], `#relatedEruption${i*4+1}`)
-      $(`#relations`).append($(`<p id=relatedEruption${(i)*4+2} class="relation">⚡(M$)</p>`))
+      $('#relations').append($(`<p id=relatedEruption${(i)*4+2} class="relation">⚡(M$)</p>`))
       drawdamage(svgitems2, volcano.data.volcano_events[i].damageAmountOrder, `#relatedEruption${(i)*4+2}`)
-      $(`#relations`).append($(`<p id=relatedEruption${(i)*4+3} class="relation">💀</p>`))
+      $('#relations').append($(`<p id=relatedEruption${(i)*4+3} class="relation">💀</p>`))
       drawdeath(svgitems2, volcano.data.volcano_events[i].deathsAmountOrder, `#relatedEruption${(i)*4+3}`)
     }
   }
