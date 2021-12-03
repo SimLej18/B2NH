@@ -274,7 +274,7 @@ li {
 }
 
 /* --- Tooltip --- */
-#info-item-tooltip {
+#info_event_tooltip {
     fill: #707070;
     fill-opacity: 0.2;
     pointer-events: none;

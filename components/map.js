@@ -239,7 +239,7 @@ function draw() {
     .text(function (d) { return d.measure_value; })
     .attr('fill-opacity', 0.5)
     .on('mouseover', function (e, d) {
-      tooltip.attr('id', 'info-item-tooltip')
+      tooltip.attr('id', 'info_event_tooltip')
         .transition()
         .duration(200)
         .style('opacity', 1);
