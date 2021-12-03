@@ -196,6 +196,9 @@ function draw() {
     return size(symbol_size(d));
   });
 
+
+
+
   //  insert world map data
   var world_map = map.selectAll('path')
     .data(world_data.features)
@@ -248,10 +251,12 @@ function draw() {
         emoji = '🌋';
       } else emoji = '🌏';
       
-      tooltip.html('<code>' + d.longitude + '  ' + d.latitude + '</code><br/><br/>' + emoji + ' <strong>' + d.title + '</strong><br/><br/><strong>' + d.measure_type + '</strong>: <span style="color:white;">' + d.measure_value + '</span>' + '<br/><br/><em>' +  d.dateTimeForHumans + '</em>')
+      tooltip.html(emoji + ' <strong>' + d.title + '</strong><br/><br/><strong>' + d.measure_type + '</strong>: <span style="color:white;">' + d.measure_value + '</span>' + '<br/><br/><em>' +  d.dateTimeForHumans + '</em>')
       .style("left", (e.pageX) + "px")		
       .style("top", (e.pageY - 200) + "px");	;
  
+      showCoordinates(e, d);
+
       // map.append("text")
       // .append("textPath") //append a textPath to the text element
       // .transition()
@@ -277,6 +282,12 @@ function draw() {
       tooltip.transition()
         .duration(1000)
         .style('opacity', 0);
+        
+        d3.select("#lat_long_info")
+        .transition()
+        .duration(1000)
+        .style('opacity', 0)
+        .remove();
 
       map.selectAll('textPath').remove();
 
@@ -317,6 +328,18 @@ function draw() {
     .attr('stroke', '#666')
     .attr('stroke-width', '.4px')
     .style('visibility', 'hidden');
+
+
+
+    function showCoordinates(e, d) {
+      d3.select('#lat_long_info').remove();
+
+      d3.select('#coordinates_tooltip')
+      .append('div')
+      .attr('id', 'lat_long_info')
+      .html('<code>Latitude ' + d.latitude + ' Longitude: ' + d.longitude + '</code>');
+     }
+     
 
   function zoomed(e) {
 
@@ -379,6 +402,9 @@ function draw() {
         updateInfoPanel(d.self_url);
       });
      }
+
+
+ 
 }
 
 
