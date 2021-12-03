@@ -311,3 +311,49 @@ li {
     stroke-linecap: round;
     pointer-events: none;
   }
+
+
+
+   /* Style the tab */
+.tab {
+    overflow: hidden;
+    background-color: rgb(20, 30, 88);
+  }
+  
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 4px 5px;
+    transition: 0.3s;
+    border: 3px solid rgb(196, 252, 251);
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    color: #fff;
+    /* width:120px; */
+    text-align: center;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color:rgb(174, 225, 224);
+    color:rgb(20, 30, 88);
+}
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color:rgb(196, 252, 251);
+    color:rgb(20, 30, 88);
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  } 
