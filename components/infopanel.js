@@ -125,7 +125,7 @@ function display(info, keys, labels, svgitems, comments, relations, volcano) {
   for (i = 0; i < 3; i++) {
 
     if (relations[i] != 0) {
-      $(`#relations`).append($(`<p class="panelbutton relation" onclick=GoToRelated${relationType[i]}(${relations[i]})></p>`)
+      $(`#relations`).append($(`<button class="panelbutton relation" onclick=GoToRelated${relationType[i]}(${relations[i]})></button>`)
         .html(`${relationType[i]}`)
       )
     }
