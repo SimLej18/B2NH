@@ -61,10 +61,10 @@ function updateRoute() {
         // add the buttons
         
         if(i >= 1){
-            destinationLine += "<div class='movebutton' onclick = 'routeUp(" + i + ")'>↑</div>"
+            destinationLine += "<button class='movebutton' onclick = 'routeUp(" + i + ")'>↑</button>"
         }
         if(i < currentroute.length-1){
-            destinationLine += "<div class='movebutton' onclick = 'routeDown(" + i + ")'>↓</div>"
+            destinationLine += "<button class='movebutton' onclick = 'routeDown(" + i + ")'>↓</button>"
         }
         destinationLine += "</p>"
 
