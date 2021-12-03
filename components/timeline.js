@@ -49,6 +49,7 @@ function treatNewLeftInput() {
         firstYear = Math.max(-5000, firstYear);
         firstYear = Math.min(firstYear, lastYear);
         $('#leftYearInput').val(firstYear);
+        layer1.children[1].data.year = firstYear;
         inputValues[0] = firstYear;
         timeFilter = [...inputValues];
         updateCursorPos(timeFilter);
@@ -70,6 +71,7 @@ function treatNewRightInput() {
         lastYear = Math.min(lastYear, 2021);
         lastYear = Math.max(firstYear, lastYear);
         $('#rightYearInput').val(lastYear);
+        layer1.children[2].data.year = lastYear;
         inputValues[1] = lastYear;
         timeFilter = [...inputValues];
         updateCursorPos(timeFilter);
