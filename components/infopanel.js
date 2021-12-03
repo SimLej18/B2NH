@@ -13,7 +13,7 @@ $(".subinfopaneltoggle").click(function () {
 
   if ($(this).is('#togglerelations')) {
     if ($("#relations").is(":visible")) {
-      $(this).html('Show related events')
+      $(this).html('Related events')
       $('#relations,#infos,#togglecommentary').toggle();
     } else {
       $(this).html('Close')
@@ -70,7 +70,7 @@ function updateInfoPanel(url_of_event) {
 
   } else if ($('#relations').is(':visible')) {
     $('#relations').toggle()
-    $('#togglerelations').html('Show related events')
+    $('#togglerelations').html('Related events')
     selectedEvent = url_of_event;
     fetchEvent(selectedEvent);
     $(`#infos`).fadeToggle();
