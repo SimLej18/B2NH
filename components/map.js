@@ -378,6 +378,13 @@ function draw() {
     //infopanelAnchorClick();
     //routepanelAnchorClick();
 
+    // open info panel
+    infopanelAnchorClick();
+    // update info panel
+    updateInfoPanel(d.self_url);
+
+    // then performs zoom
+
     position = projection([d.longitude, d.latitude]);
     if(currentZoom >= 13) {
       scale = 15;
@@ -396,10 +403,7 @@ function draw() {
       .ease(d3.easeCubic)
       .call(zoom.transform, newTransform)
       .on('end', function () {
-        // open info panel
-        infopanelAnchorClick();
-        // update info panel
-        updateInfoPanel(d.self_url);
+
       });
      }
 
