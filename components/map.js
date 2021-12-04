@@ -387,6 +387,7 @@ function draw() {
 
     // open info panel
     infopanelAnchorClick();
+    
     // update info panel
     updateInfoPanel(d.self_url);
 

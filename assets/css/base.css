@@ -214,6 +214,15 @@ li {
     text-align: left;
 }
 
+.subinfopanel {
+    padding-left: 5%;
+    border:2px solid rgb(196, 252, 251);
+    border-radius:0px 10px 10px 10px;
+}
+
+#infobuttons {
+    padding-top: 5px;
+}
 /* --- Routepanel CSS --- */
 
 .routepanel {
@@ -321,6 +330,11 @@ li {
    /* Style the tab */
 .tab {
     overflow: hidden;
+    width:fit-content;
+    border: 1px solid rgb(196, 252, 251);
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:10px 10px 0px 0px;
   }
 
   /* Style the buttons that are used to open the tab content */
@@ -332,10 +346,8 @@ li {
     cursor: pointer;
     padding: 4px 5px;
     transition: 0.3s;
-    border: 3px solid rgb(196, 252, 251);
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    border-radius:10px;
+    border-right: 1px solid rgb(196, 252, 251);
+    border-left: 1px solid rgb(196, 252, 251);;
     color: #fff;
     /* width:120px; */
     text-align: center;

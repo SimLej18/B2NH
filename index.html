@@ -109,18 +109,18 @@
                     </div>
 
                     <div
-                        class="panelBody infopanelBody hiddenpanel glow">
+                        id="infopanelBody" class="panelBody infopanelBody hiddenpanel glow">
                         <!-- Tab links -->
-                        <!-- <div class="tab">
-                            <button class="tablinks active"
-                                onclick="">Info</button>
-                            <button class="tablinks"
-                                onclick="">Description</button>
-                            <button class="tablinks"
-                                onclick="">Related events</button>
-                        </div> -->
-                        <h1 id="infopanel"></h1>
-                        <div id="infos">
+                        <div class="tab">
+                            <button id="tabinfo" class="tablinks active"
+                                onclick="ShowInfo()">Info</button>
+                            <button id="tabcomment" class="tablinks"
+                                onclick="ShowDescription()">Description</button>
+                            <button id="tabrelation" class="tablinks"
+                                onclick="ShowRelation()">Related events</button>
+                        </div>
+
+                        <div id="infos" class="subinfopanel">
                             <p id="element1"></p>
                             <p id="element2"></p>
                             <p id="element3"></p>
@@ -131,21 +131,13 @@
                         </div>
 
                         <div id="commentary"
-                            class="hiddenpanel scrolltext"></div>
+                            class="hiddenpanel scrolltext subinfopanel"></div>
 
                         <div id="relations"
-                            class="hiddenpanel scrolltext">
-                            <p id="heading_of_relations">Related
-                                Events :</p>
+                            class="hiddenpanel scrolltext subinfopanel">
                         </div>
 
                         <div id="infobuttons">
-                            <button id="togglerelations"
-                                class="panelbutton subinfopaneltoggle">
-                                Related events</button>
-                            <button id="togglecommentary"
-                                class="panelbutton subinfopaneltoggle">
-                                More info</button>
                             <div id="circuitbutton">
                                 <!-- This div contains all the interaction with routepanel -->
                             </div>
