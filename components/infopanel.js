@@ -99,9 +99,11 @@ function display(info, keys, labels, svgitems, comments, relations, volcano) {
   relationType2= ["Earthquake","Tsunami","Eruption"]
   relationDate= ["0","0","0"]
   $('.relation').remove()
+  $(`#tabrelation`).addClass(`hiddenpanel`)
   for (i = 0; i < 3; i++) {
 
     if (relations[i] != 0) {
+      $(`#tabrelation`).removeClass('hiddenpanel')
       if (i==0){relationDate[i]=info.data.earthquake_event.dateTimeForInfoPanel}
       else if(i==1){relationDate[i]=info.data.tsunami_event.dateTimeForInfoPanel}
       else {relationDate[i]=info.data.volcano_event.dateTimeForInfoPanel}
@@ -113,6 +115,7 @@ function display(info, keys, labels, svgitems, comments, relations, volcano) {
     }
   }
   if (volcano != null) {
+    $(`#tabrelation`).removeClass('hiddenpanel')
     $('#relations').append($(`<p id=volcanoVEI class="relation"></p>`).html(`🌋 Eruptions of ${volcano.data.name}🌋`))
 
     for (i = 0; i < volcano.data.events_count; i++) {

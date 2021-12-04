@@ -52,7 +52,13 @@ li {
     z-index: 0;
 }
 
-.scrolltext{display:block;height: 339px;overflow-y: scroll;}
+.scrolltext{
+    display:block;
+    height: 339px;
+    overflow-y: scroll;
+    text-align:center;
+    padding-right: 5%
+    }
 
 .hiddenpanel{display:none}
 
@@ -114,7 +120,7 @@ li {
 }
 
 .panelbutton{
-    border: 3px solid rgb(196, 252, 251);
+    border: 2px solid rgb(196, 252, 251);
     background-color: rgb(20, 30, 88);
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
@@ -211,7 +217,7 @@ li {
     border-bottom: 3px solid rgb(196, 252, 251);
     min-width: 28vh;
     max-width: 28vh;
-    text-align: center;
+    text-align: left;
 }
 
 .subinfopanel {
