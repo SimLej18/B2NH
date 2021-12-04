@@ -52,7 +52,7 @@ li {
     z-index: 0;
 }
 
-.scrolltext{display:block;height: 250px;overflow-y: scroll;}
+.scrolltext{display:block;height: 339px;overflow-y: scroll;}
 
 .hiddenpanel{display:none}
 
@@ -209,7 +209,7 @@ li {
 .infopanelBody {
     border-left: 3px solid rgb(196, 252, 251);
     border-bottom: 3px solid rgb(196, 252, 251);
-    min-width: 25vh;
+    min-width: 28vh;
     max-width: 28vh;
     text-align: left;
 }

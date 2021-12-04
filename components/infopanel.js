@@ -11,6 +11,7 @@ function infopanelAnchorClick() {
 
 //functions to switch infopanel tabs
 function ShowInfo(){
+  $(`#circuitbutton`).removeClass("hiddenpanel")
   $(`#tabinfo`).addClass("active")
   $(`#tabcomment`).removeClass("active")
   $(`#tabrelation`).removeClass("active")
@@ -21,6 +22,7 @@ function ShowInfo(){
 }
 
 function ShowDescription(){
+  $(`#circuitbutton`).removeClass("hiddenpanel")
   $(`#tabinfo`).removeClass("active")
   $(`#tabcomment`).addClass("active")
   $(`#tabrelation`).removeClass("active")
@@ -30,6 +32,7 @@ function ShowDescription(){
 }
 
 function ShowRelation(){
+  $(`#circuitbutton`).addClass("hiddenpanel")
   $(`#tabinfo`).removeClass("active")
   $(`#tabcomment`).removeClass("active")
   $(`#tabrelation`).addClass("active")
