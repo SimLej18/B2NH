@@ -8,35 +8,34 @@ function infopanelAnchorClick() {
   $('.infopanelBody').toggle();
 }
 
-//toggle for related events and commentary
-$(".subinfopaneltoggle").click(function () {
+//functions to switch infopanel tabs
+function ShowInfo(){
+  $(`#tabinfo`).addClass("active")
+  $(`#tabcomment`).removeClass("active")
+  $(`#tabrelation`).removeClass("active")
+  $(`#infos`).removeClass("hiddenpanel")
+  $(`#relations`).addClass("hiddenpanel")
+  $(`#commentary`).addClass("hiddenpanel")
 
-  if ($(this).is('#togglerelations')) {
-    if ($("#relations").is(":visible")) {
-      $(this).html('Related events')
-      $('#relations,#infos,#togglecommentary').toggle();
-    } else {
-      $(this).html('Close')
-      $('#infos,#togglecommentary,#relations').toggle();
-    }
-  }
-  if ($(this).is('#togglecommentary')) {
-    if ($('#commentary').is(":visible")) {
-      $(this).html('Description')
-      $(".infopanelBody").css({
-        "max-width": "28vh"
-      })
-      $('#commentary, #infos, #togglerelations').toggle();
-    } else {
-      $(this).html('Close')
-      $(".infopanelBody").css({
-        "max-width": "50vh"
-      })
-      $('#infos, #togglerelations, #commentary').toggle();
+}
 
-    }
-  }
-})
+function ShowDescription(){
+  $(`#tabinfo`).removeClass("active")
+  $(`#tabcomment`).addClass("active")
+  $(`#tabrelation`).removeClass("active")
+  $(`#infos`).addClass("hiddenpanel")
+  $(`#relations`).addClass("hiddenpanel")
+  $(`#commentary`).removeClass("hiddenpanel")
+}
+
+function ShowRelation(){
+  $(`#tabinfo`).removeClass("active")
+  $(`#tabcomment`).removeClass("active")
+  $(`#tabrelation`).addClass("active")
+  $(`#infos`).addClass("hiddenpanel")
+  $(`#relations`).removeClass("hiddenpanel")
+  $(`#commentary`).addClass("hiddenpanel")
+}
 
 //go to the chosen related event
 function GoToRelatedEarthquake(id) {
@@ -54,41 +53,10 @@ function GoToRelatedEruption(id) {
 
 // This function is called when the user clicks on the button of an event
 function updateInfoPanel(url_of_event) {
-  if ($('.infopanelBody').is(":hidden")) {
-    $('.infopanelBody').toggle()
-  }
-  if ($("#commentary").is(":visible")) {
-    $(".infopanelBody").css({
-      "max-width": "28vh"
-    })
-    $('#commentary').toggle()
-    $('#togglecommentary').html('Description')
+    ShowInfo();
     selectedEvent = url_of_event;
     fetchEvent(selectedEvent);
-    $(`#infos`).fadeToggle();
-    $('#togglerelations').toggle();
-
-  } else if ($('#relations').is(':visible')) {
-    $('#relations').toggle()
-    $('#togglerelations').html('Related events')
-    selectedEvent = url_of_event;
-    fetchEvent(selectedEvent);
-    $(`#infos`).fadeToggle();
-    $(`#togglecommentary`).toggle();
-
-  } else {
-    $('#infos').fadeToggle(50);
-    $('#togglecommentary').fadeToggle(50);
-    $('#addDestination').fadeToggle(50);
-    $('#togglerelations').fadeToggle(50);
-    fetchEvent(url_of_event);
-    // console.log(url_of_event);
-    $('#infos').fadeToggle();
-    $('#togglecommentary').fadeToggle();
-    $('#addDestination').fadeToggle();
-    $('#togglerelations').fadeToggle();
   }
-}
 
 //----------------------------------------------------------------Info writing---------------------------------------------------------
 
@@ -120,35 +88,45 @@ function display(info, keys, labels, svgitems, comments, relations, volcano) {
   $('#commentary').html(comments)
 
   //write related events
-  relationType = ["Earthquake", "Tsunami", "Eruption"]
+  relationType = ["🌏 Earthquake 🌏", "🌊 Tsunami 🌊", "🌋 Eruption 🌋"]
+  relationType2= ["Earthquake","Tsunami","Eruption"]
+  relationDate= ["0","0","0"]
   $('.relation').remove()
   for (i = 0; i < 3; i++) {
 
     if (relations[i] != 0) {
-      $('#relations').append($(`<button class="panelbutton relation" onclick=GoToRelated${relationType[i]}(${relations[i]})></button>`)
-        .html(`${relationType[i]}`)
+      if (i==0){relationDate[i]=info.data.earthquake_event.dateTimeForInfoPanel}
+      else if(i==1){relationDate[i]=info.data.tsunami_event.dateTimeForInfoPanel}
+      else {relationDate[i]=info.data.volcano_event.dateTimeForInfoPanel}
+      
+      $('#relations').append($(`<p class="relation"></p>`).html(`${relationType[i]}`))
+      $('#relations').append($(`<button class="panelbutton relation" onclick=GoToRelated${relationType2[i]}(${relations[i]})></button>`)
+        .html(`🕐 : ${relationDate[i]}`),
       )
     }
   }
   if (volcano != null) {
-    $('#relations').append($(`<p class="relation"></p>`).html("List of all eruptions of :"))
-    $('#relations').append($(`<p id=volcanoVEI class="relation"></p>`).html(`🌋Volcano : ${volcano.data.name}🌋`))
+    $('#relations').append($(`<p id=volcanoVEI class="relation"></p>`).html(`🌋 Eruptions of ${volcano.data.name}🌋`))
 
     for (i = 0; i < volcano.data.events_count; i++) {
       $('#relations').append($(`<button id=relatedEruption${(i)*4} class="panelbutton relation" onclick=GoToRelatedEruption(${volcano.data.volcano_events[i].id})></button>`)
         .html(`🕐 : ${volcano.data.volcano_events[i].dateTimeForInfoPanel}`))
 
-      svgitems2 = ['LightYellow', 'Red', 8, "blue", 20, index[volcano.data.volcano_events[i].volcano_explosivity_index],
-        `${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
-        `${redeaths=/null|Few|Some|Many|Very Many/g.exec(`${volcano.data.volcano_events[i].deathsAmountOrderLabel}`)}`
-      ]
+      $(`#relations`).append($(`<p>\n</p>`))
 
-      $('#relations').append($(`<p id=relatedEruption${i*4+1} class="relation"></p>`))
-      drawbar(svgitems2, keys[3], `#relatedEruption${i*4+1}`)
-      $('#relations').append($(`<p id=relatedEruption${(i)*4+2} class="relation">⚡(M$)</p>`))
-      drawdamage(svgitems2, volcano.data.volcano_events[i].damageAmountOrder, `#relatedEruption${(i)*4+2}`)
-      $('#relations').append($(`<p id=relatedEruption${(i)*4+3} class="relation">💀</p>`))
-      drawdeath(svgitems2, volcano.data.volcano_events[i].deathsAmountOrder, `#relatedEruption${(i)*4+3}`)
+      // Sert à tracer des barres supplémentaires pour les éruptions reliées mais n'a pas été jugé pertinent
+
+      //svgitems2 = ['LightYellow', 'Red', 8, "blue", 20, index[volcano.data.volcano_events[i].volcano_explosivity_index],
+      //  `${/null|Limited|Moderate|Severe|Extreme/g.exec(`${volcano.data.volcano_events[i].damageAmountOrderLabel}`)}`,
+      //  `${redeaths=/null|Few|Some|Many|Very Many/g.exec(`${volcano.data.volcano_events[i].deathsAmountOrderLabel}`)}`
+      //]
+
+      //$('#relations').append($(`<p id=relatedEruption${i*4+1} class="relation"></p>`))
+      //drawbar(svgitems2, keys[3], `#relatedEruption${i*4+1}`)
+      //$('#relations').append($(`<p id=relatedEruption${(i)*4+2} class="relation">⚡(M$)</p>`))
+      //drawdamage(svgitems2, volcano.data.volcano_events[i].damageAmountOrder, `#relatedEruption${(i)*4+2}`)
+      //$('#relations').append($(`<p id=relatedEruption${(i)*4+3} class="relation">💀</p>`))
+      //drawdeath(svgitems2, volcano.data.volcano_events[i].deathsAmountOrder, `#relatedEruption${(i)*4+3}`)
     }
   }
 }
@@ -244,7 +222,7 @@ function fetchEvent(url_of_event) {
       }
     })
     .then(info => {
-      // console.log(info);
+      console.log(info)
       redamage = /null|Limited|Moderate|Severe|Extreme/g;
       redeaths = /null|Few|Some|Many|Very Many/g;
 
@@ -307,4 +285,4 @@ function fetchEvent(url_of_event) {
 }
 
 // data fetched at the beginning of the page
-fetchEvent("https://b2nh-api.tintamarre.be/api/v1/events/random");
+//fetchEvent("https://b2nh-api.tintamarre.be/api/v1/events/random");
