@@ -80,17 +80,14 @@ function updateRoute() {
             upb.setAttribute("onclick","routeUp(" + i + ")");
             upb.className = "movebutton";
             upb.innerHTML = "↑"
-
-            // destinationLine += "<button class='movebutton' onclick = 'routeUp(" + i + ")'>↑</button>"
         }
+        
         if(i < currentroute.length-1){
             var downb = document.createElement("button");
             line.appendChild(downb);
             downb.setAttribute("onclick","routeDown(" + i + ")");
             downb.className = "movebutton";
             downb.innerHTML = "↓"
-
-            // destinationLine += "<button class='movebutton' onclick = 'routeDown(" + i + ")'>↓</button>"
         }
         
         linetext.innerHTML = destinationLine
