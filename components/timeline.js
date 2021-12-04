@@ -190,7 +190,7 @@ function drawEvents() {
             project.layers[0].children[0].activate();  // Activates volcano layer
             for (var earthquake of allEventsDict["EarthquakeEvents"]) {
                 var xFromYear = getXFromYear(earthquake.year);
-                var height = parseFloat((earthquake.measure_value-6)*3)/10*50;
+                var height = parseFloat((earthquake.measure_value-6.5)*3)/10*50;
                 var earthquakeRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
                 earthquakeRect.metadata = earthquake;
                 earthquakeRect.fillColor = new Color(0, 200/255, 0);

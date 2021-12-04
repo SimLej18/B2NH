@@ -179,7 +179,11 @@ function draw() {
   var toBase10 = function (d) {
     if (d.type == 'eruption') {
       measureBase10 = d.measure_value / 8 * 10;
-    } else measureBase10 = d.measure_value;
+    }
+    else if (d.type == 'earthquake') {
+      measureBase10 = (d.measure_value - 6.5) * 3; // Scale adaptation
+    }
+    else measureBase10 = d.measure_value;
 
     return measureBase10;
   }
