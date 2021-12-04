@@ -22,8 +22,16 @@ function removeDestinationClick() {
     if ($('.routepanelBody').is(":hidden")) {
         $('.routepanelBody').toggle()
       }
+
+    mylist = [];
+    for (let i = 0; i < currentroute.length; i++) {
+        mylist.push(currentroute[i]["links"]["self"])
+    }
+
     console.log('A destination has been removed')
-    currentroute.splice(currentroute.indexOf(selectedEvent), 1)
+    console.log(selectedEvent)
+    console.log(currentroute)
+    currentroute.splice(mylist.indexOf(selectedEvent["links"]["self"]), 1)
     console.log('Current circuit length: ' + currentroute.length)
     updateRoute()
 }
@@ -98,12 +106,6 @@ function updateRoute() {
     }
 
     updateCircuitButton();
-
-    //infopanel
-    // updateCircuitButton()
-
-    //map
-    //drawCircuit()
 }
 
 // Met à jour le bouton d'ajout/suppression de destination, dans l'infopanel
@@ -114,8 +116,8 @@ function updateCircuitButton(){
     }
 
     if (mylist.includes(selectedEvent["links"]["self"])) {
-      document.getElementById(`circuitbutton`).innerHTML=`<button class ='panelbutton' onclick = "removeDestinationClick()">Remove from circuit</button>`; 
-      }
+        document.getElementById(`circuitbutton`).innerHTML=`<button class ='panelbutton' onclick = "removeDestinationClick()">Remove from circuit</button>`; 
+        }
     else{
         if (currentroute.length >= maxlimit){
             document.getElementById(`circuitbutton`).innerHTML=`<div>You circuit is full !</div>`;
@@ -148,12 +150,10 @@ function selectRouteEvent(index){
     console.assert(index < currentroute.length && index >= 0, "Index exception")
     currentEvent = currentroute[index]
 
-    // clickEvent(e, currentEvent.data)
-    // console.log(currentEvent);
     updateInfoPanel(currentEvent.links.self);
     selectedEvent = currentEvent;
     updateCircuitButton();
-    // checkEventClick(currentroute[index])
+
     handler.clickEvent(undefined, currentroute[index])
 }
 

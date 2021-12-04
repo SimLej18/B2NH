@@ -256,8 +256,24 @@ li {
 .routepanelBody {
     border-top: 3px solid rgb(196, 252, 251);
     border-left: 3px solid rgb(196, 252, 251);
-    width: 40vh;
+    width: 50vh;
     font-size: 18px;
+}
+
+.destinationline{
+    display: flex;
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: auto;
+    cursor: pointer;
+    justify-content: right;
+    
+}
+
+.destinationtext{
+
+    flex-grow: 8;
+    justify-content: right;
 }
 
 .movebutton{
@@ -274,27 +290,10 @@ li {
     /*width: 10px;*/
 }
 
-.destinationtext{
-
-    flex-grow: 8;
-    justify-content: normal;
-}
-
 .movebutton:hover{
     background-color:rgb(196, 252, 251);
     color:rgb(20, 30, 88);
 }
-
-.destinationline{
-    display: flex;
-    width: 100%;
-    white-space: nowrap;
-    overflow-x: auto;
-    cursor: pointer;
-    
-}
-
-
 
 /* used by map.js */
 
