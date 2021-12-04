@@ -275,7 +275,9 @@ li {
 }
 
 .destinationtext{
-    flex-grow: 8
+
+    flex-grow: 8;
+    justify-content: normal;
 }
 
 .movebutton:hover{

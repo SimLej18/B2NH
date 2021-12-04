@@ -97,6 +97,8 @@ function updateRoute() {
         completelist.innerHTML = "<p>Create your own circuit !</p>"
     }
 
+    updateCircuitButton();
+
     //infopanel
     // updateCircuitButton()
 
@@ -151,7 +153,8 @@ function selectRouteEvent(index){
     updateInfoPanel(currentEvent.links.self);
     selectedEvent = currentEvent;
     updateCircuitButton();
-    checkEventClick(currentroute[index])
+    // checkEventClick(currentroute[index])
+    handler.clickEvent(undefined, currentroute[index])
 }
 
 // Draw the entire circuit on the world map
