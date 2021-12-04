@@ -148,13 +148,22 @@ function routeDown(i){
 
 function selectRouteEvent(index){
     console.assert(index < currentroute.length && index >= 0, "Index exception")
-    currentEvent = currentroute[index]
+    selectedEvent = currentroute[index]
 
-    updateInfoPanel(currentEvent.links.self);
-    selectedEvent = currentEvent;
+
+    handler.clickEvent(undefined, currentroute[index]);
+    if(currentroute[index]["type"] == 'eruption'){
+        var myid = "https://b2nh-api.tintamarre.be/api/v1/events/eruption/" + currentroute[index]["id"];
+        console.log("Go go go")
+        console.log(myid);
+        fetchEvent(myid);
+    }
+    else{
+        console.log("Faut pas aller ici")
+        fetchEvent(currentroute[index]["links"]["self"]);
+    }
+    
     updateCircuitButton();
-
-    handler.clickEvent(undefined, currentroute[index])
 }
 
 // Draw the entire circuit on the world map
