@@ -14,10 +14,10 @@ $(".subinfopaneltoggle").click(function () {
   if ($(this).is('#togglerelations')) {
     if ($("#relations").is(":visible")) {
       $(this).html('Related events')
-      $('#relations,#infos,#togglecommentary').toggle();
+      $('#relations,#infos,#togglecommentary,#circuitbutton').toggle();
     } else {
       $(this).html('Close')
-      $('#infos,#togglecommentary,#relations').toggle();
+      $('#infos,#togglecommentary,#relations,#circuitbutton').toggle();
     }
   }
   if ($(this).is('#togglecommentary')) {
@@ -26,13 +26,13 @@ $(".subinfopaneltoggle").click(function () {
       $(".infopanelBody").css({
         "max-width": "28vh"
       })
-      $('#commentary, #infos, #togglerelations').toggle();
+      $('#commentary, #infos, #togglerelations,#circuitbutton').toggle();
     } else {
       $(this).html('Close')
       $(".infopanelBody").css({
         "max-width": "50vh"
       })
-      $('#infos, #togglerelations, #commentary').toggle();
+      $('#infos, #togglerelations, #commentary,#circuitbutton').toggle();
 
     }
   }
