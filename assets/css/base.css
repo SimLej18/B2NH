@@ -132,7 +132,7 @@ li {
 /* --- Timeline CSS --- */
 
 .timeline {
-    width: 723px;
+    width: 920px;
 }
 
 .timelineAnchor {
@@ -157,10 +157,11 @@ li {
 
 #timelineCanvas {
     height: 100px;
-    width: 700px;
+    width: 900px;
 }
 
 .timelineSubCanvas {
+    width: 900px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
