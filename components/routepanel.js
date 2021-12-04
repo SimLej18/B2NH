@@ -24,7 +24,7 @@ function removeDestinationClick() {
       }
     console.log('A destination has been removed')
     currentroute.splice(currentroute.indexOf(selectedEvent), 1)
-    console.log('Current circuit: ' + currentroute)
+    console.log('Current circuit length: ' + currentroute.length)
     updateRoute()
 }
 
@@ -40,7 +40,7 @@ function updateRoute() {
         var line = document.createElement("p");
         completelist.appendChild(line);
         line.id = "destination" + i;
-        line.setAttribute("onclick","selectRouteEvent(" + i + ")");
+        // line.setAttribute("onclick","selectRouteEvent(" + i + ")");
         line.className = "destinationline";
         // line.setAttribute("onmousover","highlightEventOnMap(null ," + selectedEvent + ")");
 
@@ -81,7 +81,7 @@ function updateRoute() {
             upb.className = "movebutton";
             upb.innerHTML = "↑"
         }
-        
+
         if(i < currentroute.length-1){
             var downb = document.createElement("button");
             line.appendChild(downb);
@@ -98,7 +98,7 @@ function updateRoute() {
     }
 
     //infopanel
-    updateCircuitButton()
+    // updateCircuitButton()
 
     //map
     //drawCircuit()
