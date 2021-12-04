@@ -88,7 +88,12 @@ function updateRoute() {
 
 // Met à jour le bouton d'ajout/suppression de destination, dans l'infopanel
 function updateCircuitButton(){
-    if (currentroute.includes(selectedEvent)) {
+    mylist = [];
+    for (let i = 0; i < currentroute.length; i++) {
+        mylist.push(currentroute[i]["links"]["self"])
+    }
+
+    if (mylist.includes(selectedEvent["links"]["self"])) {
       document.getElementById(`circuitbutton`).innerHTML=`<button class ='panelbutton' onclick = "removeDestinationClick()">Remove from circuit</button>`; 
       }
     else{
