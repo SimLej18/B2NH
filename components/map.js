@@ -378,11 +378,14 @@ function draw() {
   function clickEvent(e, d) {
 
     // close panels
-    //infopanelAnchorClick();
+    if ($('.infopanelBody').is(":hidden")){
+    infopanelAnchorClick();}
     //routepanelAnchorClick();
-
+    
+    //routepanelAnchorClick()
+    
     // open info panel
-    infopanelAnchorClick();
+    //infopanelAnchorClick();
     
     // update info panel
     updateInfoPanel(d.self_url);
