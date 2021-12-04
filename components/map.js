@@ -382,9 +382,8 @@ function draw() {
     //routepanelAnchorClick();
 
     // open info panel
-    if($(`#infopanelBody`).is(": hidden")){
     infopanelAnchorClick();
-    }
+    
     // update info panel
     updateInfoPanel(d.self_url);
 
