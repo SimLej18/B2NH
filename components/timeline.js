@@ -250,8 +250,10 @@ function checkEventClick(e) {
         for (eventType of project.layers[0].children) {
             for (event of eventType.children) {
                 if (event.contains(e.point)) {
-                    handler.clickEvent(e, event.metadata);
-                    return;
+                    if (currentTimeFilter[0] <= event.metadata.year && event.metadata.year <= currentTimeFilter[1]) {
+                        handler.clickEvent(e, event.metadata);
+                        return;
+                    }
                 }
             }
         }
@@ -270,7 +272,7 @@ function getXFromYear(year) {
     return Math.pow(1.0020901, year+5000-3820);
 }
 
-function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, barLineLength=600, timeRange=[-5000, 2021]) {
+function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, timeRange=[-5000, 2021]) {
     console.assert(cursorSide == "left" || cursorSide == "right", "Invalid cursorSide");
     var year;
     var x;
