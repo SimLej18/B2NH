@@ -211,7 +211,7 @@ li {
     border-bottom: 3px solid rgb(196, 252, 251);
     min-width: 28vh;
     max-width: 28vh;
-    text-align: left;
+    text-align: center;
 }
 
 .subinfopanel {

@@ -58,6 +58,8 @@ function GoToRelatedEruption(id) {
 
 // This function is called when the user clicks on the button of an event
 function updateInfoPanel(url_of_event) {
+    $(`#NoSelectedEvent`).remove()
+    $(`.tab`).removeClass("hiddenpanel")
     ShowInfo();
     selectedEvent = url_of_event;
     fetchEvent(selectedEvent);
