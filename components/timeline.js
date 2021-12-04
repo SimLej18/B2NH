@@ -17,7 +17,6 @@ function cancelAnchorClick(e) {
 }
 
 function volcanoToggle(e) {
-    e.stopPropagation();
     checkboxes[0] = (checkboxes[0] + 1) % 2; // Invert checkbox state
     filterEvents(checkboxes, timeFilter);
     updateMap();
@@ -25,7 +24,6 @@ function volcanoToggle(e) {
 }
 
 function tsunamiToggle(e) {
-    e.stopPropagation();
     checkboxes[1] = (checkboxes[1] + 1) % 2; // Invert checkbox state
     filterEvents(checkboxes, timeFilter);
     updateMap();
@@ -33,7 +31,6 @@ function tsunamiToggle(e) {
 }
 
 function earthquakeToggle(e) {
-    e.stopPropagation();
     checkboxes[2] = (checkboxes[2] + 1) % 2; // Invert checkbox state
     filterEvents(checkboxes, timeFilter);
     updateMap();
