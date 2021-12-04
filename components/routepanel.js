@@ -36,13 +36,19 @@ function updateRoute() {
 
     for (let i = 0; i < currentroute.length; i++) {
 
-        var line = document.createElement("P");
+        // Create a line
+        var line = document.createElement("p");
         completelist.appendChild(line);
         line.id = "destination" + i;
         line.setAttribute("onclick","selectRouteEvent(" + i + ")");
+        line.className = "destinationline";
         // line.setAttribute("onmousover","highlightEventOnMap(null ," + selectedEvent + ")");
 
-        line.className = "destinationline";
+        // Create the text element
+        var linetext = document.createElement("p");
+        line.appendChild(linetext);
+        linetext.setAttribute("onclick","selectRouteEvent(" + i + ")");
+        linetext.className = "destinationtext";
 
         destinationLine = ""
 
@@ -66,17 +72,28 @@ function updateRoute() {
 
         destinationLine += " - " + finaldate
 
-        // add the buttons
+        // Create the buttons elements
         
         if(i >= 1){
-            destinationLine += "<button class='movebutton' onclick = 'routeUp(" + i + ")'>↑</button>"
+            var upb = document.createElement("button");
+            line.appendChild(upb);
+            upb.setAttribute("onclick","routeUp(" + i + ")");
+            upb.className = "movebutton";
+            upb.innerHTML = "↑"
+
+            // destinationLine += "<button class='movebutton' onclick = 'routeUp(" + i + ")'>↑</button>"
         }
         if(i < currentroute.length-1){
-            destinationLine += "<button class='movebutton' onclick = 'routeDown(" + i + ")'>↓</button>"
-        }
-        destinationLine += "</p>"
+            var downb = document.createElement("button");
+            line.appendChild(downb);
+            downb.setAttribute("onclick","routeDown(" + i + ")");
+            downb.className = "movebutton";
+            downb.innerHTML = "↓"
 
-        line.innerHTML += destinationLine
+            // destinationLine += "<button class='movebutton' onclick = 'routeDown(" + i + ")'>↓</button>"
+        }
+        
+        linetext.innerHTML = destinationLine
     } 
 
     if (currentroute.length == 0){

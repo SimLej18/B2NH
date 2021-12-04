@@ -241,8 +241,8 @@ li {
 .routepanelBody {
     border-top: 3px solid rgb(196, 252, 251);
     border-left: 3px solid rgb(196, 252, 251);
-    min-width: 28vh;
-    max-width: 28vh;
+    width: 40vh;
+    font-size: 18px;
 }
 
 .movebutton{
@@ -252,8 +252,9 @@ li {
     -webkit-border-radius:5px;
     border-radius:10px;
     color: #fff;
-    text-align: center;
+    align-self: flex-end;
     padding-left: 5px;
+    flex-grow: 1
 }
 
 .movebutton:hover{
@@ -266,6 +267,7 @@ li {
     width: 100%;
     white-space: nowrap;
     overflow-x: auto;
+    
 }
 
 /* used by map.js */
