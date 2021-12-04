@@ -251,7 +251,6 @@ function checkEventClick(e) {
             for (event of eventType.children) {
                 if (event.contains(e.point)) {
                     handler.clickEvent(e, event.metadata);
-                    console.log(event);
                     return;
                 }
             }
