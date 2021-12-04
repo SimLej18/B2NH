@@ -273,7 +273,7 @@ li {
 .destinationtext{
 
     flex-grow: 8;
-    justify-content: right;
+    text-align: left;
 }
 
 .movebutton{
