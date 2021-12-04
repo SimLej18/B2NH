@@ -29,8 +29,6 @@ function removeDestinationClick() {
     }
 
     console.log('A destination has been removed')
-    console.log(selectedEvent)
-    console.log(currentroute)
     currentroute.splice(mylist.indexOf(selectedEvent["links"]["self"]), 1)
     console.log('Current circuit length: ' + currentroute.length)
     updateRoute()
@@ -150,16 +148,12 @@ function selectRouteEvent(index){
     console.assert(index < currentroute.length && index >= 0, "Index exception")
     selectedEvent = currentroute[index]
 
-
     handler.clickEvent(undefined, currentroute[index]);
     if(currentroute[index]["type"] == 'eruption'){
         var myid = "https://b2nh-api.tintamarre.be/api/v1/events/eruption/" + currentroute[index]["id"];
-        console.log("Go go go")
-        console.log(myid);
         fetchEvent(myid);
     }
     else{
-        console.log("Faut pas aller ici")
         fetchEvent(currentroute[index]["links"]["self"]);
     }
     
