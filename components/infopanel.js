@@ -1,8 +1,5 @@
 //--------------------------------------------------------Panels toggle and navigation-------------------------------------------------
 
-//sert pour les volcans pour leur indice d'explosivité
-let index = ["Effusive", "Gentle", "Explosive", "Catastrophic", "Cataclysmic", "Paroxysmic", "Colossal", "Super-colossal", "Mega-colossal"]
-
 //functions to display or not Infopanel
 function infopanelAnchorClick() {
   $('.infopanelBody').toggle();
@@ -260,7 +257,7 @@ function fetchEvent(url_of_event) {
         labels = [`🌋Volcano :  ${info.data.volcano.name}🌋`, `🕐 : ${info.data.dateTimeForInfoPanel}`,
           `⚐ : ${info.data.volcano.country}     -     ${info.data.volcano.elevation}m ⛰️`, ` Volcano Explosivity index`, `⚡ Damage (M$) ⚡`, `💀 Victims 💀`
         ]
-        svgitems = ['LightYellow', 'Red', 8, "blue", 20, index[info.data.volcano_explosivity_index], `${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`, `${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
+        svgitems = ['LightYellow', 'Red', 8, "blue", 20, info.data.volcano_explosivity_index_details.description, `${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`, `${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
         relations = [info.data.earthquakeEventId, info.data.tsunamiEventId, 0]
       }
 
