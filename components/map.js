@@ -165,7 +165,7 @@ function draw() {
 
   var colorScaleEarthquake = d3.scaleLinear()
     .domain([0, 10])
-    .range(['#fff', '#008101']);
+    .range(['#fff', '#cccc00']);
 
   var colorScaleEruption = d3.scaleLinear()
     .domain([0, 10])
@@ -246,7 +246,7 @@ function draw() {
         .transition()
         .duration(200)
         .style('opacity', 1);
-      
+
       var emoji = '';
       if (d.type == 'tsunami') {
         emoji = '🌊';

@@ -195,10 +195,10 @@ function drawEvents() {
                 earthquakeRect.metadata = earthquake;
                 earthquakeRect.fillColor = new Color(0, 200/255, 0);
                 if (timeFilter[0] <= earthquake.year && earthquake.year <= timeFilter[1]) {
-                    earthquakeRect.fillColor = new Color(0, 200/255, 0, 1);
+                    earthquakeRect.fillColor = new Color(175/255, 175/255, 0, 1);
                 }
                 else {
-                    earthquakeRect.fillColor = new Color(0, 200/255, 0, 0.25);
+                    earthquakeRect.fillColor = new Color(175/255, 175/255, 0, 0.25);
                 }
             }
         }
@@ -251,6 +251,7 @@ function checkEventClick(e) {
             for (event of eventType.children) {
                 if (event.contains(e.point)) {
                     handler.clickEvent(e, event.metadata);
+                    break;
                 }
             }
         }
