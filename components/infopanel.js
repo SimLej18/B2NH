@@ -29,6 +29,7 @@ function ShowDescription(){
   $(`#infos`).addClass("hiddenpanel")
   $(`#relations`).addClass("hiddenpanel")
   $(`#commentary`).removeClass("hiddenpanel")
+
 }
 
 function ShowRelation(){
