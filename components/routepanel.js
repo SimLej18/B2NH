@@ -8,6 +8,9 @@ function routepanelAnchorClick() {
 
 // Ajoute l'evènement sélectionné au trajet
 function addDestinationClick() {
+    if ($('.routepanelBody').is(":hidden")) {
+        $('.routepanelBody').toggle()
+      }
     console.log('A new destination is added')
     currentroute.push(selectedEvent)
     console.log('Current circuit length: ' + currentroute.length)
@@ -16,6 +19,9 @@ function addDestinationClick() {
 
 // Supprime l'évènement sélectionné du trajet
 function removeDestinationClick() {
+    if ($('.routepanelBody').is(":hidden")) {
+        $('.routepanelBody').toggle()
+      }
     console.log('A destination has been removed')
     currentroute.splice(currentroute.indexOf(selectedEvent), 1)
     console.log('Current circuit: ' + currentroute)
@@ -69,8 +75,6 @@ function updateRoute() {
             destinationLine += "<button class='movebutton' onclick = 'routeDown(" + i + ")'>↓</button>"
         }
         destinationLine += "</p>"
-
-        console.log(destinationLine)
 
         line.innerHTML += destinationLine
     } 
@@ -133,6 +137,7 @@ function selectRouteEvent(index){
     updateInfoPanel(currentEvent.links.self);
     selectedEvent = currentEvent;
     updateCircuitButton();
+    checkEventClick(currentroute[index])
 }
 
 // Draw the entire circuit on the world map
