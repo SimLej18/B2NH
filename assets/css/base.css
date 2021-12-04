@@ -90,7 +90,7 @@ li {
 
 .panel > div {
     padding: 10px;
-    background-color: rgb(17 17 84 / 75%);
+    background-color: rgb(20 20 100 / 75%);
     pointer-events: auto;
 }
 
@@ -132,13 +132,7 @@ li {
 /* --- Timeline CSS --- */
 
 .timeline {
-    width: 723px;
-}
-
-.timeline > div {
-    border-top: 3px solid rgb(196, 252, 251);
-    border-right: 3px solid rgb(196, 252, 251);
-
+    width: 920px;
 }
 
 .timelineAnchor {
@@ -146,14 +140,28 @@ li {
     flex-direction: row;
     justify-content: space-between;
     clip-path: polygon(100% 100%,95% 7%, 0% 7%, 0% 100%);
+    font-size: 20px;
+}
+
+.timelineBody {
+    border-top: 3px solid rgb(196, 252, 251);
+    border-right: 3px solid rgb(196, 252, 251);
+}
+
+.eventTypeSelector {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 #timelineCanvas {
     height: 100px;
-    width: 700px;
+    width: 900px;
 }
 
 .timelineSubCanvas {
+    width: 900px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -184,11 +192,6 @@ li {
     justify-content: end;
 }
 
-.infopanel > div {
-    border-left: 3px solid rgb(196, 252, 251);
-    border-bottom: 3px solid rgb(196, 252, 251);
-}
-
 .infopanelAnchor {
     display: flex;
     flex-direction: column;
@@ -199,10 +202,13 @@ li {
 
 .infopanelTitle {
     transform: rotate(-90deg);
-    margin-top: 60px;
+    font-size: 20px;
+    margin-top: 25px;
 }
 
 .infopanelBody {
+    border-left: 3px solid rgb(196, 252, 251);
+    border-bottom: 3px solid rgb(196, 252, 251);
     min-width: 25vh;
     max-width: 28vh;
     text-align: left;
@@ -227,11 +233,6 @@ li {
     justify-content: end;
 }
 
-.routepanel > div {
-    border-top: 3px solid rgb(196, 252, 251);
-    border-left: 3px solid rgb(196, 252, 251);
-}
-
 .routepanelAnchor {
     display: flex;
     flex-direction: column;
@@ -242,10 +243,13 @@ li {
 
 .routepanelTitle {
     transform: rotate(-90deg);
-    margin-bottom: 60px;
+    font-size: 20px;
+    margin-bottom: 40px;
 }
 
 .routepanelBody {
+    border-top: 3px solid rgb(196, 252, 251);
+    border-left: 3px solid rgb(196, 252, 251);
     min-width: 28vh;
     max-width: 28vh;
 }
@@ -332,7 +336,7 @@ li {
     -webkit-border-radius:5px;
     border-radius:10px 10px 0px 0px;
   }
-  
+
   /* Style the buttons that are used to open the tab content */
   .tab button {
     background-color: inherit;
@@ -348,23 +352,23 @@ li {
     /* width:120px; */
     text-align: center;
   }
-  
+
   /* Change background color of buttons on hover */
   .tab button:hover {
     background-color:rgb(174, 225, 224);
     color:rgb(20, 30, 88);
 }
-  
+
   /* Create an active/current tablink class */
   .tab button.active {
     background-color:rgb(196, 252, 251);
     color:rgb(20, 30, 88);
   }
-  
+
   /* Style the tab content */
   .tabcontent {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
-  } 
+  }

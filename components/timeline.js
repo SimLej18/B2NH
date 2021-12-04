@@ -113,13 +113,13 @@ async function createTimeline() {
         var tool = new Tool();
 
         // Create the line bar and cursors
-        var lineBar = new Path.Rectangle(new Point(50, 65), new Size(600, 3));
+        var lineBar = new Path.Rectangle(new Point(50, 65), new Size(800, 3));
 
         var leftCursor = new Path.Rectangle(new Point(30, 55), new Size(20, 25));
         leftCursor.data.clicked = false;
         leftCursor.data.year = timeFilter[0];
 
-        var rightCursor = new Path.Rectangle(new Point(650, 55), new Size(20, 25));
+        var rightCursor = new Path.Rectangle(new Point(850, 55), new Size(20, 25));
         rightCursor.data.clicked = false;
         rightCursor.data.year = timeFilter[1];
 
@@ -153,7 +153,7 @@ async function createTimeline() {
                 inputValues[0] = leftCursor.data.year;
             }
             if (rightCursor.data.clicked) {
-                rightCursor.position = new Point(Math.max(Math.min((e.point.x-5), 660), leftCursor.position.x+20), 67.5);
+                rightCursor.position = new Point(Math.max(Math.min((e.point.x-5), 860), leftCursor.position.x+20), 67.5);
                 rightCursor.data.year = getCursorYear(rightCursor.position.x, "right");
                 $('#rightYearInput').val(rightCursor.data.year);
                 inputValues[1] = rightCursor.data.year;
@@ -190,15 +190,15 @@ function drawEvents() {
             project.layers[0].children[0].activate();  // Activates volcano layer
             for (var earthquake of allEventsDict["EarthquakeEvents"]) {
                 var xFromYear = getXFromYear(earthquake.year);
-                var height = parseFloat(earthquake.measure_value)/10*50;
+                var height = parseFloat((earthquake.measure_value-6)*3)/10*50;
                 var earthquakeRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
                 earthquakeRect.metadata = earthquake;
                 earthquakeRect.fillColor = new Color(0, 200/255, 0);
                 if (timeFilter[0] <= earthquake.year && earthquake.year <= timeFilter[1]) {
-                    earthquakeRect.fillColor = new Color(0, 200/255, 0, 1);
+                    earthquakeRect.fillColor = new Color(175/255, 175/255, 0, 1);
                 }
                 else {
-                    earthquakeRect.fillColor = new Color(0, 200/255, 0, 0.25);
+                    earthquakeRect.fillColor = new Color(175/255, 175/255, 0, 0.25);
                 }
             }
         }
@@ -251,6 +251,7 @@ function checkEventClick(e) {
             for (event of eventType.children) {
                 if (event.contains(e.point)) {
                     handler.clickEvent(e, event.metadata);
+                    break;
                 }
             }
         }
@@ -266,7 +267,7 @@ function updateTimeline() {
 }
 
 function getXFromYear(year) {
-    return Math.pow(1.002, year+5000-3820);
+    return Math.pow(1.0020901, year+5000-3820);
 }
 
 function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, barLineLength=600, timeRange=[-5000, 2021]) {
@@ -280,7 +281,7 @@ function getCursorYear(cursorPos, cursorSide, cursorWidth=20, barLineOffset=50, 
     if (cursorSide == "right") {
         x = cursorPos-barLineOffset-cursorWidth/2;
     }
-    year = Math.min(Math.max(Math.ceil(Math.log(x)/Math.log(1.002))+3820-5000, -5000), 2021);
+    year = Math.min(Math.max(Math.ceil(Math.log(x)/Math.log(1.0020901))+3820-5000, -5000), 2021);
 
     return year;
 }

@@ -8,6 +8,7 @@ function infopanelAnchorClick() {
   $('.infopanelBody').toggle();
 }
 
+
 //functions to switch infopanel tabs
 function ShowInfo(){
   $(`#tabinfo`).addClass("active")
