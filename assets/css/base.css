@@ -261,9 +261,15 @@ li {
     -webkit-border-radius:5px;
     border-radius:10px;
     color: #fff;
-    align-self: flex-end;
+    /* align-self: flex-end; */
     padding-left: 5px;
-    /* flex-grow: 1 */
+    flex-grow: 1;
+    height: 40px;
+    /*width: 10px;*/
+}
+
+.destinationtext{
+    flex-grow: 8
 }
 
 .movebutton:hover{
