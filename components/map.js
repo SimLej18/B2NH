@@ -164,8 +164,8 @@ function draw() {
 
 
   var colorScaleEarthquake = d3.scaleLinear()
-    .domain([0, 10])
-    .range(['#fff', '#00ff00']);
+    .domain([0, 5])
+    .range(['#fff', 'green']);
 
   var colorScaleEruption = d3.scaleLinear()
     .domain([0, 10])
@@ -181,7 +181,7 @@ function draw() {
       measureBase10 = d.measure_value / 8 * 10;
     }
     else if (d.type == 'earthquake') {
-      measureBase10 = (d.measure_value - 6.5) * 3; // Scale adaptation
+      measureBase10 = (d.measure_value - 6.5) * 4; // Scale adaptation
     }
     else measureBase10 = d.measure_value;
 
