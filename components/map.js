@@ -165,7 +165,7 @@ function draw() {
 
   var colorScaleEarthquake = d3.scaleLinear()
     .domain([0, 10])
-    .range(['#fff', '#cccc00']);
+    .range(['#fff', '#00ff00']);
 
   var colorScaleEruption = d3.scaleLinear()
     .domain([0, 10])
@@ -385,12 +385,12 @@ function draw() {
     if ($('.infopanelBody').is(":hidden")){
     infopanelAnchorClick();}
     //routepanelAnchorClick();
-    
+
     //routepanelAnchorClick()
-    
+
     // open info panel
     //infopanelAnchorClick();
-    
+
     // update info panel
     updateInfoPanel(d.self_url);
 
