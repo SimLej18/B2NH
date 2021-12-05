@@ -11,6 +11,8 @@
 body {
     margin: 0;
     background-image: url("../images/sci-fi-bg.png");
+    background-size:30%;
+    background-position-y: center;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.8em;
     color: rgb(196, 252, 251);
