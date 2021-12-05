@@ -58,6 +58,7 @@ let labels_data = [{
 
 ];
 
+
 let map_data = [];
 
 let handler = new Object();
@@ -386,6 +387,8 @@ function draw() {
       return 'translate(' + x + ',' + y + ')scale(' + Math.sqrt(e.transform.k) + ') rotate(' + d.angle + ')';
     });
     map.selectAll('#route').attr('transform', 'translate(' + e.transform.x + ',' + e.transform.y + ')scale(' + e.transform.k + ')')
+    //solution nulle à chier 2
+    .style('visibility','visible')
 
   }
 
@@ -500,21 +503,16 @@ function highlightEventOnMap(e, d) {
         let current = currentroute[i];
         let next = currentroute[i + 1];
 
-        var current_point = d3.select('#' + current.type + '_' + current.id);
-        var current_point_coordinates = current_point.attr('transform');
-
         x1=current.longitude
         y1=current.latitude
-
-        var next_point = d3.select('#' + next.type + '_' + next.id);
-        var next_point_coordinates = next_point.attr('transform');
 
         x2=next.longitude
         y2=next.latitude
 
-        var link = {type: "LineString", coordinates: [[x1, y1], [x2, y2]]}
         var path = d3.geoPath()
         .projection(projection)
+        var link = {type: "LineString", coordinates: [[x1, y1], [x2, y2]]}
+
 
      map.append("path")
         .attr('id','route')
@@ -528,9 +526,14 @@ function highlightEventOnMap(e, d) {
         .duration(500)
         .attr('stroke-width', '7px')
 
-        
-       // var x1 = current_point_coordinates.split('(')[1].split(',')[0];
-       // var y1 = current_point_coordinates.split('(')[1].split(',')[1].split(')')[0];
+    //solution nulle à chier
+        .attr('visibility','hidden');
+
+     
+    
+
+
+
          
        // var next_point = d3.select('#' + next.type + '_' + next.id);
        // var next_point_coordinates = next_point.attr('transform');

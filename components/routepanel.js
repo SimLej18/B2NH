@@ -12,9 +12,9 @@ function addDestinationClick() {
     if ($('.routepanelBody').is(":hidden")) {
         $('.routepanelBody').toggle()
       }
-    console.log('A new destination is added')
+    //console.log('A new destination is added')
     currentroute.push(selectedEvent)
-    console.log('Current circuit length: ' + currentroute.length)
+    //console.log('Current circuit length: ' + currentroute.length)
 
     // add button to redraw the circuit on map
     if (currentroute.length >= 2){
@@ -43,6 +43,8 @@ function removeDestinationClick() {
     console.log('A destination has been removed')
     currentroute.splice(mylist.indexOf(selectedEvent["links"]["self"]), 1)
     console.log('Current circuit length: ' + currentroute.length)
+
+    addDestinationToMap(currentroute)
     updateRoute()
 }
 
@@ -95,7 +97,7 @@ function updateRoute() {
         if(i >= 1){
             var upb = document.createElement("button");
             line.appendChild(upb);
-            upb.setAttribute("onclick","routeUp(" + i + ")");
+            upb.setAttribute("onclick","routeUp(" + i + ");addDestinationToMap(currentroute)");
             upb.className = "movebutton";
             upb.innerHTML = "↑"
         }
@@ -103,7 +105,7 @@ function updateRoute() {
         if(i < currentroute.length-1){
             var downb = document.createElement("button");
             line.appendChild(downb);
-            downb.setAttribute("onclick","routeDown(" + i + ")");
+            downb.setAttribute("onclick","routeDown(" + i + ");addDestinationToMap(currentroute)");
             downb.className = "movebutton";
             downb.innerHTML = "↓"
         }
