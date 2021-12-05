@@ -229,7 +229,7 @@ function fetchEvent(url_of_event) {
       }
     })
     .then(info => {
-      console.log(info)
+      //console.log(info)
       redamage = /null|Limited|Moderate|Severe|Extreme/g;
       redeaths = /null|Few|Some|Many|Very Many/g;
 

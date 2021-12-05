@@ -67,25 +67,24 @@ let handler = new Object();
 //   d3.select(id)
 //   .classed(Class, !d3.select(id).classed(Class))
 // }
-haversine(42.741,-71.3161,42.806911,-71.290611)
+
 //function to compute distance between two coordinates
 function haversine(lat1,lon1,lat2,lon2){
 
-var R = 6371; // km 
-//has a problem with the .toRad() method below.
-var x1 = lat2-lat1;
-var dLat = x1*Math.PI/180;  
-var x2 = lon2-lon1;
-var dLon = x2*Math.PI/180;  
-var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-                Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);  
-var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var R = 6371; // km 
+  //has a problem with the .toRad() method below.
+  var x1 = lat2-lat1;
+  var dLat = x1*Math.PI/180;  
+  var x2 = lon2-lon1;
+  var dLon = x2*Math.PI/180;  
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+                  Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * 
+                  Math.sin(dLon/2) * Math.sin(dLon/2);  
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 
-//d donne la distance
-var d = R * c; 
+  //d donne la distance
+  var d = R * c; 
 
-console.log(d)
 }
 
 // Method that will be used when we update the data
@@ -379,15 +378,14 @@ function draw() {
     });
 
     labels.attr('transform', function (d) {
+      
       var position = projection([d.longitude, d.latitude]);
       var x = (position[0] * e.transform.k) + e.transform.x;
       var y = (position[1] * e.transform.k) + e.transform.y;
 
       return 'translate(' + x + ',' + y + ')scale(' + Math.sqrt(e.transform.k) + ') rotate(' + d.angle + ')';
     });
-
-
-    map.selectAll('line').remove();
+    map.selectAll('#route').attr('transform', 'translate(' + e.transform.x + ',' + e.transform.y + ')scale(' + e.transform.k + ')')
 
   }
 
@@ -485,43 +483,76 @@ function highlightEventOnMap(e, d) {
 
 
     // remove all routes lines
-    map.selectAll('line').remove();
+    map.selectAll('#route').remove();
 
     for (let i = 0; i < currentroute.length; i++) {
 
       if (i != currentroute.length - 1) {
 
+        const width = 3000;
+        const height = 1500;
+
+        const projection = d3.geoMercator()
+        .center([4, 50]) // center of the map == UNamur
+        .scale(width / 2 / Math.PI) // scale to fit the map to the screen
+        .translate([width / 2, height / 2]);
+
         let current = currentroute[i];
         let next = currentroute[i + 1];
-        
+
         var current_point = d3.select('#' + current.type + '_' + current.id);
         var current_point_coordinates = current_point.attr('transform');
-      
-        var x1 = current_point_coordinates.split('(')[1].split(',')[0];
-        var y1 = current_point_coordinates.split('(')[1].split(',')[1].split(')')[0];
-         
+
+        x1=current.longitude
+        y1=current.latitude
+
         var next_point = d3.select('#' + next.type + '_' + next.id);
         var next_point_coordinates = next_point.attr('transform');
+
+        x2=next.longitude
+        y2=next.latitude
+
+        var link = {type: "LineString", coordinates: [[x1, y1], [x2, y2]]}
+        var path = d3.geoPath()
+        .projection(projection)
+
+     map.append("path")
+        .attr('id','route')
+        .attr("d", path(link))
+        .style("fill", "none")
+        .attr('stroke', 'rgb(196, 252, 251)')
+        .attr('stroke-width', '7px')
+        .style('stroke-dasharray', '7,15')
+        .attr('fill', 'none')
+        .transition()
+        .duration(500)
+        .attr('stroke-width', '7px')
+
+        
+       // var x1 = current_point_coordinates.split('(')[1].split(',')[0];
+       // var y1 = current_point_coordinates.split('(')[1].split(',')[1].split(')')[0];
+         
+       // var next_point = d3.select('#' + next.type + '_' + next.id);
+       // var next_point_coordinates = next_point.attr('transform');
     
-        var x2 = next_point_coordinates.split('(')[1].split(',')[0];
-        var y2 = next_point_coordinates.split('(')[1].split(',')[1].split(')')[0];
+       // var x2 = next_point_coordinates.split('(')[1].split(',')[0];
+       // var y2 = next_point_coordinates.split('(')[1].split(',')[1].split(')')[0];
 
-        var map = d3.select('#map').select('svg');
+       // var map = d3.select('#map').select('svg');
 
-        map
-          .append('line')
-          .attr('x1', x1)
-          .attr('y1', y1)
-          .attr('x2', x2)
-          .attr('y2', y2)
-          
-          .attr('stroke', 'rgb(196, 252, 251)')
-          .attr('stroke-width', '7px')
-          .style('stroke-dasharray', '7,15')
-          .transition()
-          .duration(500)
-          .attr('fill', 'none')
-          .attr('stroke-width', '7px');
+       // map
+       //   .append('line')
+       //   .attr('x1', x1)
+       //   .attr('y1', y1)
+       //   .attr('x2', x2)
+       //   .attr('y2', y2)
+       //   .attr('stroke', 'rgb(196, 252, 251)')
+       //   .attr('stroke-width', '7px')
+       //   .style('stroke-dasharray', '7,15')
+       //   .attr('fill', 'none')
+       //   .transition()
+       //   .duration(500)
+      //    .attr('stroke-width', '7px');
 
       }
     }
