@@ -247,7 +247,7 @@ function fetchEvent(url_of_event) {
         labels = ["🌊Tsunami🌊", `🕐 : ${info.data.dateTimeForInfoPanel}`,
           `⚐ : ${info.data.country}`, `  Tsunami intensity -  ${info.data.maxWaterHeight}m wave`, `⚡ Damage (M$) ⚡`, `💀 Victims 💀`
         ]
-        svgitems = ['LightBlue', 'Blue', 10, "red", 16, `${info.data.tis}`, `${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`, `${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
+        svgitems = ['white', '#0080ff' , 10, "red", 16, `${info.data.tis}`, `${redamage.exec(`${info.data.damageAmountOrderLabel}`)}`, `${redeaths.exec(`${info.data.deathsAmountOrderLabel}`)}`]
         relations = [info.data.earthquakeEventId, 0, info.data.volcanoEventId]
       }
 

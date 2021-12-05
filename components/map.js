@@ -165,7 +165,7 @@ function draw() {
 
   var colorScaleEarthquake = d3.scaleLinear()
     .domain([0, 8])
-    .range(['#fff', 'green']);
+    .range(['lightYellow', 'green']);
 
   var colorScaleEruption = d3.scaleLinear()
     .domain([0, 10])
@@ -173,8 +173,7 @@ function draw() {
 
   var colorScaleTsunami = d3.scaleLinear()
     .domain([0, 10])
-    .range(['#fff', '#0000ff']);
-
+    .range(['lightYellow', '#1ac6ff']);
 
   var toBase10 = function (d) {
     if (d.type == 'eruption') {
@@ -214,6 +213,7 @@ function draw() {
     .attr('d', path)
     .attr('class', 'countries');
 
+
   // insert points to map
   var points_map_data = map.selectAll('path')
     .data(map_data, ({
@@ -247,6 +247,7 @@ function draw() {
     .attr('fill-opacity', 0.5)
     .on('mouseover', function (e, d) {
       tooltip.attr('id', 'info_event_tooltip')
+        .attr('class','sb5')
         .transition()
         .duration(200)
         .style('opacity', 1);
@@ -259,8 +260,8 @@ function draw() {
       } else emoji = '🌏';
 
       tooltip.html(emoji + ' <strong>' + d.title + '</strong><br/><br/><strong>' + d.measure_type + '</strong>: <span style="color:white;">' + d.measure_value + '</span>' + '<br/><br/><em>' +  d.dateTimeForHumans + '</em>')
-      .style("left", (e.pageX) + "px")
-      .style("top", (e.pageY - 200) + "px");	;
+      .style("left", (e.pageX-2) + "px")
+      .style("top", (e.pageY - 140) + "px");	;
 
       showCoordinates(e, d);
 

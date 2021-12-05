@@ -256,8 +256,8 @@ li {
 .routepanelBody {
     border-top: 3px solid rgb(196, 252, 251);
     border-left: 3px solid rgb(196, 252, 251);
-    width: 50vh;
-    font-size: 18px;
+    min-width: 35vh;
+    /*font-size: 18px;*/
 }
 
 .destinationline{
@@ -312,13 +312,38 @@ li {
     size: 10px;
     border: solid;
     border-width: 1px;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: rgb(17 17 84);
     padding: 10px;
     position: absolute;
     z-index: 10;
 }
 
+.sb5:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid rgb(196, 252, 251);
+    border-right: 10px solid transparent;
+    border-top: 10px solid rgb(196, 252, 251);
+    border-bottom: 10px solid transparent;
+    left: 5px;
+    bottom: -20px;
+  }
+  
+  .sb5:after {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid  rgb(17 17 84);
+    border-right: 10px solid transparent;
+    border-top: 10px solid  rgb(17 17 84);
+    border-bottom: 10px solid transparent;
+    left: 6px;
+    bottom: -17px;
+  }
 
 #coordinates_tooltip div {
     fill: #707070;
@@ -335,9 +360,17 @@ li {
 }
 /* used by map.js */
 .countries {
-    fill: #fff;
-    stroke: #ccc;
-    stroke-width: 0.1px;
+    /* normal mode */
+    /*fill: #fff;*/
+    /*stroke: #ccc;*/
+    /*stroke-width: 0.1px;*/
+
+    /* Dark mode*/
+    fill: rgb(26, 28, 71);
+    stroke: rgb(223, 223, 223);
+    stroke-width: 0.2px;
+
+
     stroke-linejoin: round;
     stroke-linecap: round;
     pointer-events: none;
