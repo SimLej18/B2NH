@@ -439,6 +439,8 @@ function draw() {
 
 function highlightEventOnMap(e, d) {
 
+
+
   var point_event = d3.select('#' + d.type + '_' + d.id);
   var coordinates = point_event.attr('transform');
 
@@ -474,7 +476,13 @@ function highlightEventOnMap(e, d) {
 
 
   function addDestinationToMap(currentroute) {
-    // toggleClass
+    
+    var map = d3.select('#map').select('svg');
+
+
+    // remove all routes lines
+    map.selectAll('line').remove();
+
     for (let i = 0; i < currentroute.length; i++) {
 
       if (i != currentroute.length - 1) {
@@ -513,7 +521,7 @@ function highlightEventOnMap(e, d) {
         //   'id': id
         // };
 
-        var map = d3.select('#map').select('svg');
+
 
         map
           .append('line')
@@ -523,11 +531,10 @@ function highlightEventOnMap(e, d) {
           .attr('y2', y2)
           .attr('stroke', 'yellow')
           .attr('stroke-width', '5px')
+          .attr('strokedasharray', '5,5')
           .attr('fill', 'none')
           .transition()
           .duration(500)
-          .attr('x2', x)
-          .attr('y2', y)
           .attr('stroke-width', '4px');
 
       }
