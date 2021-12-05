@@ -164,7 +164,7 @@ function draw() {
 
 
   var colorScaleEarthquake = d3.scaleLinear()
-    .domain([0, 5])
+    .domain([0, 8])
     .range(['#fff', 'green']);
 
   var colorScaleEruption = d3.scaleLinear()
