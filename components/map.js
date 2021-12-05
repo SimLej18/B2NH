@@ -387,23 +387,7 @@ function draw() {
     });
 
 
-    map.selectAll('line')
-      .attr('x1', function (d) {
-        return (d.source.x * e.transform.k) + e.transform.x;
-      })
-      .attr('y1', function (d) {
-        return (d.source.y * e.transform.k) + e.transform.y;
-      }
-      )
-      .attr('x2', function (d) {
-        return (d.target.x * e.transform.k) + e.transform.x;
-      }
-      )
-      .attr('y2', function (d) {
-        return (d.target.y * e.transform.k) + e.transform.y;
-      }
-      );
-
+    map.selectAll('line').remove();
 
   }
 
@@ -523,25 +507,6 @@ function highlightEventOnMap(e, d) {
         var y2 = next_point_coordinates.split('(')[1].split(',')[1].split(')')[0];
 
         var map = d3.select('#map').select('svg');
-
-        // let angle = getAngle(current_lat, current_long, next_lat, next_long);
-        
-        // let name = current.name;
-        // let description = current.description;
-        
-        // let longitude = current.longitude;
-        // let latitude = current.latitude;
-        // let id = current.id;
-        // let marker = {
-        //   'name': name,
-        //   'description': description,
-        //   'longitude': longitude,
-        //   'latitude': latitude,
-        //   'angle': angle,
-        //   'id': id
-        // };
-
-
 
         map
           .append('line')
