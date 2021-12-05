@@ -367,6 +367,23 @@ function draw() {
     });
 
 
+    map.selectAll('line')
+      .attr('x1', function (d) {
+        return (d.source.x * e.transform.k) + e.transform.x;
+      })
+      .attr('y1', function (d) {
+        return (d.source.y * e.transform.k) + e.transform.y;
+      }
+      )
+      .attr('x2', function (d) {
+        return (d.target.x * e.transform.k) + e.transform.x;
+      }
+      )
+      .attr('y2', function (d) {
+        return (d.target.y * e.transform.k) + e.transform.y;
+      }
+      );
+
 
   }
 
@@ -453,6 +470,8 @@ function highlightEventOnMap(e, d) {
 
 
 
+  }
+
 
   function addDestinationToMap(currentroute) {
     // toggleClass
@@ -502,7 +521,7 @@ function highlightEventOnMap(e, d) {
           .attr('y1', y1)
           .attr('x2', x2)
           .attr('y2', y2)
-          .attr('stroke', 'red')
+          .attr('stroke', 'yellow')
           .attr('stroke-width', '5px')
           .attr('fill', 'none')
           .transition()
@@ -516,6 +535,3 @@ function highlightEventOnMap(e, d) {
       console.log(currentroute);
       console.log('addDestinationToMap called!');
     }
-
-
-  }
