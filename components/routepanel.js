@@ -8,6 +8,7 @@ function routepanelAnchorClick() {
 
 // Ajoute l'evènement sélectionné au trajet
 function addDestinationClick() {
+    $(`#printedRoute`).removeClass(`logoBackground`)
     if ($('.routepanelBody').is(":hidden")) {
         $('.routepanelBody').toggle()
       }
@@ -101,7 +102,8 @@ function updateRoute() {
     } 
 
     if (currentroute.length == 0){
-        completelist.innerHTML = "<p>Create your own circuit !</p>"
+        completelist.innerHTML = "<p>Create your own circuit !</p>";
+        $(`#printedRoute`).addClass("logoBackground")
     }
 
     updateCircuitButton();
