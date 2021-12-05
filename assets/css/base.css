@@ -99,11 +99,11 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    float:left;
 }
 
 .logoline{
     position:absolute;
-    top: px;
     left: 0px;
     width:100%;
     background-color: none;
@@ -112,7 +112,7 @@ li {
 
 .logo{
     position: relative;
-    left: 0%;
+    left: center;
     top:5%;
     width: 40px;
     height: 40px;
@@ -126,6 +126,7 @@ li {
     background-position-x:center;
     border-radius: 0px 0px 20px 20px;
 }
+
 .panel {
 }
 

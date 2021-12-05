@@ -549,13 +549,14 @@ function highlightEventOnMap(e, d) {
           .attr('y1', y1)
           .attr('x2', x2)
           .attr('y2', y2)
-          .attr('stroke', 'yellow')
-          .attr('stroke-width', '5px')
-          .attr('strokedasharray', '5,5')
-          .attr('fill', 'none')
+          
+          .attr('stroke', 'rgb(196, 252, 251)')
+          .attr('stroke-width', '7px')
+          .style('stroke-dasharray', '7,15')
           .transition()
           .duration(500)
-          .attr('stroke-width', '4px');
+          .attr('fill', 'none')
+          .attr('stroke-width', '7px');
 
       }
     }
