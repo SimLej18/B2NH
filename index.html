@@ -55,13 +55,15 @@
                             <div>
                                 <input type="checkbox"
                                     id="checkbox_volcanoes"
-                                    onclick="volcanoToggle()" checked />
+                                    onclick="volcanoToggle()"
+                                    checked />
                                 <label>🌋</label>
                             </div>
                             <div>
                                 <input type="checkbox"
                                     id="checkbox_tsunamis"
-                                    onclick="tsunamiToggle()" checked />
+                                    onclick="tsunamiToggle()"
+                                    checked />
                                 <label>🌊</label>
                             </div>
                             <div>
@@ -85,7 +87,8 @@
                                     class="count"></span>
                                 Tsunamis: <span id="tsunamis_count"
                                     class="count"></span>
-                                Earthquakes: <span id="earthquakes_count"
+                                Earthquakes: <span
+                                    id="earthquakes_count"
                                     class="count"></span>
                             </div>
                             <input class="yearInput"
@@ -108,22 +111,26 @@
                         </div>
                     </div>
 
-                    <div
-                        id="infopanelBody" class="panelBody infopanelBody hiddenpanel glow">
-                    <div id="NoSelectedEvent">
-                        <p>NO EVENT SELECTED</p>
-                    </div>
+                    <div id="infopanelBody"
+                        class="panelBody infopanelBody hiddenpanel glow">
+                        <div id="NoSelectedEvent">
+                            <p>NO EVENT SELECTED</p>
+                        </div>
                         <!-- Tab links -->
                         <div class="tab hiddenpanel">
-                            <button id="tabinfo" class="tablinks active"
+                            <button id="tabinfo"
+                                class="tablinks active"
                                 onclick="ShowInfo()">Info</button>
                             <button id="tabcomment" class="tablinks"
                                 onclick="ShowDescription()">Description</button>
-                            <button id="tabrelation" class="tablinks hiddenpanel"
-                                onclick="ShowRelation()">Related events</button>
+                            <button id="tabrelation"
+                                class="tablinks hiddenpanel"
+                                onclick="ShowRelation()">Related
+                                events</button>
                         </div>
 
-                        <div id="infos" class="subinfopanel hiddenpanel">
+                        <div id="infos"
+                            class="subinfopanel hiddenpanel">
                             <p id="element1"></p>
                             <p id="element2"></p>
                             <p id="element3"></p>
@@ -134,7 +141,8 @@
                         </div>
 
                         <div id="commentary"
-                            class="hiddenpanel scrolltext subinfopanel"></div>
+                            class="hiddenpanel scrolltext subinfopanel">
+                        </div>
 
                         <div id="relations"
                             class="hiddenpanel scrolltext subinfopanel">
