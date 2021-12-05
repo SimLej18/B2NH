@@ -230,12 +230,12 @@ function drawEvents() {
                 var height = parseFloat(tsunami.measure_value)/10*50;
                 var tsunamiRect = new Path.Rectangle(new Point(50+xFromYear, 65-height), new Size(2, height));
                 tsunamiRect.metadata = tsunami;
-                tsunamiRect.fillColor = new Color(0, 0, 200/255);
+                tsunamiRect.fillColor = new Color(0, 128/255, 255/255);
                 if (timeFilter[0] <= tsunami.year && tsunami.year <= timeFilter[1]) {
-                    tsunamiRect.fillColor = new Color(0, 0, 200/255, 1);
+                    tsunamiRect.fillColor = new Color(0, 128/255, 255/255, 1);
                 }
                 else {
-                    tsunamiRect.fillColor = new Color(0, 0, 200/255, 0.25);
+                    tsunamiRect.fillColor = new Color(0, 128/255, 255/255, 0.25);
                 }
             }
         }
