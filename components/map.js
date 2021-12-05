@@ -512,7 +512,7 @@ function highlightEventOnMap(e, d) {
           .attr('stroke-width', '4px');
 
       }
-
+    }
       console.log(currentroute);
       console.log('addDestinationToMap called!');
     }
