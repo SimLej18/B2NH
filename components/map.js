@@ -75,8 +75,9 @@ function updateMap() {
   updateEvents(map_data);
 }
 
-function addDestinationToMap() {
+function addDestinationToMap(currentroute) {
   // toggleClass
+  console.log(currentroute);
   console.log('addDestinationToMap called!');
 }
 

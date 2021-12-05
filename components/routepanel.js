@@ -14,6 +14,7 @@ function addDestinationClick() {
     console.log('A new destination is added')
     currentroute.push(selectedEvent)
     console.log('Current circuit length: ' + currentroute.length)
+    addDestinationToMap(currentroute)
     updateRoute()
 }
 
@@ -124,7 +125,8 @@ function updateCircuitButton(){
             document.getElementById(`circuitbutton`).innerHTML=`<button class ='panelbutton' onclick = "addDestinationClick()">Add to circuit</button>`;
         }
     }
-  }
+
+}
 
 function routeUp(i){
     console.assert(i>=1, "i should be higher than 1. Your i: " + i)
