@@ -386,6 +386,7 @@ function draw() {
 
       return 'translate(' + x + ',' + y + ')scale(' + Math.sqrt(e.transform.k) + ') rotate(' + d.angle + ')';
     });
+    
     map.selectAll('#route').attr('transform', 'translate(' + e.transform.x + ',' + e.transform.y + ')scale(' + e.transform.k + ')')
     //solution nulle à chier 2
     .style('visibility','visible')
@@ -516,46 +517,21 @@ function highlightEventOnMap(e, d) {
 
      map.append("path")
         .attr('id','route')
-        .attr("d", path(link))
-        .style("fill", "none")
+        .attr('d', path(link))
+        .style('fill', 'none')
         .attr('stroke', 'rgb(196, 252, 251)')
-        .attr('stroke-width', '7px')
+        .attr('stroke-width', '4px')
         .style('stroke-dasharray', '7,15')
         .attr('fill', 'none')
         .transition()
         .duration(500)
-        .attr('stroke-width', '7px')
+        .attr('stroke-width', '4px')
 
     //solution nulle à chier
         .attr('visibility','hidden');
 
      
     
-
-
-
-         
-       // var next_point = d3.select('#' + next.type + '_' + next.id);
-       // var next_point_coordinates = next_point.attr('transform');
-    
-       // var x2 = next_point_coordinates.split('(')[1].split(',')[0];
-       // var y2 = next_point_coordinates.split('(')[1].split(',')[1].split(')')[0];
-
-       // var map = d3.select('#map').select('svg');
-
-       // map
-       //   .append('line')
-       //   .attr('x1', x1)
-       //   .attr('y1', y1)
-       //   .attr('x2', x2)
-       //   .attr('y2', y2)
-       //   .attr('stroke', 'rgb(196, 252, 251)')
-       //   .attr('stroke-width', '7px')
-       //   .style('stroke-dasharray', '7,15')
-       //   .attr('fill', 'none')
-       //   .transition()
-       //   .duration(500)
-      //    .attr('stroke-width', '7px');
 
       }
     }
