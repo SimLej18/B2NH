@@ -534,7 +534,8 @@ function highlightEventOnMap(e, d) {
         .attr('visibility','hidden');
 
      
-    
+        handler.clickEvent(null, current);
+
 
       }
     }
