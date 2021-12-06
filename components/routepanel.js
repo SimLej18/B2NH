@@ -17,9 +17,9 @@ function addDestinationClick() {
     //console.log('Current circuit length: ' + currentroute.length)
 
     // add button to redraw the circuit on map
-    if (currentroute.length >= 2){
-        document.getElementById(`redraw`).hidden = false;
-    }
+    // if (currentroute.length >= 2){
+    //     document.getElementById(`redraw`).hidden = false;
+    // }
 
     addDestinationToMap(currentroute)
     updateRoute()
