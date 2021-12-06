@@ -114,6 +114,8 @@ function updateRoute() {
         $(`#printedRoute`).addClass("logoBackground")
     }
 
+    addDestinationToMap(currentroute)
+
     updateCircuitButton();
 }
 
