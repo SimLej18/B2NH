@@ -200,6 +200,7 @@ li {
 #timelineCanvas {
     height: 100px;
     width: 900px;
+    background-color: rgb(255, 255, 255, 0.3);
 }
 
 .timelineSubCanvas {
@@ -324,7 +325,7 @@ li {
     overflow-x: auto;
     cursor: pointer;
     justify-content: right;
-    
+
 }
 
 .destinationtext{
@@ -388,7 +389,7 @@ li {
     left: 5px;
     bottom: -20px;
   }
-  
+
   .sb5:after {
     content: "";
     width: 0px;
