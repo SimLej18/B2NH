@@ -1,10 +1,12 @@
-# B2NH
-Frontend of Back To Natural Hazards make with **D3.js**, **paper.js** and some ❤️.
+# Back 2 Natural Hazards
+
+<img src="https://github.com/SimLej18/B2NH/blob/main/assets/css/logo.png?raw=true" alt="B2NH logo" width="200"/>
+
+Frontend of *Back To Natural Hazards* made with **D3.js**, **paper.js** and some ❤️.
+
+Backend of *Back To Natural Hazards* made with **Sqlite3** and **Lumen (Laravel)** and available at https://github.com/tintamarre/b2nh-api
 
 Live at https://b2nh.world
-
-# Logo
-[
 
 # Credits
 
@@ -25,6 +27,6 @@ Then open your browser to `http://localhost:8080`
 `docker build -t webserver .`
 
 ## Run the image
-`docker run -it --rm -d -p 86:80 --name web webserver`
+`docker run -it --rm -d -p 8088:80 --name web webserver`
 
-Then open your browser to `http://localhost:86`
+Then open your browser to `http://localhost:8088`
