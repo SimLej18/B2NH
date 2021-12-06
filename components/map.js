@@ -265,7 +265,8 @@ function draw() {
         .attr('class', 'sb5')
         .transition()
         .duration(200)
-        .style('opacity', 1);
+        .style('opacity', 1)
+        .style('visibility', 'visible');
 
       var emoji = '';
       if (d.type == 'tsunami') {
@@ -377,6 +378,8 @@ function draw() {
 
       return 'translate(' + x + ',' + y + ')scale(' + Math.cbrt(e.transform.k) + ')';
     });
+
+    tooltip.style('visibility', 'hidden');
 
     labels.attr('transform', function (d) {
       
