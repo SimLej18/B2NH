@@ -530,15 +530,25 @@ function highlightEventOnMap(e, d) {
         .duration(500)
         .attr('stroke-width', '4px')
 
+    //add text label
+       map.append("text")
+          .attr("x",6)
+          .attr("dy",15)
+          //.append("textPath")
+          .attr("stroke","red")
+          //.attr("xlink:href","#route")
+          .text('test')
+      
+        
     //solution nulle à chier
         .attr('visibility','hidden');
 
      
         handler.clickEvent(null, next);
 
-
       }
-    }
+    } 
+    
       console.log(currentroute);
       console.log('addDestinationToMap called!');
     }

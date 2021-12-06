@@ -16,11 +16,6 @@ function addDestinationClick() {
     currentroute.push(selectedEvent)
     //console.log('Current circuit length: ' + currentroute.length)
 
-    // add button to redraw the circuit on map
-    // if (currentroute.length >= 2){
-    //     document.getElementById(`redraw`).hidden = false;
-    // }
-
     addDestinationToMap(currentroute)
     updateRoute()
 }
@@ -114,12 +109,12 @@ function updateRoute() {
         $(`#printedRoute`).addClass("logoBackground")
     }
 
-    addDestinationToMap(currentroute)
-
     updateCircuitButton();
 }
 
 // Met à jour le bouton d'ajout/suppression de destination, dans l'infopanel
+
+addDestinationToMap(currentroute)
 function updateCircuitButton(){
     mylist = [];
     for (let i = 0; i < currentroute.length; i++) {
