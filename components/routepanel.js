@@ -25,10 +25,6 @@ function addDestinationClick() {
     updateRoute()
 }
 
-function redrawCircuitOnMapClick() {
-    addDestinationToMap(currentroute);
-}
-
 // Supprime l'évènement sélectionné du trajet
 function removeDestinationClick() {
     if ($('.routepanelBody').is(":hidden")) {
