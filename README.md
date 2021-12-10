@@ -12,7 +12,6 @@ Frontend of *Back To Natural Hazards* made with **D3.js**, **paper.js** and some
 
 Backend of *Back To Natural Hazards* made with **Sqlite3** and **Lumen (Laravel)** and available at https://github.com/tintamarre/b2nh-api
 
-
 # Credits
 
 - @alexandreperrot
@@ -35,3 +34,7 @@ Then open your browser to `http://localhost:8080`
 `docker run -it --rm -d -p 8088:80 --name web webserver`
 
 Then open your browser to `http://localhost:8088`
+
+## License
+
+This project is licensed under the GPLv3 license.
